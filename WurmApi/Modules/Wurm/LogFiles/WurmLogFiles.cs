@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Modules.Events.Public;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogFiles
+namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 {
     /// <summary>
     /// Provides accurate information about Wurm log files.

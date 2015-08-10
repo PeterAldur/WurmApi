@@ -1,4 +1,4 @@
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerHistory.Jobs
+namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory.Jobs
 {
     class GetCurrentServerJob
     {

@@ -1,7 +1,6 @@
-﻿using System.IO;
-using AldursLab.Testing;
+﻿using AldursLab.Testing;
 
-namespace AldurSoft.WurmApi.Tests.Builders.WurmClient
+namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {
     static class WurmClientMockBuilder
     {

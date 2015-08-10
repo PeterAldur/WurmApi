@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AldurSoft.WurmApi.Utility
+namespace AldursLab.WurmApi.Utility
 {
     public class LogFileParser
     {

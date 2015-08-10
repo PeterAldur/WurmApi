@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 
-namespace AldurSoft.WurmApi.Utility
+namespace AldursLab.WurmApi.Utility
 {
     public class FileSystemChangeMonitor : IDisposable
     {

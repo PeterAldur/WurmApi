@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     public class MonthlyFileHeuristics
     {

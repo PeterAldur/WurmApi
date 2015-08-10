@@ -1,11 +1,11 @@
 ﻿using System;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 
 #if NETFX_CORE && !WinRT
 #define WinRT
 #endif
 
-namespace AldurSoft.WurmApi.Modules.Events.Internal {
+namespace AldursLab.WurmApi.Modules.Events.Internal {
     /// <summary>
     ///   A marker interface for classes that subscribe to messages.
     /// </summary>

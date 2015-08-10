@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers.Jobs
+﻿namespace AldursLab.WurmApi.Modules.Wurm.Servers.Jobs
 {
     abstract class Job
     {

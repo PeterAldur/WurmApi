@@ -1,4 +1,4 @@
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     public enum LogType
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class EventSubscriptionsTsafeHashset : IEnumerable<AllEventsSubscription>
     {

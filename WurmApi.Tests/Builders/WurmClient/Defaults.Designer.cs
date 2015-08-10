@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AldurSoft.WurmApi.Tests.Builders.WurmClient {
+namespace AldursLab.WurmApi.Tests.Builders.WurmClient {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AldurSoft.WurmApi.Tests.Builders.WurmClient {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AldurSoft.WurmApi.Tests.Builders.WurmClient.Defaults", typeof(Defaults).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AldursLab.WurmApi.Tests.Builders.WurmClient.Defaults", typeof(Defaults).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

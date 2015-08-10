@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class CharacterLogsMonitorEngine : IHandle<CharacterLogFilesAddedOrRemoved>
     {

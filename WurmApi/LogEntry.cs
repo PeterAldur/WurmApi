@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Describes a single in-game event as logged by the game client.

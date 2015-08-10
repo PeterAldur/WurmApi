@@ -1,6 +1,6 @@
 using System;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     public class WurmDateAndUptime
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using AldurSoft.WurmApi.Tests.Tools;
+using AldursLab.WurmApi.Tests.Tools;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.UnitTests
+namespace AldursLab.WurmApi.Tests.UnitTests
 {
     [TestFixture]
     public class WurmDateTimeTests

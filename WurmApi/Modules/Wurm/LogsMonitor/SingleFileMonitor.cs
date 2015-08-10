@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     public class SingleFileMonitor
     {

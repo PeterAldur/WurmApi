@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     public interface IWurmServerHistory
     {

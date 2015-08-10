@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     [Serializable]
     public class WurmApiException : Exception

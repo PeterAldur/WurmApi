@@ -1,21 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using AldursLab.Testing;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Modules.Events.Public;
-using AldurSoft.WurmApi.Modules.Wurm.ConfigDirectories;
-using AldurSoft.WurmApi.Modules.Wurm.Configs;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
-using Telerik.JustMock;
-using Telerik.JustMock.Helpers;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.Configs
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Configs
 {
     public class WurmConfigsTests : WurmTests
     {

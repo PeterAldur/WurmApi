@@ -1,9 +1,9 @@
 using System;
 using System.Text.RegularExpressions;
 using AldursLab.Essentials.Extensions.DotNet;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel;
+using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class LogEntriesParser
     {

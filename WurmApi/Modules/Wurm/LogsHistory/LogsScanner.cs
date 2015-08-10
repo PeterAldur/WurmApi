@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
     class LogsScanner
     {

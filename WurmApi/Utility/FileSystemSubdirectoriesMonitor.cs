@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AldurSoft.WurmApi.Infrastructure;
+using AldursLab.WurmApi.Infrastructure;
 
-namespace AldurSoft.WurmApi.Utility
+namespace AldursLab.WurmApi.Utility
 {
     /// <summary>
     /// Monitors for create / delete / rename of direct subdirectories in specific directory.

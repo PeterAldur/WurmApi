@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.JobRunning
+namespace AldursLab.WurmApi.JobRunning
 {
     class QueuedJobsSyncRunner<TJobContext, TResult> : IDisposable
     {

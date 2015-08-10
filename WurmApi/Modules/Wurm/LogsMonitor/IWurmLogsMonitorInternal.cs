@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     internal interface IWurmLogsMonitorInternal
     {

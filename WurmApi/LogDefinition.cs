@@ -1,6 +1,6 @@
 using System;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     public class LogDefinition
     {

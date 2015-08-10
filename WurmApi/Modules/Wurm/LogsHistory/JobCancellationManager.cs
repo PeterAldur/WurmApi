@@ -1,8 +1,7 @@
 using System;
 using System.Threading;
-using AldurSoft.WurmApi.JobRunning;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
     class JobCancellationManager
     {

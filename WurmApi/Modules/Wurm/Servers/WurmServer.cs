@@ -2,13 +2,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.Jobs;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Wurm.Servers.Jobs;
+using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     public class WurmServer : IWurmServer
     {

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using AldursLab.PersistentObjects;
 using AldursLab.PersistentObjects.FlatFiles;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Wurm.LogsMonitor;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.Jobs;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Modules.Wurm.Servers.Jobs;
+using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     /// <summary>
     /// Manages information about wurm game servers.

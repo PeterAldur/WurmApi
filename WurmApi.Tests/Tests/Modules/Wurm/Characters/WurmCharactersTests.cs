@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.Characters
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
 {
     [TestFixture]
     class WurmCharactersTests : WurmTests

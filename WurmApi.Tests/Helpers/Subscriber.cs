@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Tests.Helpers
+namespace AldursLab.WurmApi.Tests.Helpers
 {
-    class Subscriber<TMessage> : IHandle<TMessage> where TMessage : Message
+    class Subscriber<TMessage> : Essentials.Eventing.IHandle<TMessage> where TMessage : Message
     {
         readonly List<TMessage> receivedMessages = new List<TMessage>();
         readonly object locker = new object();

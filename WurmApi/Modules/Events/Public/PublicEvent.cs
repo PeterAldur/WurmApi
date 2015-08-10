@@ -1,4 +1,4 @@
-﻿namespace AldurSoft.WurmApi.Modules.Events.Public
+﻿namespace AldursLab.WurmApi.Modules.Events.Public
 {
     abstract class PublicEvent
     {

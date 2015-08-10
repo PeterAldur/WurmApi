@@ -2,7 +2,7 @@
 using System.Globalization;
 using Newtonsoft.Json;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     [JsonObject(MemberSerialization.Fields)]
     public sealed class CharacterName : IEquatable<CharacterName>

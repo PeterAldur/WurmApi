@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Events.Internal.Messages
+namespace AldursLab.WurmApi.Modules.Events.Internal.Messages
 {
     class CharacterLogFilesAddedOrRemoved : Message
     {

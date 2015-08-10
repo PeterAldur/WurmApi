@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Represents a single date/time in Wurm calendar.

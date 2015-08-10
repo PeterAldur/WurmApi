@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Events.Public
+namespace AldursLab.WurmApi.Modules.Events.Public
 {
     class PublicEventImpl : PublicEvent
     {

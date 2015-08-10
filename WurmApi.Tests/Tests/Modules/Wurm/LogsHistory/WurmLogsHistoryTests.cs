@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AldursLab.Testing;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Wurm.CharacterDirectories;
-using AldurSoft.WurmApi.Modules.Wurm.LogFiles;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory;
 using NUnit.Framework;
-using Telerik.JustMock;
-using Telerik.JustMock.Helpers;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
 {
     [TestFixture]
     class WurmLogsHistoryTests : WurmTests

@@ -1,4 +1,4 @@
-﻿namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+﻿namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     interface IMonthlyHeuristicsDataBuilder
     {

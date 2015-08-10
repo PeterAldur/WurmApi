@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Characters
+namespace AldursLab.WurmApi.Modules.Wurm.Characters
 {
     class WurmCharacters : IWurmCharacters, IDisposable
     {

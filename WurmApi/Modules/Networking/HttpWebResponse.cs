@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace AldurSoft.WurmApi.Modules.Networking
+namespace AldursLab.WurmApi.Modules.Networking
 {
     public class HttpWebResponse
     {

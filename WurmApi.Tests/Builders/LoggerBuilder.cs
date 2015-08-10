@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
 
-namespace AldurSoft.WurmApi.Tests.Builders
+namespace AldursLab.WurmApi.Tests.Builders
 {
     public static class LoggerBuilder
     {

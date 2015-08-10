@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel;
+using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class LiveLogs
     {

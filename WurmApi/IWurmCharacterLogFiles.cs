@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Provides access to wurm log files for specific character.

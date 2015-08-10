@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     public class HeuristicsExtractionResult
     {

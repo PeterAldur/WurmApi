@@ -2,7 +2,7 @@
 using AldursLab.PersistentObjects;
 using Newtonsoft.Json;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel
 {
     [JsonObject(MemberSerialization.Fields)]
     public class WurmCharacterLogsEntity : Entity

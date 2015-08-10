@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     [Serializable]
     [JsonObject(MemberSerialization.Fields)]

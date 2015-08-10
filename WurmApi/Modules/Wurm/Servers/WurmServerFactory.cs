@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.Jobs;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Wurm.Servers.Jobs;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class WurmServerFactory
     {

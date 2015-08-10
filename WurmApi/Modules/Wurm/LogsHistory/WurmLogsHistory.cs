@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.PersistentObjects;
 using AldursLab.PersistentObjects.FlatFiles;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
     public class WurmLogsHistory : IWurmLogsHistory, IDisposable
     {

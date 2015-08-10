@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace AldurSoft.WurmApi.Tests.Tools
+namespace AldursLab.WurmApi.Tests.Tools
 {
     public class BinaryTestSerializer<T>
     {

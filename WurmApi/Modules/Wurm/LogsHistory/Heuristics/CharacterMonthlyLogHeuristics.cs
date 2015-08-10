@@ -2,12 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using AldursLab.Essentials;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     // 2014-11-11: 
     // Note that in current LogFileStreamReader implementation, start position for

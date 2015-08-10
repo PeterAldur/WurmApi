@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using AldursLab.Essentials.Extensions.DotNet;
 
-namespace AldurSoft.WurmApi.Utility
+namespace AldursLab.WurmApi.Utility
 {
     public class LogFileStreamReaderFactory
     {

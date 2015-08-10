@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Modules.Events.Public;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.CharacterDirectories
+namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
 {
     /// <summary>
     /// Manages directory information about wurm character folders

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Threading.Tasks;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     /// <summary>
     /// Parses monthly log file to extract day heuristics, useful to learn, 

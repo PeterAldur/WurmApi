@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerHistory
+namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     public class SortedServerHistory
     {

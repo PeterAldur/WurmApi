@@ -1,6 +1,6 @@
 using System;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Allows reading and observing changes of a single wurm config.

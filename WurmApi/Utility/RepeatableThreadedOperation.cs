@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Utility
+namespace AldursLab.WurmApi.Utility
 {
     /// <summary>
     /// Maintains a dedicated thread to run job delegate at. Job is executed repeatedly in response to signals. 

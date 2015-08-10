@@ -1,8 +1,8 @@
 ﻿using System;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerHistory
+namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     class ServerHistoryProviderFactory
     {

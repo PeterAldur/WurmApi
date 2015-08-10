@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AldursLab.Essentials;
-using AldurSoft.WurmApi.Tests.Tests.Modules;
-using NUnit.Framework;
+﻿using AldursLab.WurmApi.Tests.Tests.Modules;
 
-namespace AldurSoft.WurmApi.Tests
+namespace AldursLab.WurmApi.Tests
 {
     public abstract class WurmApiFixtureBase : TestsBase
     {

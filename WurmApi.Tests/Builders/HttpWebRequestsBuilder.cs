@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Networking;
+using AldursLab.WurmApi.Modules.Networking;
 using Telerik.JustMock.Helpers;
 
-namespace AldurSoft.WurmApi.Tests.Builders
+namespace AldursLab.WurmApi.Tests.Builders
 {
     public static class HttpWebRequestsBuilder
     {

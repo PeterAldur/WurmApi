@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     [Serializable]
     public class InvalidSearchParametersException : WurmApiException

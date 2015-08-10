@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerGroups
+namespace AldursLab.WurmApi.Modules.Wurm.ServerGroups
 {
     public class WurmServerGroups : IWurmServerGroups
     {

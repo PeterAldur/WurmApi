@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AldurSoft.WurmApi.Modules.Events.Public
+namespace AldursLab.WurmApi.Modules.Events.Public
 {
     interface IEventInvoker
     {

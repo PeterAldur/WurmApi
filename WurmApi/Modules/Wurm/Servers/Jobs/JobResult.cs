@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers.Jobs
+namespace AldursLab.WurmApi.Modules.Wurm.Servers.Jobs
 {
     class JobResult
     {

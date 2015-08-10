@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Events.Internal
+namespace AldursLab.WurmApi.Modules.Events.Internal
 {
     class InternalEventImpl : InternalEvent
     {

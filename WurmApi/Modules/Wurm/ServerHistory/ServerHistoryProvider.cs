@@ -3,14 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using AldursLab.Essentials;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory;
-using AldurSoft.WurmApi.Modules.Wurm.LogsMonitor;
-using AldurSoft.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerHistory
+namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     class ServerHistoryProvider : IDisposable
     {

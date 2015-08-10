@@ -2,12 +2,11 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Characters
+namespace AldursLab.WurmApi.Modules.Wurm.Characters
 {
     class WurmCharacter : IWurmCharacter, IDisposable
     {

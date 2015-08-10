@@ -1,9 +1,9 @@
 using System;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.JobRunning;
+using AldursLab.WurmApi.JobRunning;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
     class ScanJobExecutor : JobExecutor<LogSearchParameters, ScanResult>
     {

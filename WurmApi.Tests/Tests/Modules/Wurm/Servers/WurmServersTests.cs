@@ -6,13 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.Essentials;
 using AldursLab.Testing;
-using AldurSoft.WurmApi.Modules.Networking;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Modules.Networking;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
 {
     [TestFixture]
     class WurmServersTests : WurmTests

@@ -1,7 +1,7 @@
 ﻿using System;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     public class MonthlyHeuristicsExtractorFactory
     {

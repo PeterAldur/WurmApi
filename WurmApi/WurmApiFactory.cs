@@ -1,8 +1,8 @@
 using System;
-using AldurSoft.WurmApi.Modules.Wurm.InstallDirectory;
+using AldursLab.WurmApi.Modules.Wurm.InstallDirectory;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Creates new instances of WurmApi systems.

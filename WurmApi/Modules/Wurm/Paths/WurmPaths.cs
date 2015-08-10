@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Paths
+namespace AldursLab.WurmApi.Modules.Wurm.Paths
 {
     public class WurmPaths : IWurmPaths
     {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory;
-using AldurSoft.WurmApi.Modules.Wurm.ServerHistory.Jobs;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory.Jobs;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerHistory
+namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     class JobExecutor : JobExecutor<object, ServerName>
     {

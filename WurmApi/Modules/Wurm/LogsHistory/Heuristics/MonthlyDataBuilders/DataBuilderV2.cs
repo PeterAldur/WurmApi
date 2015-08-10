@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders
 {
     class DataBuilderV2 : IMonthlyHeuristicsDataBuilder
     {

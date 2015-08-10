@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
     public class ScanResult
     {

@@ -1,9 +1,8 @@
 using System;
-using System.Threading;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
     internal class LogsScannerFactory
     {

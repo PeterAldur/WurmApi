@@ -1,4 +1,4 @@
-﻿namespace AldurSoft.WurmApi
+﻿namespace AldursLab.WurmApi
 {
     public abstract class ServerGroup
     {

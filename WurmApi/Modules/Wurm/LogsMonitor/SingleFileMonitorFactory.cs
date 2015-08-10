@@ -1,7 +1,7 @@
 using System;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     public class SingleFileMonitorFactory
     {

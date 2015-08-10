@@ -6,8 +6,8 @@
     <ProjectGuid>{D5FCD526-1C19-410F-8CE4-2B4C4C5B12CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AldurSoft.WurmApi.Tests</RootNamespace>
-    <AssemblyName>AldurSoft.WurmApi.Tests</AssemblyName>
+    <RootNamespace>AldursLab.WurmApi.Tests</RootNamespace>
+    <AssemblyName>AldursLab.WurmApi.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -178,6 +178,9 @@
     <Content Include="Resources\TestPaksZipped\WurmServerTests-wurmdir.7z">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="WebTest1.webtest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\autorun.txt" />

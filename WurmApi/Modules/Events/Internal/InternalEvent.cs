@@ -1,4 +1,4 @@
-﻿namespace AldurSoft.WurmApi.Modules.Events.Internal
+﻿namespace AldursLab.WurmApi.Modules.Events.Internal
 {
     public abstract class InternalEvent
     {

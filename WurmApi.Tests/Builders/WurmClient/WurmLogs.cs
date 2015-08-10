@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace AldurSoft.WurmApi.Tests.Builders.WurmClient
+namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {
     class WurmLogs
     {

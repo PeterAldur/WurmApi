@@ -1,8 +1,8 @@
 using System;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Public;
 
-namespace AldurSoft.WurmApi.Modules.Events.Internal
+namespace AldursLab.WurmApi.Modules.Events.Internal
 {
     interface IInternalEventInvoker : IEventInvoker
     {

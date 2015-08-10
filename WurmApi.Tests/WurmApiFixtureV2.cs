@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using AldursLab.Testing;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Tests.Builders;
-using AldurSoft.WurmApi.Tests.Builders.WurmClient;
+using AldursLab.WurmApi.Tests.Builders;
+using AldursLab.WurmApi.Tests.Builders.WurmClient;
 using Telerik.JustMock;
 
-namespace AldurSoft.WurmApi.Tests
+namespace AldursLab.WurmApi.Tests
 {
     class WurmApiFixtureV2
     {

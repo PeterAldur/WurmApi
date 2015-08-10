@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using AldurSoft.WurmApi.Tests.Helpers;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Utility;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.UnitTests.Utility
+namespace AldursLab.WurmApi.Tests.UnitTests.Utility
 {
     public class SignallizableThreadedOperationTests : AssertionHelper
     {

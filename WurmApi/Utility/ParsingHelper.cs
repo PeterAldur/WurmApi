@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace AldurSoft.WurmApi.Utility
+namespace AldursLab.WurmApi.Utility
 {
     public static class ParsingHelper
     {

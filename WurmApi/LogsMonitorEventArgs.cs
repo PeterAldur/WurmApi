@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     public class LogsMonitorEventArgs : EventArgs
     {

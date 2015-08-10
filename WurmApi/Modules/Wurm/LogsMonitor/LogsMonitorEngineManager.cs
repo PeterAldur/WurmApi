@@ -3,12 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using AldursLab.Essentials.Extensions.DotNet;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Public;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Public;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class LogsMonitorEngineManager : IDisposable
     {

@@ -3,9 +3,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     public class WebFeedExtractor
     {

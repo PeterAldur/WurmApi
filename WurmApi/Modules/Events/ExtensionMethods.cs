@@ -8,7 +8,7 @@ using System.Reflection;
 #define WinRT
 #endif
 
-namespace AldurSoft.WurmApi.Modules.Events
+namespace AldursLab.WurmApi.Modules.Events
 {
     /// <summary>
     /// Generic extension methods used by the framework.

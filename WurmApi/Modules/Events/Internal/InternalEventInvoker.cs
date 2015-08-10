@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Events.Internal
+namespace AldursLab.WurmApi.Modules.Events.Internal
 {
     class InternalEventInvoker : IInternalEventInvoker, IDisposable
     {

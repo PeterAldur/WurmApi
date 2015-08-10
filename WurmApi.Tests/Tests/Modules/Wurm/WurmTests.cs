@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Tests.Builders.WurmClient;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Tests.Builders.WurmClient;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm
 {
     public abstract class WurmTests : TestsBase
     {

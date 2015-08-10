@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.Essentials.Extensions;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Events.Public
+namespace AldursLab.WurmApi.Modules.Events.Public
 {
     class PublicEventInvoker : IPublicEventInvoker, IDisposable
     {

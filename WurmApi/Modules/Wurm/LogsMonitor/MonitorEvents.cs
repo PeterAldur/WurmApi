@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class MonitorEvents
     {

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AldursLab.Testing;
-using AldurSoft.WurmApi.Modules.Wurm.LogDefinitions;
-using AldurSoft.WurmApi.Modules.Wurm.LogFiles;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Modules.Wurm.LogDefinitions;
+using AldursLab.WurmApi.Modules.Wurm.LogFiles;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
+using AldursLab.WurmApi.Utility;
 using NUnit.Framework;
 using Telerik.JustMock;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
 {
     [TestFixture]
     class MonthlyHeuristicsExtractorTests : WurmApiFixtureBase

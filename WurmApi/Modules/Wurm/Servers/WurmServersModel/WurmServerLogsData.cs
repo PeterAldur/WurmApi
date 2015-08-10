@@ -1,4 +1,4 @@
-﻿namespace AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel
+﻿namespace AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel
 {
     public class WurmServerLogsData
     {

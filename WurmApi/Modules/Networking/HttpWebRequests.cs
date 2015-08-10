@@ -1,9 +1,9 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Networking
+namespace AldursLab.WurmApi.Modules.Networking
 {
     public class HttpWebRequests : IHttpWebRequests
     {

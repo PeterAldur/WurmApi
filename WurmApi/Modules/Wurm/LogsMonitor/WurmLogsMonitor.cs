@@ -5,15 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.Essentials.Extensions.DotNet;
 using AldursLab.Essentials.Extensions.DotNet.Collections.Generic;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Modules.Events.Public;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class WurmLogsMonitor : IWurmLogsMonitor, IDisposable, IHandle<CharacterDirectoriesChanged>, IWurmLogsMonitorInternal
     {

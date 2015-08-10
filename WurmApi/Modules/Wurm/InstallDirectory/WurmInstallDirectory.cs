@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Serialization;
 using Microsoft.Win32;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.InstallDirectory
+namespace AldursLab.WurmApi.Modules.Wurm.InstallDirectory
 {
     public class WurmInstallDirectory : IWurmInstallDirectory
     {

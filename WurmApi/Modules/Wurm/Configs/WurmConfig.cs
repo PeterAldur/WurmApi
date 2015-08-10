@@ -1,16 +1,11 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Security.Cryptography;
-using System.Threading;
 using AldursLab.Essentials.Extensions.DotNet;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events.Public;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Configs
+namespace AldursLab.WurmApi.Modules.Wurm.Configs
 {
     /// <summary>
     /// If loading config values fails, some or all properties will be null / default.

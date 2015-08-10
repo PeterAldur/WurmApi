@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace AldurSoft.WurmApi.Tests.Builders.WurmClient
+namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {
     class WurmConfig
     {

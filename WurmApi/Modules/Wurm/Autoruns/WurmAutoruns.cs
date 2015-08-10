@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Autoruns
+namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
 {
     public class WurmAutoruns : IWurmAutoruns
     {

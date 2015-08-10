@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using AldursLab.PersistentObjects;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsHistory.Heuristics
+namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     public class MonthlyLogFilesHeuristics
     {

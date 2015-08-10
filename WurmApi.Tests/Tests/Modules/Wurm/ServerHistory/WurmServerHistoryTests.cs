@@ -4,10 +4,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.ServerHistory
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.ServerHistory
 {
     [TestFixture]
     class WurmServerHistoryTests : WurmTests

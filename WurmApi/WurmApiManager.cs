@@ -1,28 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AldursLab.Essentials.Eventing;
-using AldurSoft.WurmApi.Infrastructure;
-using AldurSoft.WurmApi.JobRunning;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Public;
-using AldurSoft.WurmApi.Modules.Networking;
-using AldurSoft.WurmApi.Modules.Wurm.Autoruns;
-using AldurSoft.WurmApi.Modules.Wurm.CharacterDirectories;
-using AldurSoft.WurmApi.Modules.Wurm.Characters;
-using AldurSoft.WurmApi.Modules.Wurm.ConfigDirectories;
-using AldurSoft.WurmApi.Modules.Wurm.Configs;
-using AldurSoft.WurmApi.Modules.Wurm.LogDefinitions;
-using AldurSoft.WurmApi.Modules.Wurm.LogFiles;
-using AldurSoft.WurmApi.Modules.Wurm.LogsHistory;
-using AldurSoft.WurmApi.Modules.Wurm.LogsMonitor;
-using AldurSoft.WurmApi.Modules.Wurm.Paths;
-using AldurSoft.WurmApi.Modules.Wurm.ServerHistory;
-using AldurSoft.WurmApi.Modules.Wurm.Servers;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Infrastructure;
+using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Modules.Networking;
+using AldursLab.WurmApi.Modules.Wurm.Autoruns;
+using AldursLab.WurmApi.Modules.Wurm.CharacterDirectories;
+using AldursLab.WurmApi.Modules.Wurm.Characters;
+using AldursLab.WurmApi.Modules.Wurm.ConfigDirectories;
+using AldursLab.WurmApi.Modules.Wurm.Configs;
+using AldursLab.WurmApi.Modules.Wurm.LogDefinitions;
+using AldursLab.WurmApi.Modules.Wurm.LogFiles;
+using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Modules.Wurm.Paths;
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
+using AldursLab.WurmApi.Modules.Wurm.Servers;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Host of all WurmApi services.

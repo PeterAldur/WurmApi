@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     public class WurmApiDataDirectory
     {

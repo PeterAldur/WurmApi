@@ -1,6 +1,6 @@
 using System;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Provides means of observing currently active wurm logs and obtain notificions of new events.

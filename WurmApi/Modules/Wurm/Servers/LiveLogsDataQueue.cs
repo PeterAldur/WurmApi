@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using AldurSoft.WurmApi.Modules.Wurm.LogsMonitor;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class LiveLogsDataQueue : IDisposable
     {

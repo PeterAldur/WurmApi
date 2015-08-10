@@ -1,7 +1,6 @@
-﻿using AldurSoft.WurmApi.Modules.Wurm.LogDefinitions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.LogDefinitions
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogDefinitions
 {
     public class WurmLogDefinitionsTests : WurmTests
     {

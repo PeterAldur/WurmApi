@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using AldurSoft.WurmApi.Modules.Networking;
+using AldursLab.WurmApi.Modules.Networking;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     public interface IHttpWebRequests
     {

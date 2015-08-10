@@ -1,8 +1,8 @@
 ﻿using System;
-using AldurSoft.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class CharacterLogsMonitorEngineFactory
     {

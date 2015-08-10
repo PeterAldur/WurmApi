@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     sealed class PmSubscriptionKey : IEquatable<PmSubscriptionKey>
     {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Tests.Builders.WurmClient;
-using AldurSoft.WurmApi.Tests.Helpers;
+﻿using System.Linq;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.CharacterDirectories
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.CharacterDirectories
 {
     public class WurmCharacterDirectoriesTests : WurmTests
     {

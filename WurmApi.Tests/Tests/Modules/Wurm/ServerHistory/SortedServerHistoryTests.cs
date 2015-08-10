@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AldursLab.PersistentObjects;
 using AldursLab.PersistentObjects.FlatFiles;
 using AldursLab.Testing;
-using AldurSoft.WurmApi.Modules.Wurm.ServerHistory;
-using AldurSoft.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
-
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.WurmServerHistoryImpl
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.ServerHistory
 {
     [TestFixture]
     class SortedServerHistoryTests : AssertionHelper
@@ -24,7 +19,7 @@ namespace AldurSoft.WurmApi.Tests.Tests.WurmServerHistoryImpl
         {
             DataDir = TempDirectoriesFactory.CreateEmpty();
             var lib = new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(DataDir.AbsolutePath));
-            System = new SortedServerHistory(lib.DefaultCollection.GetObject<ServerHistory>("default"));
+            System = new SortedServerHistory(lib.DefaultCollection.GetObject<WurmApi.Modules.Wurm.ServerHistory.PersistentModel.ServerHistory>("default"));
         }
 
         [Test]

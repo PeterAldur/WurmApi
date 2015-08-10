@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using AldurSoft.WurmApi.Utility;
+using AldursLab.WurmApi.Utility;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.LogFiles
+namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 {
     public class LogFileInfoFactory
     {

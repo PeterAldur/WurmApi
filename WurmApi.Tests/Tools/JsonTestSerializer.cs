@@ -2,7 +2,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace AldurSoft.WurmApi.Tests.Tools
+namespace AldursLab.WurmApi.Tests.Tools
 {
     public class JsonTestSerializer<T>
     {

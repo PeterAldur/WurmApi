@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-namespace AldurSoft.WurmApi
+namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Provides means of obtaining wurm servers information.

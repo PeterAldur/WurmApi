@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using AldursLab.PersistentObjects;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.ServerHistory.PersistentModel
+namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel
 {
     public class ServerHistory : Entity
     {

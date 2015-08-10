@@ -1,8 +1,8 @@
 ﻿using System;
-using AldurSoft.WurmApi.Modules.Wurm.Servers.WurmServersModel;
+using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Servers
+namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class LiveLogsDataForCharacter
     {

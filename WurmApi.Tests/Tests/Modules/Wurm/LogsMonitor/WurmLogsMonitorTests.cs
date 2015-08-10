@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using AldursLab.Essentials;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
 {
     [TestFixture]
     class WurmLogsMonitorTests : WurmTests

@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using AldurSoft.WurmApi.Modules.Events;
-using AldurSoft.WurmApi.Modules.Events.Internal;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Tests.Builders;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Modules.Events;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Tests.Builders;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 using Telerik.JustMock;
 
-namespace AldurSoft.WurmApi.Tests.UnitTests.Events
+namespace AldursLab.WurmApi.Tests.UnitTests.Events
 {
     public class InternalEventInvokerTests : AssertionHelper
     {

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
-namespace AldurSoft.WurmApi.Modules.Events
+namespace AldursLab.WurmApi.Modules.Events
 {
     class ThreadPoolMarshaller : IEventMarshaller
     {

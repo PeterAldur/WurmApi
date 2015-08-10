@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
 
-namespace AldurSoft.WurmApi.Tests.Builders.WurmClient
+namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {
     class WurmClientMock : IDisposable
     {

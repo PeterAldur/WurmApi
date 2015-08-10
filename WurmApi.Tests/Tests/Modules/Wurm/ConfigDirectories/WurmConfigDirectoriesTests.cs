@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using AldurSoft.WurmApi.Modules.Events.Internal.Messages;
-using AldurSoft.WurmApi.Tests.Helpers;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 
-namespace AldurSoft.WurmApi.Tests.Tests.Modules.Wurm.ConfigDirectories
+namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.ConfigDirectories
 {
     public class WurmConfigDirectoriesTests : WurmTests
     {

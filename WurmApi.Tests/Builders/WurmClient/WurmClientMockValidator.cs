@@ -1,4 +1,4 @@
-namespace AldurSoft.WurmApi.Tests.Builders.WurmClient
+namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {
     static class WurmClientMockValidator
     {

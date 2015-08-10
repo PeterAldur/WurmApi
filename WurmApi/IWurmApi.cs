@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AldursLab.Essentials.Eventing;
-using JetBrains.Annotations;
-
-namespace AldurSoft.WurmApi
+﻿namespace AldursLab.WurmApi
 {
     /// <summary>
     /// Provides an API to work with many Wurm Online related data and functions.

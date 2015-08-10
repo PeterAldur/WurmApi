@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AldurSoft.WurmApi.Modules.Events
+namespace AldursLab.WurmApi.Modules.Events
 {
     class SimpleMarshaller : IEventMarshaller
     {

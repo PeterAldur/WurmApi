@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AldurSoft.WurmApi.Modules.Wurm.Configs
+namespace AldursLab.WurmApi.Modules.Wurm.Configs
 {
     class ConfigWriter
     {
