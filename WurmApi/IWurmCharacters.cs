@@ -17,5 +17,13 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         /// <exception cref="Exception">Character could not be initialized.</exception>
         IWurmCharacter Get(CharacterName name);
+
+        /// <summary>
+        /// Returns character matching the name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Character could not be initialized.</exception>
+        IWurmCharacter Get(string name);
     }
 }

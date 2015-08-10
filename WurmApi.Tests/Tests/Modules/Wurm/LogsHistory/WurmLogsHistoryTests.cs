@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
     [TestFixture]
     class WurmLogsHistoryTests : WurmTests
     {
-        public IWurmLogsHistory System { get { return Fixture.WurmApiManager.WurmLogsHistory; } }
+        public IWurmLogsHistory System { get { return Fixture.WurmApiManager.LogsHistory; } }
 
         [SetUp]
         public void Setup()

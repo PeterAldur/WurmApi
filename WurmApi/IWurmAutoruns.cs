@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi
         /// Commands are added only if they do not yet exist.
         /// </summary>
         /// <param name="command"></param>
-        void AppendCommandToAllAutoruns(string command);
+        void MergeCommandToAllAutoruns(string command);
 
         /// <summary>
         /// Scans all autorun files and verifies each has specified command.

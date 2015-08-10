@@ -77,6 +77,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             }
         }
 
+        public IWurmCharacter Get([NotNull] string name)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            return Get(new CharacterName(name));
+        }
+
         WurmCharacter Create(CharacterName name)
         {
             if (characterDirectories.Exists(name))

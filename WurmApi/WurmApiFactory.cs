@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using AldursLab.Essentials.Extensions.DotNet.Reflection;
 using AldursLab.WurmApi.Modules.Wurm.InstallDirectory;
 using JetBrains.Annotations;
 
@@ -15,8 +17,9 @@ namespace AldursLab.WurmApi
         /// Always call Dispose on the Manager, before closing app or dropping the instance. This will ensure proper cleanup and internal cache consistency.
         /// Not calling Dispose without terminating hosting process, may result in resource leaks.
         /// </summary>
-        /// <param name="dataDirAbsolutePath">
-        /// Absolute directory path, where this instance of WurmApiManager can store data caches.
+        /// <param name="dataDirPath">
+        /// Directory path, where this instance of WurmApiManager can store data caches. Defaults to \WurmApi in the library DLL location. 
+        /// If relative path is provided, it will also be in relation to DLL location.
         /// </param>
         /// <param name="logger">
         /// An optional implementation of ILogger, where all WurmApi errors and warnings can be forwarded. 
@@ -33,10 +36,18 @@ namespace AldursLab.WurmApi
         /// Defaults to autodetection.
         /// </param>
         /// <returns></returns>
-        public static WurmApiManager Create([NotNull] string dataDirAbsolutePath, ILogger logger = null,
+        public static IWurmApi Create(string dataDirPath = null, ILogger logger = null,
             IEventMarshaller eventMarshaller = null, IWurmInstallDirectory installDirectory = null)
         {
-            if (dataDirAbsolutePath == null) throw new ArgumentNullException("dataDirAbsolutePath");
+            if (dataDirPath == null)
+            {
+                dataDirPath = "WurmApi";
+            }
+            if (!Path.IsPathRooted(dataDirPath))
+            {
+                var codebase = typeof(WurmApiFactory).Assembly.GetAssemblyDllDirectoryAbsolutePath();
+                dataDirPath = Path.Combine(codebase, dataDirPath);
+            }
             if (logger == null)
             {
                 logger = new LoggerStub();
@@ -45,7 +56,7 @@ namespace AldursLab.WurmApi
             {
                 installDirectory = new WurmInstallDirectory();
             }
-            return new WurmApiManager(new WurmApiDataDirectory(dataDirAbsolutePath, true),
+            return new WurmApiManager(new WurmApiDataDirectory(dataDirPath, true),
                 installDirectory,
                 logger,
                 eventMarshaller);

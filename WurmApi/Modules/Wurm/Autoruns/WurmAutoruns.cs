@@ -26,7 +26,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
             this.logger = logger;
         }
 
-        public void AppendCommandToAllAutoruns(string command)
+        public void MergeCommandToAllAutoruns(string command)
         {
             lock (locker)
             {

@@ -7,7 +7,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Configs
 {
     public class WurmConfigsTests : WurmTests
     {
-        public IWurmConfigs System { get { return Fixture.WurmApiManager.WurmConfigs; } }
+        public IWurmConfigs System { get { return Fixture.WurmApiManager.Configs; } }
         EventAwaiter<EventArgs> awaiter;
         Builders.WurmClient.WurmConfig configMock;
 

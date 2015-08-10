@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
     [TestFixture]
     class WurmServersTests : WurmTests
     {
-        protected IWurmServers System { get { return Fixture.WurmApiManager.WurmServers; } }
+        protected IWurmServers System { get { return Fixture.WurmApiManager.Servers; } }
         public StubbableTime.StubScope Timescope;
         protected readonly CharacterName TestGuyCharacterName = new CharacterName("Testguy");
         protected DateTime MockedNow = new DateTime(2014, 12, 15, 0, 0, 0, DateTimeKind.Local);

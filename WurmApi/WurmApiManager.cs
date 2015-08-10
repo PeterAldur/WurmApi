@@ -130,13 +130,13 @@ namespace AldursLab.WurmApi
                     taskManager));
 
             HttpWebRequests = httpWebRequests;
-            WurmAutoruns = autoruns;
-            WurmCharacters = characters;
-            WurmConfigs = wurmConfigs;
-            WurmLogDefinitions = logDefinitions;
-            WurmLogsHistory = logsHistory;
-            WurmLogsMonitor = logsMonitor;
-            WurmServers = wurmServers;
+            Autoruns = autoruns;
+            Characters = characters;
+            Configs = wurmConfigs;
+            LogDefinitions = logDefinitions;
+            LogsHistory = logsHistory;
+            LogsMonitor = logsMonitor;
+            Servers = wurmServers;
             WurmLogFiles = logFiles;
 
             // internal systems
@@ -147,13 +147,13 @@ namespace AldursLab.WurmApi
             InternalEventAggregator = internalEventAggregator;
         }
 
-        public IWurmAutoruns WurmAutoruns { get; private set; }
-        public IWurmCharacters WurmCharacters { get; private set; }
-        public IWurmConfigs WurmConfigs { get; private set; }
-        public IWurmLogDefinitions WurmLogDefinitions { get; private set; }
-        public IWurmLogsHistory WurmLogsHistory { get; private set; }
-        public IWurmLogsMonitor WurmLogsMonitor { get; private set; }
-        public IWurmServers WurmServers { get; private set; }
+        public IWurmAutoruns Autoruns { get; private set; }
+        public IWurmCharacters Characters { get; private set; }
+        public IWurmConfigs Configs { get; private set; }
+        public IWurmLogDefinitions LogDefinitions { get; private set; }
+        public IWurmLogsHistory LogsHistory { get; private set; }
+        public IWurmLogsMonitor LogsMonitor { get; private set; }
+        public IWurmServers Servers { get; private set; }
 
         public void Dispose()
         {
@@ -184,11 +184,11 @@ namespace AldursLab.WurmApi
         internal IWurmConfigDirectories WurmConfigDirectories { get; private set; }
         internal IInternalEventAggregator InternalEventAggregator { get; private set; }
         internal IHttpWebRequests HttpWebRequests { get; private set; }
-        public IWurmLogFiles WurmLogFiles { get; private set; }
+        internal IWurmLogFiles WurmLogFiles { get; private set; }
     }
 
     internal class WurmApiTuningParams
     {
-        public static TimeSpan PublicEventMarshallerDelay = TimeSpan.FromMilliseconds(500);
+        public static TimeSpan PublicEventMarshallerDelay = TimeSpan.FromMilliseconds(100);
     }
 }
