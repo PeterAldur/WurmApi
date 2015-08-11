@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Tests.Helpers
 {
-    class Subscriber<TMessage> : Essentials.Eventing.IHandle<TMessage> where TMessage : Message
+    class Subscriber<TMessage> : IHandle<TMessage> where TMessage : Message
     {
         readonly List<TMessage> receivedMessages = new List<TMessage>();
         readonly object locker = new object();

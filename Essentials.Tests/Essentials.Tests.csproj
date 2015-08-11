@@ -56,7 +56,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Eventing\EventBusTests\UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Csv\CsvResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -84,6 +83,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\CsvOutput1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Eventing\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
