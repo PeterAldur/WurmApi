@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AldursLab.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel
 {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AldursLab.Testing;
 using AldursLab.WurmApi.Modules.Wurm.LogDefinitions;
 using AldursLab.WurmApi.Modules.Wurm.LogFiles;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
+using AldursLab.WurmApi.Tests.TempDirs;
 using AldursLab.WurmApi.Utility;
 using NUnit.Framework;
 using Telerik.JustMock;

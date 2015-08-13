@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using AldursLab.Essentials;
 using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 

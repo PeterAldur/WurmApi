@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
-using AldursLab.Essentials;
 using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 

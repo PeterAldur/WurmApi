@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using AldursLab.Essentials.Extensions.DotNet.Reflection;
+using AldursLab.WurmApi.Extensions.DotNet.Reflection;
 using AldursLab.WurmApi.Modules.Wurm.InstallDirectory;
 using JetBrains.Annotations;
 

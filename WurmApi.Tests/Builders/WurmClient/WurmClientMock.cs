@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AldursLab.Testing;
+using AldursLab.WurmApi.Tests.TempDirs;
 using JetBrains.Annotations;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;

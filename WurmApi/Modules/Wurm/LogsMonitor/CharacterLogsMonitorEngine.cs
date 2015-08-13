@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AldursLab.Essentials;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using JetBrains.Annotations;

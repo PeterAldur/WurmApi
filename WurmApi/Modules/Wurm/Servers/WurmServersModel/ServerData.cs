@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AldursLab.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects;
 using Newtonsoft.Json;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel

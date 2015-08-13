@@ -1,6 +1,6 @@
 using System;
-using AldursLab.PersistentObjects;
 using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.PersistentObjects;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory

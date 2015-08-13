@@ -56,6 +56,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterName.cs" />
+    <Compile Include="Extensions\ActionExtensions.cs" />
+    <Compile Include="Extensions\DotNet\AttributeExtensions.cs" />
+    <Compile Include="Extensions\DotNet\Collections\Generic\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\DotNet\Collections\Generic\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\DotNet\DateTimeExt.cs" />
+    <Compile Include="Extensions\DotNet\EnumExtensions.cs" />
+    <Compile Include="Extensions\DotNet\EventHandlerExtensions.cs" />
+    <Compile Include="Extensions\DotNet\IO\PathExtensions.cs" />
+    <Compile Include="Extensions\DotNet\IO\StreamExtensions.cs" />
+    <Compile Include="Extensions\DotNet\ReflectionHelper.cs" />
+    <Compile Include="Extensions\DotNet\Reflection\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\DotNet\Reflection\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\DotNet\StringExtensions.cs" />
+    <Compile Include="Extensions\DotNet\TimeSpanExtensions.cs" />
+    <Compile Include="FileSystem\DirectoryOps.cs" />
+    <Compile Include="FileSystem\TransactionalFileOps.cs" />
     <Compile Include="IEventMarshaller.cs" />
     <Compile Include="JobRunning\TaskManager.cs" />
     <Compile Include="Modules\Events\Public\IEventInvoker.cs" />
@@ -135,11 +151,27 @@
     <Compile Include="Modules\Wurm\Servers\Jobs\CurrentWurmDateTimeJob.cs" />
     <Compile Include="Modules\Wurm\Servers\Jobs\Job.cs" />
     <Compile Include="Modules\Wurm\Servers\Jobs\JobResult.cs" />
+    <Compile Include="PersistentObjects\Entity.cs" />
+    <Compile Include="PersistentObjects\ErrorContext.cs" />
+    <Compile Include="PersistentObjects\Exceptions.cs" />
+    <Compile Include="PersistentObjects\FlatFilesPersistenceStrategy.cs" />
+    <Compile Include="PersistentObjects\IPersistenceStrategy.cs" />
+    <Compile Include="PersistentObjects\IPersistent.cs" />
+    <Compile Include="PersistentObjects\IPersistentCollection.cs" />
+    <Compile Include="PersistentObjects\IPersistentCollectionsLibrary.cs" />
+    <Compile Include="PersistentObjects\ISerializationStrategy.cs" />
+    <Compile Include="PersistentObjects\JsonSerializationStrategy.cs" />
+    <Compile Include="PersistentObjects\Persistent.cs" />
+    <Compile Include="PersistentObjects\PersistentCollection.cs" />
+    <Compile Include="PersistentObjects\PersistentCollectionsLibrary.cs" />
+    <Compile Include="PersistentObjects\PersistentEntityBase.cs" />
+    <Compile Include="PersistentObjects\PersistentObjectValidator.cs" />
     <Compile Include="ServerGroup.cs" />
     <Compile Include="ServerName.cs" />
     <Compile Include="SkillGainRate.cs" />
     <Compile Include="SpecificCharacterSearchParameters.cs" />
     <Compile Include="Modules\Events\SimpleMarshaller.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Utility\ExceptionEventArgs.cs" />
     <Compile Include="Utility\FileSystemChangeMonitor.cs" />
     <Compile Include="Utility\PersObjErrorHandlingStrategy.cs" />
@@ -224,20 +256,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logging\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Essentials\Essentials.csproj">
-      <Project>{e7e145ed-1938-4c09-b432-dc7d7a2d5ddb}</Project>
-      <Name>Essentials</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistentObjects.FlatFiles\PersistentObjects.FlatFiles.csproj">
-      <Project>{6322fd00-9aaa-40d9-8c6f-515cc4290b45}</Project>
-      <Name>PersistentObjects.FlatFiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistentObjects\PersistentObjects.csproj">
-      <Project>{0962a106-b1b2-4e21-9931-81d68a98ed37}</Project>
-      <Name>PersistentObjects</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

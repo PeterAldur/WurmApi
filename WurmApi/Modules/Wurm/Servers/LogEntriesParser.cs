@@ -1,6 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
-using AldursLab.Essentials.Extensions.DotNet;
+using AldursLab.WurmApi.Extensions.DotNet;
 using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Servers

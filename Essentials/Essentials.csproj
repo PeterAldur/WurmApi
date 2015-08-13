@@ -46,30 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Csv\CsvBuilderBase.cs" />
-    <Compile Include="Csv\EnumerableToCsvBuilder.cs" />
-    <Compile Include="DataAccess\EntityNotFoundException.cs" />
-    <Compile Include="DataAccess\IChangeTrackedRepository.cs" />
-    <Compile Include="Eventing\EventArgs.cs" />
-    <Compile Include="Extensions\ActionExtensions.cs" />
-    <Compile Include="Extensions\DotNet\AttributeExtensions.cs" />
-    <Compile Include="Extensions\DotNet\Collections\Generic\DictionaryExtensions.cs" />
-    <Compile Include="Extensions\DotNet\Collections\Generic\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\DotNet\DateTimeExt.cs" />
-    <Compile Include="Extensions\DotNet\Drawing\HslColor.cs" />
-    <Compile Include="Extensions\DotNet\EnumExtensions.cs" />
-    <Compile Include="Extensions\DotNet\EventHandlerExtensions.cs" />
-    <Compile Include="Extensions\DotNet\IO\StreamExtensions.cs" />
-    <Compile Include="Extensions\DotNet\IO\PathExtensions.cs" />
-    <Compile Include="Extensions\DotNet\ReflectionHelper.cs" />
-    <Compile Include="Extensions\DotNet\Reflection\AssemblyExtensions.cs" />
-    <Compile Include="Extensions\DotNet\Reflection\MemberInfoExtensions.cs" />
-    <Compile Include="Extensions\DotNet\StringExtensions.cs" />
-    <Compile Include="Extensions\DotNet\TimeSpanExtensions.cs" />
-    <Compile Include="FileSystem\DirectoryOps.cs" />
-    <Compile Include="FileSystem\TransactionalFileOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Time.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

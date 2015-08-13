@@ -2,9 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
-using AldursLab.Essentials;
-using AldursLab.PersistentObjects;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
+using AldursLab.WurmApi.PersistentObjects;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
@@ -25,7 +24,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 
         private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1,1);
 
-        public CharacterMonthlyLogHeuristics(AldursLab.PersistentObjects.IPersistent<WurmCharacterLogsEntity> persistentData,
+        public CharacterMonthlyLogHeuristics(IPersistent<WurmCharacterLogsEntity> persistentData,
             MonthlyHeuristicsExtractorFactory monthlyHeuristicsExtractorFactory,
             IWurmCharacterLogFiles wurmCharacterLogFiles)
         {

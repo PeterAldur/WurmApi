@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AldursLab.PersistentObjects;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel;
+using AldursLab.WurmApi.PersistentObjects;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics

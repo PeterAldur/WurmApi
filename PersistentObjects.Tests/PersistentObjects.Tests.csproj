@@ -60,36 +60,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PersistentCollectionsLibraryTests\CustomDeserializationErrorHandler.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\Tests\DeserializationErrorHandlingTests.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\Data\Dtos.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\Tests\MigrationsTests.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\Tests\PersistenceAndLoadingTests.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\Data\PersistentData.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\TestsBase.cs" />
-    <Compile Include="PersistentCollectionsLibraryTests\Data\TestValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Essentials\Essentials.csproj">
-      <Project>{e7e145ed-1938-4c09-b432-dc7d7a2d5ddb}</Project>
-      <Name>Essentials</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistentObjects.FlatFiles\PersistentObjects.FlatFiles.csproj">
-      <Project>{6322fd00-9aaa-40d9-8c6f-515cc4290b45}</Project>
-      <Name>PersistentObjects.FlatFiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistentObjects\PersistentObjects.csproj">
-      <Project>{0962a106-b1b2-4e21-9931-81d68a98ed37}</Project>
-      <Name>PersistentObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Testing\Testing.csproj">
-      <Project>{a0ce70f0-6f13-47f5-9b61-69f6be1ab082}</Project>
-      <Name>Testing</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

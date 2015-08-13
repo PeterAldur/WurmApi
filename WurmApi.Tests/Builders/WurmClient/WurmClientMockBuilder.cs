@@ -1,4 +1,4 @@
-﻿using AldursLab.Testing;
+﻿using AldursLab.WurmApi.Tests.TempDirs;
 
 namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {

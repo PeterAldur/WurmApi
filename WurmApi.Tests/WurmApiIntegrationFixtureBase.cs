@@ -1,5 +1,5 @@
 ﻿using System;
-using AldursLab.Testing;
+using AldursLab.WurmApi.Tests.TempDirs;
 using NUnit.Framework;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;

@@ -1,5 +1,5 @@
 ﻿using System;
-using AldursLab.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Utility

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using AldursLab.Essentials.Extensions.DotNet;
+using AldursLab.WurmApi.Extensions.DotNet;
 
 namespace AldursLab.WurmApi.Utility
 {

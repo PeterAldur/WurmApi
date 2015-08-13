@@ -2,7 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using AldursLab.Essentials.Extensions.DotNet;
+using AldursLab.WurmApi.Extensions.DotNet;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Public;
 using JetBrains.Annotations;

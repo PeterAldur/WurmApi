@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AldursLab.Essentials.Extensions;
+using AldursLab.WurmApi.Extensions;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Events.Public

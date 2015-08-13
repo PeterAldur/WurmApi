@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using AldursLab.Essentials;
 using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules

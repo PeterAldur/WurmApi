@@ -109,18 +109,31 @@
     <Compile Include="Builders\WurmClient\WurmConfig.cs" />
     <Compile Include="Builders\WurmClient\WurmLogs.cs" />
     <Compile Include="Builders\WurmClient\WurmPlayer.cs" />
+    <Compile Include="TempDirs\DirectoryHandle.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\DummyException.cs" />
     <Compile Include="Helpers\EventAwaiter.cs" />
     <Compile Include="Helpers\LogWriter.cs" />
-    <Compile Include="Helpers\SelfTests\LogWriterTests.cs" />
+    <Compile Include="Tests\LogWriterTests.cs" />
     <Compile Include="Helpers\Subscriber.cs" />
+    <Compile Include="TempDirs\TempDirectoriesFactory.cs" />
+    <Compile Include="TempDirs\TempDirectoriesManager.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\CustomDeserializationErrorHandler.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\Dtos.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\PersistentData.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\TestValues.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\TestsBase.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\Tests\DeserializationErrorHandlingTests.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\Tests\MigrationsTests.cs" />
+    <Compile Include="Tests\PersistentCollectionsLibraryTests\Tests\PersistenceAndLoadingTests.cs" />
+    <Compile Include="Tests\TempDirectoriesTests\UnitTests.cs" />
     <Compile Include="Tests\Modules\TestsBase.cs" />
     <Compile Include="Tests\Modules\Wurm\WurmTests.cs" />
     <Compile Include="Tools\BinaryTestSerializer.cs" />
     <Compile Include="Tools\JsonTestSerializer.cs" />
-    <Compile Include="UnitTests\Events\InternalEventInvokerTests.cs" />
-    <Compile Include="UnitTests\Events\PublicEventInvokerTests.cs" />
-    <Compile Include="UnitTests\Utility\SignallizableThreadedOperationTests.cs" />
+    <Compile Include="Tests\Events\InternalEventInvokerTests.cs" />
+    <Compile Include="Tests\Events\PublicEventInvokerTests.cs" />
+    <Compile Include="Tests\Utility\SignallizableThreadedOperationTests.cs" />
     <Compile Include="Tests\Modules\Wurm\CharacterDirectories\WurmCharacterDirectoriesTests.cs" />
     <Compile Include="Tests\Modules\Wurm\Characters\WurmCharactersTests.cs" />
     <Compile Include="Tests\Modules\Wurm\ConfigDirectories\WurmConfigDirectoriesTests.cs" />
@@ -135,11 +148,21 @@
     <Compile Include="Tests\Modules\Wurm\Servers\WurmServersTests.cs" />
     <Compile Include="WurmApiFixtureBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\WurmDateTimeTests.cs" />
+    <Compile Include="Tests\WurmDateTimeTests.cs" />
     <Compile Include="WurmApiFixtureV2.cs" />
     <Compile Include="WurmApiIntegrationFixtureBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CsvOutput1.txt" />
+    <Content Include="Tests\TempDirectoriesTests\SampleSourceDir\Sample.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x64\7z.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\7z.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Resources\TestPaksZipped\logs-samples-realdata.7z">
@@ -178,6 +201,9 @@
     <Content Include="Resources\TestPaksZipped\WurmServerTests-wurmdir.7z">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Tests\TempDirectoriesTests\SampleZippedDir.7z">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="WebTest1.webtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -623,22 +649,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Essentials\Essentials.csproj">
-      <Project>{e7e145ed-1938-4c09-b432-dc7d7a2d5ddb}</Project>
-      <Name>Essentials</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistentObjects.FlatFiles\PersistentObjects.FlatFiles.csproj">
-      <Project>{6322fd00-9aaa-40d9-8c6f-515cc4290b45}</Project>
-      <Name>PersistentObjects.FlatFiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersistentObjects\PersistentObjects.csproj">
-      <Project>{0962a106-b1b2-4e21-9931-81d68a98ed37}</Project>
-      <Name>PersistentObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Testing\Testing.csproj">
-      <Project>{a0ce70f0-6f13-47f5-9b61-69f6be1ab082}</Project>
-      <Name>Testing</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WurmApi\WurmApi.csproj">
       <Project>{f23b8ad5-5c3b-4c9a-bc11-3577f1cb3272}</Project>
       <Name>WurmApi</Name>
