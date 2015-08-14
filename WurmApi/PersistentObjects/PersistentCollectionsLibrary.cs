@@ -4,7 +4,7 @@ using AldursLab.WurmApi.Extensions.DotNet.Collections.Generic;
 
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public class PersistentCollectionsLibrary : IPersistentCollectionsLibrary
+    class PersistentCollectionsLibrary : IPersistentCollectionsLibrary
     {
         readonly IPersistenceStrategy persistenceStrategy;
         readonly IObjectDeserializationErrorHandlingStrategy deserializationErrorHandlingStrategy;
@@ -76,7 +76,7 @@ namespace AldursLab.WurmApi.PersistentObjects
     /// <summary>
     /// This strategy should be implemented to handle any deserialization errors.
     /// </summary>
-    public interface IObjectDeserializationErrorHandlingStrategy
+    interface IObjectDeserializationErrorHandlingStrategy
     {
         /// <summary>
         /// This method is called, when deserialization-specific error occours during persistent object instantiation.

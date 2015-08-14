@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace AldursLab.WurmApi.Extensions
+namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class ActionExtensions
+    static class ActionExtensions
     {
         public static string MethodInformationToString(this Action eventHandler)
         {

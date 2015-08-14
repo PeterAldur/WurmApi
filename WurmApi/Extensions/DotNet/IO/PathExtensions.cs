@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AldursLab.WurmApi.Extensions.DotNet.IO
 {
-    public static class PathExtensions
+    static class PathExtensions
     {
         public static string CodeBaseLocalPath(this Assembly assembly)
         {

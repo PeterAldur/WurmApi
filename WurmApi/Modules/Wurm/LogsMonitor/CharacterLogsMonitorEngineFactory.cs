@@ -27,7 +27,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             this.internalEventAggregator = internalEventAggregator;
         }
 
-        public virtual CharacterLogsMonitorEngine Create(CharacterName characterName)
+        public CharacterLogsMonitorEngine Create(CharacterName characterName)
         {
             return new CharacterLogsMonitorEngine(characterName, logger, singleFileMonitorFactory, wurmCharacterLogFiles,
                 internalEventAggregator);

@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class EnumExtensions
+    static class EnumExtensions
     {
         public static bool IsDefined<TEnum>(TEnum enumValue)
         {

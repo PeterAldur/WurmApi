@@ -2,21 +2,21 @@
 
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Data
 {
-    public class Dto : Entity
+    class Dto : Entity
     {
         public string Data { get; set; }
 
         public int OldField { get; set; }
     }
 
-    public class DtoClone : Entity
+    class DtoClone : Entity
     {
         public string Data { get; set; }
 
         public int NewField { get; set; }
     }
 
-    public class DtoWithDefaults : Entity
+    class DtoWithDefaults : Entity
     {
         public DtoWithDefaults()
         {

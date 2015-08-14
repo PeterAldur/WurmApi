@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
 {
-    public class WurmAutoruns : IWurmAutoruns
+    class WurmAutoruns : IWurmAutoruns
     {
         readonly IWurmConfigs wurmConfigs;
         readonly IWurmCharacterDirectories wurmCharacterDirectories;

@@ -3,7 +3,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
-    public class SingleFileMonitorFactory
+    class SingleFileMonitorFactory
     {
         private readonly LogFileStreamReaderFactory streamReaderFactory;
         private readonly LogFileParser logFileParser;

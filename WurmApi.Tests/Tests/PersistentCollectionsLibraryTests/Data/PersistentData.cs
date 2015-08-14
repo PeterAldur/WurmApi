@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Data
 {
-    public class PersistentData : PersistentEntityBase<Dto>
+    class PersistentData : PersistentEntityBase<Dto>
     {
         public PersistentData(IPersistent<Dto> persistent) : base(persistent)
         {
@@ -19,7 +19,7 @@ namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Data
         }
     }
 
-    public class PersistentDataWithMigration : PersistentEntityBase<Dto>
+    class PersistentDataWithMigration : PersistentEntityBase<Dto>
     {
         public PersistentDataWithMigration(IPersistent<Dto> persistent)
             : base(persistent)
@@ -43,7 +43,7 @@ namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Data
         }
     }
 
-    public class PersistentDataWithMigrationNoFilter : PersistentEntityBase<Dto>
+    class PersistentDataWithMigrationNoFilter : PersistentEntityBase<Dto>
     {
         public PersistentDataWithMigrationNoFilter(IPersistent<Dto> persistent)
             : base(persistent)

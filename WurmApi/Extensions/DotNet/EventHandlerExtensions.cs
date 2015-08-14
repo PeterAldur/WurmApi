@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class EventHandlerExtensions
+    static class EventHandlerExtensions
     {
         public static string MethodInformationToString<T>(this EventHandler<T> eventHandler) where T : EventArgs
         {

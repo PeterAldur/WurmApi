@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public abstract class PersistentEntityBase<TEntity> where TEntity : Entity, new()
+    abstract class PersistentEntityBase<TEntity> where TEntity : Entity, new()
     {
         readonly IPersistent<TEntity> persistent;
 

@@ -86,7 +86,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             }
         }
 
-        public virtual IWurmServer GetByName(ServerName name)
+        public IWurmServer GetByName(ServerName name)
         {
             if (name == null) throw new ArgumentNullException("name");
 

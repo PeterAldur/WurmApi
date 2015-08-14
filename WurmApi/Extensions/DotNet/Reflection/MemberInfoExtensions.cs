@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace AldursLab.WurmApi.Extensions.DotNet.Reflection
 {
-    public static class MemberInfoExtensions
+    static class MemberInfoExtensions
     {
         /// <summary>
         /// Converts an expression into a <see cref="MemberInfo"/>.

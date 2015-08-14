@@ -6,7 +6,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
-    public class WebFeedExtractor
+    class WebFeedExtractor
     {
         private readonly IHttpWebRequests httpWebRequests;
 

@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests
 {
-    public class TestsBase : AssertionHelper
+    class TestsBase : AssertionHelper
     {
         DirectoryHandle dir;
 

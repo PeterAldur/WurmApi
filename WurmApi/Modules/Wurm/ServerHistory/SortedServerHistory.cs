@@ -6,7 +6,7 @@ using AldursLab.WurmApi.PersistentObjects;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
-    public class SortedServerHistory
+    class SortedServerHistory
     {
         readonly IPersistent<PersistentModel.ServerHistory> persistentData;
 

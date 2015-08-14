@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    internal class JsonSerializationStrategy : ISerializationStrategy
+    class JsonSerializationStrategy : ISerializationStrategy
     {
         private JsonSerializer Serializer { get; set; }
 
@@ -134,7 +134,7 @@ namespace AldursLab.WurmApi.PersistentObjects
     }
 
     [Serializable]
-    public class DeserializationErrorsException<TEntity> : Exception where TEntity : Entity, new()
+    class DeserializationErrorsException<TEntity> : Exception where TEntity : Entity, new()
     {
         public DeserializationErrorsException(
             TEntity deserializedFallbackEntity,

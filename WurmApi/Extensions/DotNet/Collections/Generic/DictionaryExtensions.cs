@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AldursLab.WurmApi.Extensions.DotNet.Collections.Generic
 {
-    public static class DictionaryExtensions
+    static class DictionaryExtensions
     {
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key,
             Func<TValue> valueFactory)

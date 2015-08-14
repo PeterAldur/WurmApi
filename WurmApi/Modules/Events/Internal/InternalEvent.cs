@@ -1,6 +1,6 @@
 ﻿namespace AldursLab.WurmApi.Modules.Events.Internal
 {
-    public abstract class InternalEvent
+    abstract class InternalEvent
     {
         /// <summary>
         /// Flags the event as pending. Will be invoked according to scheduling parameters.

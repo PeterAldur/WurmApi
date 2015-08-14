@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
-    public class WurmServer : IWurmServer
+    class WurmServer : IWurmServer
     {
         private readonly WurmServerInfo wurmServerInfo;
         readonly QueuedJobsSyncRunner<Job, JobResult> jobRunner;
@@ -22,7 +22,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             this.jobRunner = jobRunner;
         }
 
-        public virtual ServerName ServerName
+        public ServerName ServerName
         {
             get
             {

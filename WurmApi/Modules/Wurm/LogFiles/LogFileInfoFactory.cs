@@ -4,7 +4,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 {
-    public class LogFileInfoFactory
+    class LogFileInfoFactory
     {
         private readonly IWurmLogDefinitions wurmLogDefinitions;
         private readonly ILogger logger;

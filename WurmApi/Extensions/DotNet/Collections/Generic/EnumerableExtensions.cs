@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AldursLab.WurmApi.Extensions.DotNet.Collections.Generic
 {
-    public static class EnumerableExtensions
+    static class EnumerableExtensions
     {
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
         {

@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class DateTimeExt
+    static class DateTimeExt
     {
         /// <summary>
         /// Checks if DateTime represents a moment in time, that is today, based on local time.

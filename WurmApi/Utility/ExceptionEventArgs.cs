@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Utility
 {
-    public class ExceptionEventArgs : EventArgs
+    class ExceptionEventArgs : EventArgs
     {
         public Exception Exception { get; private set; }
 

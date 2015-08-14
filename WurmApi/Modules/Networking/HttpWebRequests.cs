@@ -5,7 +5,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Networking
 {
-    public class HttpWebRequests : IHttpWebRequests
+    class HttpWebRequests : IHttpWebRequests
     {
         public async Task<HttpWebResponse> GetResponseAsync(string url)
         {

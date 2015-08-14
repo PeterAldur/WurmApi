@@ -3,7 +3,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
-    public class MonthlyHeuristicsExtractorFactory
+    class MonthlyHeuristicsExtractorFactory
     {
         private readonly LogFileStreamReaderFactory logFileStreamReaderFactory;
         private readonly ILogger logger;

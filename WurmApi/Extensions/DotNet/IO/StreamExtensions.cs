@@ -3,7 +3,7 @@ using System.IO;
 
 namespace AldursLab.WurmApi.Extensions.DotNet.IO
 {
-    public static class StreamExtensions
+    static class StreamExtensions
     {
         /// <summary>
         /// Reads entire stream into byte array.

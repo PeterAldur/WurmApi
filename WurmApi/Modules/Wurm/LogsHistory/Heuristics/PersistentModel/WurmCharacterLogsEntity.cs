@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.PersistentModel
 {
     [JsonObject(MemberSerialization.Fields)]
-    public class WurmCharacterLogsEntity : Entity
+    class WurmCharacterLogsEntity : Entity
     {
         private readonly Dictionary<string, WurmLogMonthlyFile> wurmLogFiles = new Dictionary<string, WurmLogMonthlyFile>();
 

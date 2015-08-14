@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AldursLab.WurmApi.Utility
 {
-    public class LogFileParser
+    class LogFileParser
     {
         private readonly ILogger logger;
 
@@ -155,7 +155,7 @@ namespace AldursLab.WurmApi.Utility
         }
     }
 
-    public class LogFileParserFactory
+    class LogFileParserFactory
     {
         private readonly ILogger logger;
 

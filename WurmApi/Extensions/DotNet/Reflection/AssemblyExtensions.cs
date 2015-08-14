@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AldursLab.WurmApi.Extensions.DotNet.Reflection
 {
-    public static class AssemblyExtensions
+    static class AssemblyExtensions
     {
         /// <summary>
         /// Get's the name of the assembly.

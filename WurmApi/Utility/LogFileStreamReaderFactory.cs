@@ -5,9 +5,9 @@ using AldursLab.WurmApi.Extensions.DotNet;
 
 namespace AldursLab.WurmApi.Utility
 {
-    public class LogFileStreamReaderFactory
+    class LogFileStreamReaderFactory
     {
-        public virtual LogFileStreamReader Create(
+        public LogFileStreamReader Create(
             string fileFullPath,
             long startPosition = 0,
             bool trackFileBytePositions = false)
@@ -16,7 +16,7 @@ namespace AldursLab.WurmApi.Utility
         }
     }
 
-    public class LogFileStreamReader : IDisposable
+    class LogFileStreamReader : IDisposable
     {
         private readonly long startPosition;
         private readonly bool trackFileBytePositions;
@@ -80,7 +80,7 @@ namespace AldursLab.WurmApi.Utility
 
         private bool endOfStreamPositionUpdated = false;
 
-        public virtual string TryReadNextLine()
+        public string TryReadNextLine()
         {
             var pk = streamReader.Peek();
             if (pk == -1)

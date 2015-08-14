@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Tests
 {
-    public abstract class WurmApiFixtureBase : TestsBase
+    abstract class WurmApiFixtureBase : TestsBase
     {
     }
 }

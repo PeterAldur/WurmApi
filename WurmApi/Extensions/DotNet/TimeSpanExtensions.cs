@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class TimeSpanExtensions
+    static class TimeSpanExtensions
     {
         public static TimeSpan StripMilliseconds(this TimeSpan timeSpan)
         {

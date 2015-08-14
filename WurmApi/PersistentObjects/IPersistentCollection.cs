@@ -1,6 +1,6 @@
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public interface IPersistentCollection
+    interface IPersistentCollection
     {
         /// <summary>
         /// </summary>

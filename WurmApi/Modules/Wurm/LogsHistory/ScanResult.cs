@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
-    public class ScanResult
+    class ScanResult
     {
         public IList<LogEntry> LogEntries { get; private set; }
 

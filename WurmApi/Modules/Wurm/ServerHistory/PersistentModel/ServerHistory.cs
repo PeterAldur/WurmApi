@@ -4,7 +4,7 @@ using AldursLab.WurmApi.PersistentObjects;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel
 {
-    public class ServerHistory : Entity
+    class ServerHistory : Entity
     {
         public ServerHistory()
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.Extensions;
+using AldursLab.WurmApi.Extensions.DotNet;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Events.Public

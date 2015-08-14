@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class ReflectionHelper
+    static class ReflectionHelper
     {
         public static Func<TClassType, TFieldType> GetFieldAccessor<TClassType, TFieldType>(string fieldName)
         {

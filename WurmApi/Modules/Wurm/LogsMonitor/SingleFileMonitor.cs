@@ -5,7 +5,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
-    public class SingleFileMonitor
+    class SingleFileMonitor
     {
         private readonly LogFileInfo logFileInfo;
         private readonly LogFileStreamReaderFactory streamReaderFactory;
@@ -32,7 +32,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public LogFileInfo LogFileInfo { get { return logFileInfo; }}
 
-        public virtual ICollection<LogEntry> GetNewEvents()
+        public ICollection<LogEntry> GetNewEvents()
         {
             List<string> logLines = ReadNewLogLines();
             var parsedEntries = logFileParser.ParseLinesFromLogsScan(logLines, Time.Get.LocalNow);

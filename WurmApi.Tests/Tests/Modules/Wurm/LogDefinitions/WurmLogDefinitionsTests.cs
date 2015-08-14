@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogDefinitions
 {
-    public class WurmLogDefinitionsTests : WurmTests
+    class WurmLogDefinitionsTests : WurmTests
     {
         IWurmLogDefinitions System { get { return Fixture.WurmApiManager.LogDefinitions; } }
 

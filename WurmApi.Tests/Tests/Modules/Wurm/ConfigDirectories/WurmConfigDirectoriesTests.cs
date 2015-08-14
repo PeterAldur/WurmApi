@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.ConfigDirectories
 {
-    public class WurmConfigDirectoriesTests : WurmTests
+    class WurmConfigDirectoriesTests : WurmTests
     {
         // assumption: normalization convention for WurmApi is ToUpperInvariant
 

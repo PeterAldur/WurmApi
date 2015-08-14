@@ -6,7 +6,7 @@ using Telerik.JustMock.Helpers;
 
 namespace AldursLab.WurmApi.Tests
 {
-    public abstract class WurmApiIntegrationFixtureBase : WurmApiFixtureBase
+    abstract class WurmApiIntegrationFixtureBase : WurmApiFixtureBase
     {
         private DirectoryHandle dataDir;
         private DirectoryHandle wurmDir;

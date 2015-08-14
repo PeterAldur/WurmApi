@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Tests
 {
     [TestFixture]
-    public class DeserializationErrorHandlingTests : TestsBase
+    class DeserializationErrorHandlingTests : TestsBase
     {
         const string ObjectId = "id";
         const string SomeValue = "SomeValue";

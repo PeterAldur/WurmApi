@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules
 {
-    public class TestsBase : AssertionHelper
+    class TestsBase : AssertionHelper
     {
         internal string TestPaksDirFullPath { get; private set; }
         internal string TestPaksZippedDirFullPath { get; private set; }

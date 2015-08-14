@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
-    internal interface IWurmLogsMonitorInternal
+    interface IWurmLogsMonitorInternal
     {
         void SubscribeInternal(CharacterName characterName, LogType logType,
             EventHandler<LogsMonitorEventArgs> eventHandler);

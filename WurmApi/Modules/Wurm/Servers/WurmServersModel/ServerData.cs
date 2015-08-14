@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel
 {
     [JsonObject(MemberSerialization.Fields)]
-    public class ServersData : Entity
+    class ServersData : Entity
     {
         private readonly Dictionary<ServerName, ServerData> serverDatas;
         private DateTimeOffset lastScanDate;

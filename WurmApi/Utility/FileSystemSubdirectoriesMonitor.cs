@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AldursLab.WurmApi.Infrastructure;
 
 namespace AldursLab.WurmApi.Utility
 {
     /// <summary>
     /// Monitors for create / delete / rename of direct subdirectories in specific directory.
     /// </summary>
-    class FileSystemSubdirectoriesMonitor : IRequireRefresh, IDisposable
+    class FileSystemSubdirectoriesMonitor : IDisposable
     {
         private readonly string directoryFullPath;
         FileSystemChangeMonitor fileSystemChangeMonitor;

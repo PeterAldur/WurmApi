@@ -4,7 +4,7 @@ using Telerik.JustMock.Helpers;
 
 namespace AldursLab.WurmApi.Tests.Builders
 {
-    public static class HttpWebRequestsBuilder
+    static class HttpWebRequestsBuilder
     {
         public static IHttpWebRequests SetupUrl(this IHttpWebRequests req, string url, Func<HttpWebResponse> response)
         {

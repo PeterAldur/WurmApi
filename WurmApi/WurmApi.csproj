@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterName.cs" />
-    <Compile Include="Extensions\ActionExtensions.cs" />
+    <Compile Include="Extensions\DotNet\ActionExtensions.cs" />
     <Compile Include="Extensions\DotNet\AttributeExtensions.cs" />
     <Compile Include="Extensions\DotNet\Collections\Generic\DictionaryExtensions.cs" />
     <Compile Include="Extensions\DotNet\Collections\Generic\EnumerableExtensions.cs" />
@@ -87,7 +87,6 @@
     <Compile Include="Modules\Wurm\Servers\WurmServersModel\ServerUptimeStamped.cs" />
     <Compile Include="Modules\Wurm\Servers\WurmServersModel\TimeDetails.cs" />
     <Compile Include="Modules\Wurm\Servers\WurmServersModel\WurmServerLogsData.cs" />
-    <Compile Include="Modules\Events\EventHandlerExtensions.cs" />
     <Compile Include="Modules\Events\Internal\IInternalEventAggregator.cs" />
     <Compile Include="Modules\Events\ExtensionMethods.cs" />
     <Compile Include="Modules\Events\Internal\IInternalEventInvoker.cs" />
@@ -108,7 +107,6 @@
     <Compile Include="IHttpWebRequests.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="InvalidSearchParametersException.cs" />
-    <Compile Include="Infrastructure\IRequireRefresh.cs" />
     <Compile Include="IWurmApi.cs" />
     <Compile Include="IWurmAutoruns.cs" />
     <Compile Include="IWurmCharacter.cs" />
@@ -254,9 +252,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logging\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogDefinitions
 {
-    public class WurmLogDefinitions : IWurmLogDefinitions
+    class WurmLogDefinitions : IWurmLogDefinitions
     {
         private static readonly LogDefinition[] Definitions = new[]
         {

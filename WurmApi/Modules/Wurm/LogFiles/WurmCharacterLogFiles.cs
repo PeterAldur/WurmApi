@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 {
-    public class WurmCharacterLogFiles : IWurmCharacterLogFiles, IDisposable
+    class WurmCharacterLogFiles : IWurmCharacterLogFiles, IDisposable
     {
         readonly ILogger logger;
         readonly LogFileInfoFactory logFileInfoFactory;

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace AldursLab.WurmApi.Utility
 {
-    public class FileSystemChangeMonitor : IDisposable
+    class FileSystemChangeMonitor : IDisposable
     {
         private readonly FileSystemWatcher fileSystemWatcher;
 

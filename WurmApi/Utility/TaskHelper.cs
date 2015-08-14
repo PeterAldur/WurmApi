@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AldursLab.WurmApi.Utility
 {
-    public static class TaskHelper
+    static class TaskHelper
     {
         public static void UnwrapSingularAggegateException(Action action)
         {

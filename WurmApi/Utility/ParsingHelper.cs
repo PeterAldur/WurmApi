@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace AldursLab.WurmApi.Utility
 {
-    public static class ParsingHelper
+    static class ParsingHelper
     {
         public static LogFileDate GetDateFromLogFileName(string fileName)
         {

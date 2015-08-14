@@ -11,7 +11,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Configs
 {
-    public class WurmConfigs : IWurmConfigs, IDisposable, IHandle<ConfigDirectoriesChanged>
+    class WurmConfigs : IWurmConfigs, IDisposable, IHandle<ConfigDirectoriesChanged>
     {
         readonly IWurmConfigDirectories wurmConfigDirectories;
         readonly ILogger logger;

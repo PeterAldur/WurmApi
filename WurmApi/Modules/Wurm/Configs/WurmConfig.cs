@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
     /// <summary>
     /// If loading config values fails, some or all properties will be null / default.
     /// </summary>
-    public class WurmConfig : IDisposable, IWurmConfig
+    class WurmConfig : IDisposable, IWurmConfig
     {
         // note: editing config through IWurmApi is no longer allowed,
         // because there is no good way to ensure, that Wurm Game Client isn't accessing it at the moment

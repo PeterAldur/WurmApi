@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class StringExtensions
+    static class StringExtensions
     {
         public static string FormatInvariant(this string format, params object[] args)
         {

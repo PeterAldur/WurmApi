@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Configs
 {
-    public class WurmConfigsTests : WurmTests
+    class WurmConfigsTests : WurmTests
     {
         public IWurmConfigs System { get { return Fixture.WurmApiManager.Configs; } }
         EventAwaiter<EventArgs> awaiter;

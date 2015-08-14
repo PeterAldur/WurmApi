@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
     /// <summary>
     /// Provides accurate information about Wurm log files.
     /// </summary>
-    public class WurmLogFiles : IWurmLogFiles, IDisposable, IHandle<CharacterDirectoriesChanged>
+    class WurmLogFiles : IWurmLogFiles, IDisposable, IHandle<CharacterDirectoriesChanged>
     {
         readonly IWurmCharacterDirectories wurmCharacterDirectories;
         readonly ILogger logger;

@@ -4,7 +4,7 @@ using AldursLab.WurmApi.FileSystem;
 
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public class FlatFilesPersistenceStrategy : IPersistenceStrategy
+    class FlatFilesPersistenceStrategy : IPersistenceStrategy
     {
         readonly string storageDirectoryAbsolutePath;
 

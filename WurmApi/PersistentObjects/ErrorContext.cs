@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public class ErrorContext
+    class ErrorContext
     {
         readonly IPersistenceStrategy persistenceStrategy;
         readonly string collectionId;

@@ -4,7 +4,7 @@ using AldursLab.WurmApi.Utility;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
-    internal class LogsScannerFactory
+    class LogsScannerFactory
     {
         private readonly LogFileParserFactory logFileParserFactory;
         private readonly LogFileStreamReaderFactory streamReaderFactory;

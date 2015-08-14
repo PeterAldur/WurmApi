@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AldursLab.WurmApi.FileSystem
 {
-    public static class TransactionalFileOps
+    static class TransactionalFileOps
     {
         private const string FileExtensionNew = ".new";
         private const string FileExtensionOld = ".old";

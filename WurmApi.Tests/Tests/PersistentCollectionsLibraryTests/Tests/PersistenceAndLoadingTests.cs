@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Tests
 {
     [TestFixture]
-    public class PersistenceAndLoadingTests : TestsBase
+    class PersistenceAndLoadingTests : TestsBase
     {
         [Test]
         public void PersistsAndLoads_DefaultCollection()

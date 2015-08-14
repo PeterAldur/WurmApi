@@ -4,7 +4,7 @@ using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
-    public class WurmServerList : IWurmServerList
+    class WurmServerList : IWurmServerList
     {
         private readonly IReadOnlyCollection<WurmServerInfo> defaultDescriptions;
 

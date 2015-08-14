@@ -27,7 +27,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
     /// It might be early, to be precise. Anything relying on this data, must be prepared
     /// to read an unexpected line, for example empty or containing single character.
     /// </remarks>
-    public class MonthlyHeuristicsExtractor
+    class MonthlyHeuristicsExtractor
     {
         private readonly LogFileInfo logFileInfo;
         private readonly LogFileStreamReaderFactory logFileStreamReaderFactory;

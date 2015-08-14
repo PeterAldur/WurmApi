@@ -3,7 +3,7 @@ using AldursLab.WurmApi.PersistentObjects;
 
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests
 {
-    public class CustomDeserializationErrorHandler : IObjectDeserializationErrorHandlingStrategy
+    class CustomDeserializationErrorHandler : IObjectDeserializationErrorHandlingStrategy
     {
         readonly Action<ErrorContext> action;
 

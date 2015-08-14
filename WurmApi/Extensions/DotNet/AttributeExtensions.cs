@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace AldursLab.WurmApi.Extensions.DotNet
 {
-    public static class AttributeExtensions
+    static class AttributeExtensions
     {
         /// <summary>
         /// Gets all the attributes of a particular type.

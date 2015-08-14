@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogFiles
 {
-    public class WurmLogFilesTests : WurmTests
+    class WurmLogFilesTests : WurmTests
     {
         protected IWurmLogFiles System;
         protected IWurmCharacterLogFiles TestGuyLogFiles;

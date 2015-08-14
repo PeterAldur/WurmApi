@@ -1,6 +1,6 @@
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public interface IPersistenceStrategy
+    interface IPersistenceStrategy
     {
         /// <summary>
         /// Returns Null, if data store does not contain object with this Id.

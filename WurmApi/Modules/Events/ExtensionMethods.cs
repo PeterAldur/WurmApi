@@ -13,7 +13,7 @@ namespace AldursLab.WurmApi.Modules.Events
     /// <summary>
     /// Generic extension methods used by the framework.
     /// </summary>
-    public static class ExtensionMethods {
+    static class ExtensionMethods {
         /// <summary>
         /// Get's the name of the assembly.
         /// </summary>

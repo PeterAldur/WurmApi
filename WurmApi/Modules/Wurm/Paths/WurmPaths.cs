@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Modules.Wurm.Paths
 {
-    public class WurmPaths : IWurmPaths
+    class WurmPaths : IWurmPaths
     {
         private readonly string configsDirPath;
         private readonly string playersDirPath;

@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
-    public class MonthlyLogFilesHeuristics
+    class MonthlyLogFilesHeuristics
     {
         readonly IPersistentCollection heuristicsPersistentCollection;
         readonly IWurmLogFiles wurmLogFiles;

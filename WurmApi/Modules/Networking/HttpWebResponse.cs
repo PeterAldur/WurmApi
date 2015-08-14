@@ -3,7 +3,7 @@ using System.IO;
 
 namespace AldursLab.WurmApi.Modules.Networking
 {
-    public class HttpWebResponse
+    class HttpWebResponse
     {
         private readonly System.Net.HttpWebResponse webResponse;
 

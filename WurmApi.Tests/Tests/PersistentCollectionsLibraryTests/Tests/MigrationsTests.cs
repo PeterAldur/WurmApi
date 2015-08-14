@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Tests
 {
     [TestFixture]
-    public class MigrationsTests : TestsBase
+    class MigrationsTests : TestsBase
     {
         [Test]
         public void MigratesData_IfMatchingFilter()

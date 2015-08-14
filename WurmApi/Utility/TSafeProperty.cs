@@ -1,6 +1,6 @@
 ﻿namespace AldursLab.WurmApi.Utility
 {
-    public static class ThreadSafeProperty
+    static class ThreadSafeProperty
     {
         public static ThreadSafeProperty<T> Create<T>(T initialValue)
         {
@@ -8,7 +8,7 @@
         }
     }
 
-    public class ThreadSafeProperty<T>
+    class ThreadSafeProperty<T>
     {
         readonly object locker = new object();
         T value;

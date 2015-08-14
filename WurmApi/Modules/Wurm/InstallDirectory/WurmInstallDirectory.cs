@@ -4,7 +4,7 @@ using Microsoft.Win32;
 
 namespace AldursLab.WurmApi.Modules.Wurm.InstallDirectory
 {
-    public class WurmInstallDirectory : IWurmInstallDirectory
+    class WurmInstallDirectory : IWurmInstallDirectory
     {
         /// <param name="fullPath">Null to allow WurmApi to figure this on its own.</param>
         /// <exception cref="WurmGameClientInstallDirectoryValidationException">

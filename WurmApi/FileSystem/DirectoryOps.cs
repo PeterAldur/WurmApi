@@ -4,7 +4,7 @@ using System.IO;
 
 namespace AldursLab.WurmApi.FileSystem
 {
-    public static class DirectoryOps
+    static class DirectoryOps
     {
         public static void CopyRecursively(string sourceDirAbsolutePath, string targetDirAbsolutePath, bool overwriteFiles = false)
         {

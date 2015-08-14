@@ -16,7 +16,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
     // has to be prepared to handle malformed lines.
     // This is almost guaranteed to happen after automatic rebuilding cache on midnight.
 
-    public class CharacterMonthlyLogHeuristics
+    class CharacterMonthlyLogHeuristics
     {
         private readonly IPersistent<WurmCharacterLogsEntity> persistentData;
         private readonly MonthlyHeuristicsExtractorFactory monthlyHeuristicsExtractorFactory;

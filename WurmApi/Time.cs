@@ -6,7 +6,7 @@ namespace AldursLab.WurmApi
     /// <summary>
     /// Provides current time with possibility to change the provider.
     /// </summary>
-    public class Time
+    class Time
     {
         private static Time _localTimeProvider;
         private static readonly object SyncLocker = new object();
@@ -52,7 +52,7 @@ namespace AldursLab.WurmApi
         public virtual DateTimeOffset LocalNowOffset { get { return DateTimeOffset.Now; } }
     }
 
-    public class StubbableTime : Time
+    class StubbableTime : Time
     {
         private bool OverrideActive { get; set; }
         private DateTime? NowOverride { get; set; }

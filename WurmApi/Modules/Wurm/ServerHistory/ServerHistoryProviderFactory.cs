@@ -35,7 +35,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             this.wurmLogFiles = wurmLogFiles;
         }
 
-        public virtual ServerHistoryProvider Create(CharacterName characterName)
+        public ServerHistoryProvider Create(CharacterName characterName)
         {
             if (characterName == null) throw new ArgumentNullException("characterName");
             var persistent = persistentCollection.GetObject<PersistentModel.ServerHistory>(characterName.Normalized);

@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm
 {
-    public abstract class WurmTests : TestsBase
+    abstract class WurmTests : TestsBase
     {
         internal WurmApiFixtureV2 Fixture { get; private set; }
         internal WurmClientMock ClientMock { get { return Fixture.WurmClientMock; } }

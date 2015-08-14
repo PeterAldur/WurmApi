@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace AldursLab.WurmApi.PersistentObjects
 {
-    public abstract class Entity
+    abstract class Entity
     {
         [JsonProperty]
         public string ObjectId { get; internal set; }

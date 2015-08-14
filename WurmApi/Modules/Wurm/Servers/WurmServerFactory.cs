@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             this.jobRunner = jobRunner;
         }
 
-        public virtual WurmServer Create(WurmServerInfo wurmServerInfo)
+        public WurmServer Create(WurmServerInfo wurmServerInfo)
         {
             if (createdServers.Contains(wurmServerInfo.Name))
             {

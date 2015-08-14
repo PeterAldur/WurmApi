@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using AldursLab.WurmApi.Infrastructure;
 using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events;
 using AldursLab.WurmApi.Modules.Events.Internal;
@@ -25,9 +24,8 @@ namespace AldursLab.WurmApi
     /// <summary>
     /// Host of all WurmApi services.
     /// </summary>
-    public sealed class WurmApiManager : IWurmApi, IDisposable
+    sealed class WurmApiManager : IWurmApi, IDisposable
     {
-        readonly List<IRequireRefresh> requireRefreshes = new List<IRequireRefresh>();
         readonly List<IDisposable> disposables = new List<IDisposable>();
 
         /// <summary>

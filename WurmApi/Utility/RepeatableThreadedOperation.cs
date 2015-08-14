@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.Utility
     /// Maintains a dedicated thread to run job delegate at. Job is executed repeatedly in response to signals. 
     /// If signals arrive when job is already running, another execution is queued immediately.
     /// </summary>
-    public sealed class RepeatableThreadedOperation : IDisposable
+    sealed class RepeatableThreadedOperation : IDisposable
     {
         [CanBeNull]
         readonly IEventMarshaller eventMarshaller;

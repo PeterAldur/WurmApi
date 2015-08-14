@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerGroups
 {
-    public class WurmServerGroups : IWurmServerGroups
+    class WurmServerGroups : IWurmServerGroups
     {
         private readonly List<ServerGroup> groups = new List<ServerGroup>();
 

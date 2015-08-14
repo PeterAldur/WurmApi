@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
-    public class WurmLogsHistory : IWurmLogsHistory, IDisposable
+    class WurmLogsHistory : IWurmLogsHistory, IDisposable
     {
         readonly QueuedJobsSyncRunner<LogSearchParameters, ScanResult> runner;
 
@@ -39,7 +39,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             runner = new QueuedJobsSyncRunner<LogSearchParameters, ScanResult>(new ScanJobExecutor(logsScannerFactory, persistentLibrary, logger), logger);
         }
 
-        public virtual async Task<IList<LogEntry>> ScanAsync(LogSearchParameters logSearchParameters)
+        public async Task<IList<LogEntry>> ScanAsync(LogSearchParameters logSearchParameters)
         {
             var result = await runner.Run(logSearchParameters, CancellationToken.None).ConfigureAwait(false);
             return result.LogEntries;
@@ -50,7 +50,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             return TaskHelper.UnwrapSingularAggegateException(() => ScanAsync(logSearchParameters).Result);
         }
 
-        public virtual async Task<IList<LogEntry>> ScanAsync(LogSearchParameters logSearchParameters,
+        public async Task<IList<LogEntry>> ScanAsync(LogSearchParameters logSearchParameters,
             CancellationToken cancellationToken)
         {
             var result = await runner.Run(logSearchParameters, cancellationToken).ConfigureAwait(false);
