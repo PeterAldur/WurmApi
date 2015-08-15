@@ -1,4 +1,5 @@
 using System;
+using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.Utility;
 

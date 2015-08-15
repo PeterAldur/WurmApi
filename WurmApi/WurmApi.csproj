@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\Wurm\LogReading\LogFileCrLfStreamReader.cs" />
+    <Compile Include="Modules\Wurm\LogReading\LogFileLfStreamReader.cs" />
+    <Compile Include="Modules\Wurm\LogReading\LogFileStreamReader.cs" />
     <Compile Include="Validation\Blacklist.cs" />
     <Compile Include="CharacterName.cs" />
     <Compile Include="Extensions\DotNet\ActionExtensions.cs" />
@@ -188,7 +191,7 @@
     <Compile Include="Modules\Networking\HttpWebRequests.cs" />
     <Compile Include="Utility\FileSystemSubdirectoriesMonitor.cs" />
     <Compile Include="Utility\LogFileParser.cs" />
-    <Compile Include="Utility\LogFileStreamReaderFactory.cs" />
+    <Compile Include="Modules\Wurm\LogReading\LogFileStreamReaderFactory.cs" />
     <Compile Include="Utility\ParsingHelper.cs" />
     <Compile Include="Utility\WurmSubdirsMonitor.cs" />
     <Compile Include="Modules\Wurm\Autoruns\WurmAutoruns.cs" />

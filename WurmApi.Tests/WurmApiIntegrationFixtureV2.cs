@@ -6,7 +6,7 @@ using Telerik.JustMock;
 
 namespace AldursLab.WurmApi.Tests
 {
-    class WurmApiFixtureV2
+    class WurmApiIntegrationFixtureV2
     {
         // note: 
         // using default ThreadPool marshallers for both internal and public events
@@ -15,7 +15,7 @@ namespace AldursLab.WurmApi.Tests
         WurmApiManager wurmApiManager;
         readonly object locker = new object();
 
-        public WurmApiFixtureV2()
+        public WurmApiIntegrationFixtureV2()
         {
             var handle = TempDirectoriesFactory.CreateEmpty();
             WurmApiDataDir = new DirectoryInfo(handle.AbsolutePath);
@@ -42,7 +42,8 @@ namespace AldursLab.WurmApi.Tests
                             WurmApiDataDir.FullName,
                             WurmClientMock.InstallDirectory,
                             HttpWebRequestsMock,
-                            LoggerMock);
+                            LoggerMock,
+                            new WurmApiConfig());
                     }
                     return wurmApiManager;
                 }

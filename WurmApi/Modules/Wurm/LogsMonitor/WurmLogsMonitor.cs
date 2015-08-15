@@ -9,6 +9,7 @@ using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
@@ -23,6 +24,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         readonly IWurmCharacterDirectories wurmCharacterDirectories;
         readonly InternalEventInvoker internalEventInvoker;
         readonly TaskManager taskManager;
+        readonly LogFileStreamReaderFactory logFileStreamReaderFactory;
 
         IReadOnlyDictionary<CharacterName, LogsMonitorEngineManager> characterNameToEngineManagers =
             new Dictionary<CharacterName, LogsMonitorEngineManager>();
@@ -38,7 +40,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         public WurmLogsMonitor([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] ILogger logger,
             [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] IInternalEventAggregator internalEventAggregator,
             [NotNull] IWurmCharacterDirectories wurmCharacterDirectories,
-            [NotNull] InternalEventInvoker internalEventInvoker, [NotNull] TaskManager taskManager)
+            [NotNull] InternalEventInvoker internalEventInvoker, [NotNull] TaskManager taskManager,
+            [NotNull] LogFileStreamReaderFactory logFileStreamReaderFactory)
         {
             if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
             if (logger == null) throw new ArgumentNullException("logger");
@@ -47,6 +50,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
             if (internalEventInvoker == null) throw new ArgumentNullException("internalEventInvoker");
             if (taskManager == null) throw new ArgumentNullException("taskManager");
+            if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
             this.wurmLogFiles = wurmLogFiles;
             this.logger = logger;
             this.publicEventInvoker = publicEventInvoker;
@@ -54,6 +58,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             this.wurmCharacterDirectories = wurmCharacterDirectories;
             this.internalEventInvoker = internalEventInvoker;
             this.taskManager = taskManager;
+            this.logFileStreamReaderFactory = logFileStreamReaderFactory;
 
             try
             {
@@ -191,7 +196,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
                                 new CharacterLogsMonitorEngineFactory(
                                     logger,
                                     new SingleFileMonitorFactory(
-                                        new LogFileStreamReaderFactory(),
+                                        logFileStreamReaderFactory,
                                         new LogFileParser(logger)),
                                     wurmLogFiles.GetForCharacter(characterName),
                                     internalEventAggregator),

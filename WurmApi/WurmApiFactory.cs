@@ -35,9 +35,12 @@ namespace AldursLab.WurmApi
         /// An optional Wurm Game Client directory path provider.
         /// Defaults to autodetection.
         /// </param>
+        /// <param name="config">
+        /// Optional extra configuration options.
+        /// </param>
         /// <returns></returns>
         public static IWurmApi Create(string dataDirPath = null, ILogger logger = null,
-            IEventMarshaller eventMarshaller = null, IWurmInstallDirectory installDirectory = null)
+            IEventMarshaller eventMarshaller = null, IWurmInstallDirectory installDirectory = null, WurmApiConfig config = null)
         {
             if (dataDirPath == null)
             {
@@ -56,10 +59,15 @@ namespace AldursLab.WurmApi
             {
                 installDirectory = new WurmInstallDirectory();
             }
+            if (config == null)
+            {
+                config = new WurmApiConfig();
+            }
             return new WurmApiManager(new WurmApiDataDirectory(dataDirPath, true),
                 installDirectory,
                 logger,
-                eventMarshaller);
+                eventMarshaller,
+                config);
         }
     }
 }

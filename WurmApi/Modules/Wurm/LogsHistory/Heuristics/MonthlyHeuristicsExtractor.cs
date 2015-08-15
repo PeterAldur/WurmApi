@@ -1,4 +1,5 @@
 ﻿using System;
+using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders;
 using AldursLab.WurmApi.Utility;
 
@@ -34,7 +35,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
         private readonly ILogger logger;
 
         public MonthlyHeuristicsExtractor(
-            LogFileInfo logFileInfo, 
+            LogFileInfo logFileInfo,
             LogFileStreamReaderFactory logFileStreamReaderFactory,
             ILogger logger)
         {

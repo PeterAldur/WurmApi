@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.PersistentObjects;
 using AldursLab.WurmApi.Utility;
@@ -14,8 +15,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
     {
         readonly QueuedJobsSyncRunner<LogSearchParameters, ScanResult> runner;
 
-        public WurmLogsHistory([NotNull] IWurmLogFiles wurmLogFiles,
-            [NotNull] ILogger logger, string heuristicsDataDirectory)
+        public WurmLogsHistory([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] ILogger logger,
+            string heuristicsDataDirectory, LogFileStreamReaderFactory logFileStreamReaderFactory)
         {
             if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
             if (logger == null) throw new ArgumentNullException("logger");
@@ -25,7 +26,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                     new PersObjErrorHandlingStrategy(logger));
             var heuristicsCollection = persistentLibrary.GetCollection("heuristics");
 
-            var logFileStreamReaderFactory = new LogFileStreamReaderFactory();
             var logsScannerFactory = new LogsScannerFactory(
                 new LogFileParserFactory(logger),
                 logFileStreamReaderFactory,
@@ -36,7 +36,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                 wurmLogFiles,
                 logger);
 
-            runner = new QueuedJobsSyncRunner<LogSearchParameters, ScanResult>(new ScanJobExecutor(logsScannerFactory, persistentLibrary, logger), logger);
+            runner =
+                new QueuedJobsSyncRunner<LogSearchParameters, ScanResult>(
+                    new ScanJobExecutor(logsScannerFactory, persistentLibrary, logger),
+                    logger);
         }
 
         public async Task<IList<LogEntry>> ScanAsync(LogSearchParameters logSearchParameters)

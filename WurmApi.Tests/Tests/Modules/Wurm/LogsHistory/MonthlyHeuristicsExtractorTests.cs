@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using AldursLab.WurmApi.Modules.Wurm.LogDefinitions;
 using AldursLab.WurmApi.Modules.Wurm.LogFiles;
+using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.Tests.TempDirs;
 using AldursLab.WurmApi.Utility;
@@ -13,7 +14,7 @@ using Telerik.JustMock;
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
 {
     [TestFixture]
-    class MonthlyHeuristicsExtractorTests : WurmApiFixtureBase
+    class MonthlyHeuristicsExtractorTests : TestsBase
     {
         private FileInfo testFile;
         private FileInfo emptyTestFile;
@@ -54,8 +55,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             LogFileInfoFactory factory = new LogFileInfoFactory(new WurmLogDefinitions(), Mock.Create<ILogger>());
             
             return new MonthlyHeuristicsExtractor(
-                factory.Create(info), 
-                new LogFileStreamReaderFactory(),
+                factory.Create(info),
+                new LogFileStreamReaderFactory(new WurmApiConfig()), 
                 Mock.Create<ILogger>());
         }
 

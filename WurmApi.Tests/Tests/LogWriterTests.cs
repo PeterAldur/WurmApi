@@ -2,12 +2,13 @@
 using System.IO;
 using AldursLab.WurmApi.Tests.Helpers;
 using AldursLab.WurmApi.Tests.TempDirs;
+using AldursLab.WurmApi.Tests.Tests.Modules;
 using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests
 {
     [TestFixture]
-    class LogWriterTests : WurmApiFixtureBase
+    class LogWriterTests : TestsBase
     {
         private DirectoryHandle testDir;
         private LogWriter monthlyWriter;

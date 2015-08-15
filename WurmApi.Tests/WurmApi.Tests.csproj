@@ -118,6 +118,7 @@
     <Compile Include="Helpers\Subscriber.cs" />
     <Compile Include="TempDirs\TempDirectoriesFactory.cs" />
     <Compile Include="TempDirs\TempDirectoriesManager.cs" />
+    <Compile Include="Tests\Modules\Wurm\LogReading\LogFileStreamReaderTests.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\CustomDeserializationErrorHandler.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\Dtos.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\PersistentData.cs" />
@@ -146,11 +147,9 @@
     <Compile Include="Tests\Modules\Wurm\ServerHistory\SortedServerHistoryTests.cs" />
     <Compile Include="Tests\Modules\Wurm\ServerHistory\WurmServerHistoryTests.cs" />
     <Compile Include="Tests\Modules\Wurm\Servers\WurmServersTests.cs" />
-    <Compile Include="WurmApiFixtureBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\WurmDateTimeTests.cs" />
-    <Compile Include="WurmApiFixtureV2.cs" />
-    <Compile Include="WurmApiIntegrationFixtureBase.cs" />
+    <Compile Include="WurmApiIntegrationFixtureV2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CsvOutput1.txt" />
@@ -199,6 +198,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\TestPaksZipped\WurmServerTests-wurmdir.7z">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\TestPaksZipped\ubuntu-wurm-dir.7z">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Tests\TempDirectoriesTests\SampleZippedDir.7z">

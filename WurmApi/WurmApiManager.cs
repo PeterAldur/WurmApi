@@ -13,6 +13,7 @@ using AldursLab.WurmApi.Modules.Wurm.ConfigDirectories;
 using AldursLab.WurmApi.Modules.Wurm.Configs;
 using AldursLab.WurmApi.Modules.Wurm.LogDefinitions;
 using AldursLab.WurmApi.Modules.Wurm.LogFiles;
+using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.Paths;
@@ -36,7 +37,8 @@ namespace AldursLab.WurmApi
             WurmApiDataDirectory dataDirectory,
             IWurmInstallDirectory installDirectory,
             ILogger wurmApiLogger,
-            IEventMarshaller publicEventMarshaller)
+            IEventMarshaller publicEventMarshaller,
+            WurmApiConfig wurmApiConfig)
         {
             var threadPoolMarshaller = new ThreadPoolMarshaller(wurmApiLogger);
             if (publicEventMarshaller == null)
@@ -49,7 +51,8 @@ namespace AldursLab.WurmApi
                 httpRequests,
                 wurmApiLogger,
                 publicEventMarshaller,
-                threadPoolMarshaller);
+                threadPoolMarshaller,
+                wurmApiConfig);
         }
 
         /// <summary>
@@ -59,14 +62,29 @@ namespace AldursLab.WurmApi
             string dataDir,
             IWurmInstallDirectory installDirectory,
             IHttpWebRequests httpWebRequests,
-            ILogger logger)
+            ILogger logger,
+            WurmApiConfig wurmApiConfig)
         {
-            ConstructSystems(dataDir, installDirectory, httpWebRequests, logger, new SimpleMarshaller(), new SimpleMarshaller());
+            ConstructSystems(dataDir,
+                installDirectory,
+                httpWebRequests,
+                logger,
+                new SimpleMarshaller(),
+                new SimpleMarshaller(),
+                wurmApiConfig);
         }
 
         void ConstructSystems(string wurmApiDataDirectoryFullPath, IWurmInstallDirectory installDirectory,
-            IHttpWebRequests httpWebRequests, ILogger logger, IEventMarshaller publicEventMarshaller, IEventMarshaller internalEventMarshaller)
+            IHttpWebRequests httpWebRequests, ILogger logger, IEventMarshaller publicEventMarshaller,
+            IEventMarshaller internalEventMarshaller, WurmApiConfig wurmApiConfig)
         {
+            IWurmApiConfig internalWurmApiConfig = new WurmApiConfig()
+            {
+                Platform = wurmApiConfig.Platform
+            };
+
+            LogFileStreamReaderFactory logFileStreamReaderFactory = Wire(new LogFileStreamReaderFactory(internalWurmApiConfig));
+
             Wire(installDirectory);
             Wire(httpWebRequests);
 
@@ -78,7 +96,8 @@ namespace AldursLab.WurmApi
 
             InternalEventAggregator internalEventAggregator = Wire(new InternalEventAggregator());
 
-            InternalEventInvoker internalEventInvoker = Wire(new InternalEventInvoker(internalEventAggregator, logger, internalEventMarshaller));
+            InternalEventInvoker internalEventInvoker =
+                Wire(new InternalEventInvoker(internalEventAggregator, logger, internalEventMarshaller));
 
             WurmPaths paths = Wire(new WurmPaths(installDirectory));
 
@@ -91,8 +110,12 @@ namespace AldursLab.WurmApi
             WurmCharacterDirectories characterDirectories =
                 Wire(new WurmCharacterDirectories(paths, internalEventAggregator, taskManager, logger));
             WurmLogFiles logFiles =
-                Wire(new WurmLogFiles(characterDirectories, logger, logDefinitions, internalEventAggregator,
-                    internalEventInvoker, taskManager));
+                Wire(new WurmLogFiles(characterDirectories,
+                    logger,
+                    logDefinitions,
+                    internalEventAggregator,
+                    internalEventInvoker,
+                    taskManager));
 
             WurmLogsMonitor logsMonitor =
                 Wire(new WurmLogsMonitor(logFiles,
@@ -101,9 +124,10 @@ namespace AldursLab.WurmApi
                     internalEventAggregator,
                     characterDirectories,
                     internalEventInvoker,
-                    taskManager));
+                    taskManager,
+                    logFileStreamReaderFactory));
             var heuristicsDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmLogsHistory");
-            WurmLogsHistory logsHistory = Wire(new WurmLogsHistory(logFiles, logger, heuristicsDataDirectory));
+            WurmLogsHistory logsHistory = Wire(new WurmLogsHistory(logFiles, logger, heuristicsDataDirectory, logFileStreamReaderFactory));
 
             WurmConfigs wurmConfigs =
                 Wire(new WurmConfigs(configDirectories,
@@ -115,12 +139,23 @@ namespace AldursLab.WurmApi
 
             var wurmServerHistoryDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServerHistory");
             WurmServerHistory wurmServerHistory =
-                Wire(new WurmServerHistory(wurmServerHistoryDataDirectory, logsHistory, serverList, logger, logsMonitor, logFiles));
+                Wire(new WurmServerHistory(wurmServerHistoryDataDirectory,
+                    logsHistory,
+                    serverList,
+                    logger,
+                    logsMonitor,
+                    logFiles));
 
             var wurmServersDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServers");
             WurmServers wurmServers =
-                Wire(new WurmServers(logsHistory, logsMonitor, serverList, httpWebRequests, wurmServersDataDirectory,
-                    characterDirectories, wurmServerHistory, logger));
+                Wire(new WurmServers(logsHistory,
+                    logsMonitor,
+                    serverList,
+                    httpWebRequests,
+                    wurmServersDataDirectory,
+                    characterDirectories,
+                    wurmServerHistory,
+                    logger));
 
             WurmCharacters characters =
                 Wire(new WurmCharacters(characterDirectories,
@@ -191,5 +226,48 @@ namespace AldursLab.WurmApi
     internal class WurmApiTuningParams
     {
         public static TimeSpan PublicEventMarshallerDelay = TimeSpan.FromMilliseconds(100);
+    }
+
+    /// <summary>
+    /// Additional configuration options for WurmApi
+    /// </summary>
+    public class WurmApiConfig : IWurmApiConfig
+    {
+        /// <summary>
+        /// Constructs new instance of WurmApiConfig with default settings.
+        /// </summary>
+        public WurmApiConfig()
+        {
+            Platform = Platform.Windows;
+        }
+
+        /// <summary>
+        /// Current operating system
+        /// </summary>
+        public Platform Platform { get; set; }
+    }
+
+    internal interface IWurmApiConfig
+    {
+        Platform Platform { get; }
+    }
+
+    /// <summary>
+    /// Operating System
+    /// </summary>
+    public enum Platform
+    {
+        /// <summary>
+        /// Any version of desktop Microsoft Windows
+        /// </summary>
+        Windows,
+        /// <summary>
+        /// Any version of desktop Linux (eg. Ubuntu)
+        /// </summary>
+        Linux,
+        /// <summary>
+        /// Any version of Apple MAC
+        /// </summary>
+        Mac
     }
 }
