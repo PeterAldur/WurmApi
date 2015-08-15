@@ -91,6 +91,9 @@ namespace AldursLab.WurmApi.JobRunning
         readonly Action action;
         DateTimeOffset lastInvoke = DateTimeOffset.MinValue;
         int triggered;
+        DateTimeOffset lastError = DateTimeOffset.MinValue;
+
+        static readonly TimeSpan ErrorMinimumRetryDelay = TimeSpan.FromMilliseconds(500);
 
         public TaskHandle([NotNull] Action action, [NotNull] string description, TimeSpan? minimumDelay = null)
         {
@@ -104,7 +107,7 @@ namespace AldursLab.WurmApi.JobRunning
         internal void TryExecute()
         {
             var now = Time.Get.LocalNowOffset;
-            if (triggered == 1 && lastInvoke < now - MinimumDelay)
+            if (triggered == 1 && lastInvoke < now - MinimumDelay && lastError < now - ErrorMinimumRetryDelay)
             {
                 Interlocked.Exchange(ref triggered, 0);
                 try
@@ -116,6 +119,7 @@ namespace AldursLab.WurmApi.JobRunning
                 {
                     // if action failed, retry on next run
                     Interlocked.Exchange(ref triggered, 1);
+                    lastError = Time.Get.LocalNowOffset;
                     throw;
                 }
             }

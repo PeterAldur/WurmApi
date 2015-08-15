@@ -46,7 +46,7 @@ namespace AldursLab.WurmApi.Validation
             if (count >= issueTreshhold)
             {
                 logger.Log(LogLevel.Error,
-                    string.Format("{1} > Adding key {0} blacklist because at least {2} issues were reported",
+                    string.Format("{1} > Adding key {0} to blacklist because at least {2} issues were reported",
                         key,
                         description,
                         count),
