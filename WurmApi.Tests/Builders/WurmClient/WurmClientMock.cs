@@ -95,6 +95,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
                 throw new InvalidOperationException("player already exists");
             }
             players.Add(p);
+            p.SetConfigName("default");
             return p;
         }
 

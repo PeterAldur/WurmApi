@@ -5,6 +5,7 @@ using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Utility;
+using AldursLab.WurmApi.Validation;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
@@ -16,11 +17,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
     {
         readonly IInternalEventAggregator eventAggregator;
 
-        public WurmCharacterDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator, TaskManager taskManager)
-            : base(wurmPaths.CharactersDirFullPath, taskManager, () => eventAggregator.Send(new CharacterDirectoriesChanged()))
+        public WurmCharacterDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator,
+            TaskManager taskManager, ILogger logger)
+            : base(
+                wurmPaths.CharactersDirFullPath,
+                taskManager,
+                () => eventAggregator.Send(new CharacterDirectoriesChanged()),
+                logger,
+                ValidateDirectory)
         {
             if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
             this.eventAggregator = eventAggregator;
+        }
+
+        static void ValidateDirectory(string directoryPath)
+        {
+            CharacterDirectoryValidator.ValidateFullPath(directoryPath);
         }
 
         public string GetFullDirPathForCharacter([NotNull] CharacterName characterName)

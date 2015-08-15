@@ -34,7 +34,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 
         public WurmPlayer SetConfigName(string name)
         {
-            File.WriteAllText(ConfigTxt.FullName + "\r\n", name);
+            File.WriteAllText(ConfigTxt.FullName, name + "\r\n");
             return this;
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AldursLab.WurmApi.Extensions.DotNet.Collections.Generic;
 using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;

@@ -17,11 +17,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
     {
         readonly IInternalEventAggregator eventAggregator;
 
-        public WurmConfigDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator, TaskManager taskManager)
-            : base(wurmPaths.ConfigsDirFullPath, taskManager, () => eventAggregator.Send(new ConfigDirectoriesChanged()))
+        public WurmConfigDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator,
+            TaskManager taskManager, ILogger logger)
+            : base(
+                wurmPaths.ConfigsDirFullPath,
+                taskManager,
+                () => eventAggregator.Send(new ConfigDirectoriesChanged()),
+                logger,
+                ValidateDirectory)
         {
             if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
             this.eventAggregator = eventAggregator;
+        }
+
+        static void ValidateDirectory(string directoryFullPath)
+        {
+            // todo: validation
         }
 
         public IEnumerable<string> AllConfigNames

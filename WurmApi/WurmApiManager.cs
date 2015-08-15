@@ -18,6 +18,7 @@ using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.Paths;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
 using AldursLab.WurmApi.Modules.Wurm.Servers;
+using AldursLab.WurmApi.Validation;
 
 namespace AldursLab.WurmApi
 {
@@ -85,8 +86,10 @@ namespace AldursLab.WurmApi
 
             WurmLogDefinitions logDefinitions = Wire(new WurmLogDefinitions());
 
-            WurmConfigDirectories configDirectories = Wire(new WurmConfigDirectories(paths, internalEventAggregator, taskManager));
-            WurmCharacterDirectories characterDirectories = Wire(new WurmCharacterDirectories(paths, internalEventAggregator, taskManager));
+            WurmConfigDirectories configDirectories =
+                Wire(new WurmConfigDirectories(paths, internalEventAggregator, taskManager, logger));
+            WurmCharacterDirectories characterDirectories =
+                Wire(new WurmCharacterDirectories(paths, internalEventAggregator, taskManager, logger));
             WurmLogFiles logFiles =
                 Wire(new WurmLogFiles(characterDirectories, logger, logDefinitions, internalEventAggregator,
                     internalEventInvoker, taskManager));

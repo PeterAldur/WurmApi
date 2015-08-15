@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Validation\Blacklist.cs" />
     <Compile Include="CharacterName.cs" />
     <Compile Include="Extensions\DotNet\ActionExtensions.cs" />
     <Compile Include="Extensions\DotNet\AttributeExtensions.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Utility\RepeatableThreadedOperation.cs" />
     <Compile Include="Utility\TaskHelper.cs" />
     <Compile Include="Utility\TSafeProperty.cs" />
+    <Compile Include="Validation\CharacterDirectoryValidator.cs" />
     <Compile Include="WurmApiExceptions.cs" />
     <Compile Include="WurmApiFactory.cs" />
     <Compile Include="WurmDateTime.cs" />
