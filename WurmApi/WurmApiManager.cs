@@ -258,16 +258,20 @@ namespace AldursLab.WurmApi
     public enum Platform
     {
         /// <summary>
+        /// Unknown / unspecified
+        /// </summary>
+        Unknown = 0,
+        /// <summary>
         /// Any version of desktop Microsoft Windows
         /// </summary>
-        Windows,
+        Windows = 1,
         /// <summary>
         /// Any version of desktop Linux (eg. Ubuntu)
         /// </summary>
-        Linux,
+        Linux = 2,
         /// <summary>
         /// Any version of Apple MAC
         /// </summary>
-        Mac
+        Mac = 3
     }
 }
