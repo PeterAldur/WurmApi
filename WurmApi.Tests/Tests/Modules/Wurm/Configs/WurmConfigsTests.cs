@@ -58,7 +58,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Configs
 
             configMock.GameSettings.ChangeValue("skillgain_no_favor", "true");
 
-            awaiter.WaitInvocations(1);
+            awaiter.WaitInvocations(2);
 
             Expect(config.NoSkillMessageOnFavorChange, True);
         }
