@@ -10,11 +10,35 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
         // Mono implementation differs from .NET, file byte positions are not as easy to obtain
         // Do not use trackFileBytePositions outside .NET, rely on line indexes, this is much slower but at least it works.
 
-        static readonly Func<StreamReader, int> GetCharPosAccessor =
-            ReflectionHelper.GetFieldAccessor<StreamReader, int>("charPos");
+        static Func<StreamReader, int> _getCharPosAccessor;
 
-        static readonly Func<StreamReader, int> GetCharLenAccessor =
-            ReflectionHelper.GetFieldAccessor<StreamReader, int>("charLen");
+        static Func<StreamReader, int> GetCharPosAccessor
+        {
+            get
+            {
+                if (_getCharPosAccessor == null)
+                {
+                    _getCharPosAccessor =
+                        ReflectionHelper.GetFieldAccessor<StreamReader, int>("charPos");
+                }
+                return _getCharPosAccessor;
+            }
+        }
+
+        static Func<StreamReader, int> _getCharLenAccessor;
+
+        static Func<StreamReader, int> GetCharLenAccessor
+        {
+            get
+            {
+                if (_getCharLenAccessor == null)
+                {
+                    _getCharLenAccessor =
+                        ReflectionHelper.GetFieldAccessor<StreamReader, int>("charLen");
+                }
+                return _getCharLenAccessor;
+            }
+        }
 
         private readonly long startPosition;
         private readonly bool trackFileBytePositions;
