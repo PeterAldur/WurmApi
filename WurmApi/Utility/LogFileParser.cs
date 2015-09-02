@@ -19,7 +19,8 @@ namespace AldursLab.WurmApi.Utility
         /// In other words, the first line MUST be the first entry on a given day.
         /// </summary>
         /// <returns></returns>
-        public IList<LogEntry> ParseLinesForDay(IReadOnlyList<string> lines, DateTime originDate, LogFileInfo logFileInfo)
+        public IList<LogEntry> ParseLinesForDay(IReadOnlyList<string> lines, DateTime originDate,
+            LogFileInfo logFileInfo)
         {
             AssertOriginDate(originDate);
 
@@ -61,7 +62,7 @@ namespace AldursLab.WurmApi.Utility
                 string source = ParsingHelper.TryParseSourceFromLogLine(line);
                 string content = ParsingHelper.TryParseContentFromLogLine(line);
 
-                LogEntry entry = new LogEntry(originDate + currentLineStamp, source, content);
+                LogEntry entry = new LogEntry(originDate + currentLineStamp, source, content, logFileInfo.PmRecipientNormalized);
 
                 result.Add(entry);
             }

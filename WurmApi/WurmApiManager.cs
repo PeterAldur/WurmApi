@@ -127,7 +127,12 @@ namespace AldursLab.WurmApi
                     taskManager,
                     logFileStreamReaderFactory));
             var heuristicsDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmLogsHistory");
-            WurmLogsHistory logsHistory = Wire(new WurmLogsHistory(logFiles, logger, heuristicsDataDirectory, logFileStreamReaderFactory));
+            WurmLogsHistory logsHistory =
+                Wire(new WurmLogsHistory(logFiles,
+                    logger,
+                    heuristicsDataDirectory,
+                    logFileStreamReaderFactory,
+                    wurmApiConfig));
 
             WurmConfigs wurmConfigs =
                 Wire(new WurmConfigs(configDirectories,

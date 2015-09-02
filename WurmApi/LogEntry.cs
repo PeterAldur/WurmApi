@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi
@@ -8,13 +9,17 @@ namespace AldursLab.WurmApi
     /// </summary>
     public class LogEntry
     {
-        public LogEntry(DateTime timestamp, [NotNull] string source, [NotNull] string content)
+        public LogEntry(DateTime timestamp, [NotNull] string source, [NotNull] string content,
+            [CanBeNull] string pmConversationRecipient = null)
         {
             if (source == null) throw new ArgumentNullException("source");
             if (content == null) throw new ArgumentNullException("content");
             Timestamp = timestamp;
             Source = source;
             Content = content;
+            PmConversationRecipient = pmConversationRecipient != null
+                ? new CharacterName(pmConversationRecipient)
+                : CharacterName.Empty;
         }
 
         /// <summary>
@@ -38,5 +43,10 @@ namespace AldursLab.WurmApi
         {
             return string.Format("Timestamp: {0}, Source: {1}, Content: {2}", Timestamp, Source, Content);
         }
+
+        /// <summary>
+        /// Contains name of the PM recipient of a PM conversation, if LogEntry describes PM Logs
+        /// </summary>
+        public CharacterName PmConversationRecipient { get; private set; }
     }
 }

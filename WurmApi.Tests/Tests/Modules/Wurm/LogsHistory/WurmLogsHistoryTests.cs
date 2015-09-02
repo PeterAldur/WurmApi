@@ -7,9 +7,13 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
 {
-    [TestFixture]
+    [TestFixture(Platform.Windows)]
+    [TestFixture(Platform.Linux)]
     class WurmLogsHistoryTests : WurmTests
     {
+        public WurmLogsHistoryTests(Platform targetPlatform) : base(targetPlatform)
+        {}
+
         public IWurmLogsHistory System { get { return Fixture.WurmApiManager.LogsHistory; } }
 
         [SetUp]

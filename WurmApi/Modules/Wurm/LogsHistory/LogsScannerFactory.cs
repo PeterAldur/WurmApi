@@ -2,6 +2,7 @@ using System;
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.Utility;
+using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 {
@@ -12,13 +13,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         private readonly MonthlyLogFilesHeuristics heuristics;
         private readonly IWurmLogFiles wurmLogFiles;
         private readonly ILogger logger;
+        readonly IWurmApiConfig wurmApiConfig;
 
         public LogsScannerFactory(
             LogFileParserFactory logFileParserFactory,
             LogFileStreamReaderFactory streamReaderFactory,
             MonthlyLogFilesHeuristics heuristics,
             IWurmLogFiles wurmLogFiles,
-            ILogger logger)
+            ILogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logFileParserFactory == null)
                 throw new ArgumentNullException("logFileParserFactory");
@@ -30,11 +32,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                 throw new ArgumentNullException("wurmLogFiles");
             if (logger == null)
                 throw new ArgumentNullException("logger");
+            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
             this.logFileParserFactory = logFileParserFactory;
             this.streamReaderFactory = streamReaderFactory;
             this.heuristics = heuristics;
             this.wurmLogFiles = wurmLogFiles;
             this.logger = logger;
+            this.wurmApiConfig = wurmApiConfig;
         }
 
         /// <summary>
@@ -50,7 +54,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                 heuristics,
                 streamReaderFactory,
                 logger,
-                logFileParserFactory);
+                logFileParserFactory,
+                wurmApiConfig);
         }
     }
 }

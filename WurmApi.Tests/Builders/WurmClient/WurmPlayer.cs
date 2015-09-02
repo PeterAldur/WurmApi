@@ -11,7 +11,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
         DirectoryInfo ScreenshotsDir { get; set; }
         FileInfo ConfigTxt { get; set; }
 
-        public WurmPlayer(DirectoryInfo playerDir, string name)
+        public WurmPlayer(DirectoryInfo playerDir, string name, Platform targetPlatform)
         {
             Name = name;
             this.playerDir = playerDir;
@@ -20,7 +20,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
             ScreenshotsDir = playerDir.CreateSubdirectory("screenshots");
             ConfigTxt = new FileInfo(Path.Combine(playerDir.FullName, "config.txt"));
             File.WriteAllText(ConfigTxt.FullName, string.Empty);
-            Logs = new WurmLogs(LogsDir);
+            Logs = new WurmLogs(LogsDir, targetPlatform);
         }
 
         public string Name { get; private set; }

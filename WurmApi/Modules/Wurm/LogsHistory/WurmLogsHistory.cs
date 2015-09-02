@@ -16,10 +16,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         readonly QueuedJobsSyncRunner<LogSearchParameters, ScanResult> runner;
 
         public WurmLogsHistory([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] ILogger logger,
-            string heuristicsDataDirectory, LogFileStreamReaderFactory logFileStreamReaderFactory)
+            [NotNull] string heuristicsDataDirectory, [NotNull] LogFileStreamReaderFactory logFileStreamReaderFactory,
+            [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
             if (logger == null) throw new ArgumentNullException("logger");
+            if (heuristicsDataDirectory == null) throw new ArgumentNullException("heuristicsDataDirectory");
+            if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
+            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
 
             var persistentLibrary =
                 new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(heuristicsDataDirectory),
@@ -32,9 +36,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                 new MonthlyLogFilesHeuristics(
                     heuristicsCollection,
                     wurmLogFiles,
-                    new MonthlyHeuristicsExtractorFactory(logFileStreamReaderFactory, logger)),
+                    new MonthlyHeuristicsExtractorFactory(logFileStreamReaderFactory, logger, wurmApiConfig)),
                 wurmLogFiles,
-                logger);
+                logger,
+                wurmApiConfig);
 
             runner =
                 new QueuedJobsSyncRunner<LogSearchParameters, ScanResult>(

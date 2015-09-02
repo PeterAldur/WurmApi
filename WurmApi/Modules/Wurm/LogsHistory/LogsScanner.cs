@@ -15,6 +15,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         readonly LogFileStreamReaderFactory streamReaderFactory;
         readonly ILogger logger;
         readonly LogFileParserFactory logFileParserFactory;
+        readonly IWurmApiConfig wurmApiConfig;
 
         readonly LogSearchParameters logSearchParameters;
         readonly JobCancellationManager cancellationManager;
@@ -26,7 +27,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             [NotNull] MonthlyLogFilesHeuristics monthlyHeuristics,
             [NotNull] LogFileStreamReaderFactory streamReaderFactory,
             [NotNull] ILogger logger,
-            [NotNull] LogFileParserFactory logFileParserFactory)
+            [NotNull] LogFileParserFactory logFileParserFactory, 
+            [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logSearchParameters == null) throw new ArgumentNullException("logSearchParameters");
             if (cancellationManager == null) throw new ArgumentNullException("cancellationManager");
@@ -35,6 +37,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             if (streamReaderFactory == null) throw new ArgumentNullException("streamReaderFactory");
             if (logger == null) throw new ArgumentNullException("logger");
             if (logFileParserFactory == null) throw new ArgumentNullException("logFileParserFactory");
+            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
             this.logSearchParameters = logSearchParameters;
             this.cancellationManager = cancellationManager;
             this.wurmLogFiles = wurmLogFiles;
@@ -42,6 +45,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             this.streamReaderFactory = streamReaderFactory;
             this.logger = logger;
             this.logFileParserFactory = logFileParserFactory;
+            this.wurmApiConfig = wurmApiConfig;
         }
 
         /// <summary>
@@ -52,9 +56,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         /// <returns></returns>
         public ScanResult Scan()
         {
+            logSearchParameters.AssertAreValid();
             var man = this.wurmLogFiles.GetForCharacter(logSearchParameters.CharacterName);
             LogFileInfo[] logFileInfos =
-                man.GetLogFiles(logSearchParameters.DateFrom, logSearchParameters.DateTo).ToArray();
+                man.GetLogFiles(logSearchParameters.DateFrom, logSearchParameters.DateTo)
+                   .Where(info => info.LogType == logSearchParameters.LogType).ToArray();
 
             cancellationManager.ThrowIfCancelled();
 
@@ -112,37 +118,66 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             var heuristics = heuristicsFileMap.GetFullHeuristicsForMonth(logFileInfo);
             var dayToSearchFrom = GetMinDayToSearchFrom(logSearchParameters.DateFrom, logFileInfo.LogFileDate.DateTime);
             var dayToSearchTo = GetMaxDayToSearchUpTo(logSearchParameters.DateTo, logFileInfo.LogFileDate.DateTime);
-            for (int day = dayToSearchFrom; day <= dayToSearchTo; day++)
+            LogFileStreamReader reader = null;
+            try
             {
-                var thisEntryDate = new DateTime(
-                    logFileInfo.LogFileDate.DateTime.Year,
-                    logFileInfo.LogFileDate.DateTime.Month,
-                    day,
-                    0,
-                    0,
-                    0);
-                var thisDayHeuristics = heuristics.GetForDay(day);
-                int currentLineIndex = 0;
-                List<string> allLines = new List<string>();
-                using (
-                    var reader = streamReaderFactory.Create(
-                        logFileInfo.FullPath,
-                        thisDayHeuristics.StartPositionInBytes))
+                for (int day = dayToSearchFrom; day <= dayToSearchTo; day++)
                 {
+                    var thisDayHeuristics = heuristics.GetForDay(day);
+
+                    if (thisDayHeuristics.LinesLength == 0) continue;
+
+                    if (reader == null)
+                    {
+                        if (heuristics.HasValidFilePositions)
+                        {
+                            reader = streamReaderFactory.Create(
+                                logFileInfo.FullPath,
+                                thisDayHeuristics.StartPositionInBytes);
+                        }
+                        else
+                        {
+                            reader = streamReaderFactory.CreateWithLineCountFastForward(
+                                logFileInfo.FullPath,
+                                thisDayHeuristics.TotalLinesSinceBeginFile);
+                        }
+                    }
+                    var thisEntryDate = new DateTime(
+                        logFileInfo.LogFileDate.DateTime.Year,
+                        logFileInfo.LogFileDate.DateTime.Month,
+                        day,
+                        0,
+                        0,
+                        0);
+
+                    int readLinesCount = 0;
+                    List<string> allLines = new List<string>();
+
                     string currentLine;
                     while ((currentLine = reader.TryReadNextLine()) != null)
                     {
-                        currentLineIndex++;
-                        if (currentLineIndex > thisDayHeuristics.LinesLength)
-                            break;
                         allLines.Add(currentLine);
+                        readLinesCount++;
+                        if (readLinesCount == thisDayHeuristics.LinesLength)
+                        {
+                            break;
+                        }
                     }
-                }
-                IEnumerable<LogEntry> parsedLines = logFileParser.ParseLinesForDay(allLines, thisEntryDate, logFileInfo);
-                result.AddRange(parsedLines);
 
-                cancellationManager.ThrowIfCancelled();
+                    IEnumerable<LogEntry> parsedLines = logFileParser.ParseLinesForDay(allLines,
+                        thisEntryDate,
+                        logFileInfo);
+                    result.AddRange(parsedLines);
+
+                    cancellationManager.ThrowIfCancelled();
+                }
             }
+            finally
+            {
+                if (reader != null) reader.Dispose();
+            }
+
+
         }
 
         private int GetMaxDayToSearchUpTo(DateTime to, DateTime logDateTime)

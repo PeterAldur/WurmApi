@@ -8,6 +8,15 @@ namespace AldursLab.WurmApi
     public sealed class CharacterName : IEquatable<CharacterName>
     {
         private readonly string normalizedName;
+        static readonly CharacterName EmptyName = new CharacterName("");
+
+        public static CharacterName Empty
+        {
+            get
+            {
+                return EmptyName;
+            }
+        }
 
         public CharacterName(string name)
         {
@@ -70,5 +79,7 @@ namespace AldursLab.WurmApi
         {
             return Capitalized.ToString(CultureInfo.InvariantCulture);
         }
+
+        public bool IsEmpty { get { return string.IsNullOrWhiteSpace(normalizedName); } }
     }
 }

@@ -8,6 +8,7 @@ namespace AldursLab.WurmApi.Tests
 {
     class WurmApiIntegrationFixtureV2
     {
+        readonly Platform targetPlatform;
         // note: 
         // using default ThreadPool marshallers for both internal and public events
         // while simple marshaller would speed tests, using thread pool can potentially uncover more bugs
@@ -15,11 +16,13 @@ namespace AldursLab.WurmApi.Tests
         WurmApiManager wurmApiManager;
         readonly object locker = new object();
 
-        public WurmApiIntegrationFixtureV2()
+        public WurmApiIntegrationFixtureV2(Platform targetPlatform)
         {
+            this.targetPlatform = targetPlatform;
+
             var handle = TempDirectoriesFactory.CreateEmpty();
             WurmApiDataDir = new DirectoryInfo(handle.AbsolutePath);
-            WurmClientMock = WurmClientMockBuilder.Create();
+            WurmClientMock = WurmClientMockBuilder.Create(targetPlatform);
             LoggerMock = Mock.Create<ILogger>().RedirectToTraceOut();
             HttpWebRequestsMock = Mock.Create<IHttpWebRequests>();
         }
@@ -43,7 +46,7 @@ namespace AldursLab.WurmApi.Tests
                             WurmClientMock.InstallDirectory,
                             HttpWebRequestsMock,
                             LoggerMock,
-                            new WurmApiConfig());
+                            new WurmApiConfig() { Platform = targetPlatform });
                     }
                     return wurmApiManager;
                 }

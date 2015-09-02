@@ -6,10 +6,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
     public class MonthlyFileHeuristics
     {
-        public MonthlyFileHeuristics(DateTime logDate, Dictionary<int, DayInfo> heuristics)
+        public MonthlyFileHeuristics(DateTime logDate, Dictionary<int, DayInfo> heuristics, bool hasValidFilePositions)
         {
             this.heuristics = heuristics;
             LogDate = logDate;
+            HasValidFilePositions = hasValidFilePositions;
         }
 
         private readonly Dictionary<int, DayInfo> heuristics;
@@ -33,5 +34,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
                     "No heuristics available for this day. This should not have happened! Abandon ship!");
             }
         }
+
+        public bool HasValidFilePositions { get; private set; }
     }
 }

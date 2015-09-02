@@ -7,12 +7,20 @@ using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
 {
-    [TestFixture]
+    [TestFixture(Platform.Windows)]
+    [TestFixture(Platform.Linux)]
     class WurmLogsMonitorTests : WurmTests
     {
+        readonly Platform targetPlatform;
+
         protected IWurmLogsMonitor System;
         protected readonly CharacterName TestGuyCharacterName = new CharacterName("Testguy");
         StubbableTime.StubScope scope;
+
+        public WurmLogsMonitorTests(Platform targetPlatform) : base(targetPlatform)
+        {
+            this.targetPlatform = targetPlatform;
+        }
 
         [SetUp]
         public void Setup()
@@ -156,7 +164,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
             {
                 File.Create(filepath).Dispose();
             }
-            File.AppendAllLines(filepath, new[] {contents});
+
+            File.AppendAllText(filepath, contents + (targetPlatform == Platform.Windows ? "\r\n" : "\n"));
         }
     }
 }

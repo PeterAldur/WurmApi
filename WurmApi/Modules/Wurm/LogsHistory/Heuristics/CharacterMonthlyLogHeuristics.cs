@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -44,11 +45,24 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 
         private MonthlyFileHeuristics CreateMonthlyFileHeuristics(WurmLogMonthlyFile wurmLogMonthlyFile)
         {
+            var dayMap = new Dictionary<int, DayInfo>();
+            var days = wurmLogMonthlyFile.DayToHeuristicsMap.OrderBy(pair => pair.Key).ToArray();
+            int totalLines = 0;
+            foreach (var pair in days)
+            {
+                dayMap.Add(pair.Key,
+                    new DayInfo(
+                        pair.Value.FilePositionInBytes,
+                        pair.Value.LinesCount,
+                        totalLines
+                        ));
+                totalLines += pair.Value.LinesCount;
+            }
+
             return new MonthlyFileHeuristics(
                 wurmLogMonthlyFile.LogDate,
-                wurmLogMonthlyFile.DayToHeuristicsMap.ToDictionary(
-                    pair => pair.Key,
-                    pair => new DayInfo(pair.Value.FilePositionInBytes, pair.Value.LinesCount)));
+                dayMap,
+                wurmLogMonthlyFile.HasValidBytePositions);
         }
 
         private WurmLogMonthlyFile GetEntityForFile(LogFileInfo logFileInfo)
@@ -64,12 +78,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
             }
 
             FileInfo fileInfo = new FileInfo(logFileInfo.FullPath);
-            if (fileData.LastKnownSizeInBytes < fileInfo.Length)
+            var fileLength = fileInfo.Length;
+            if (fileData.LastKnownSizeInBytes < fileLength)
             {
                 var extractor = monthlyHeuristicsExtractorFactory.Create(logFileInfo);
-                var results = extractor.ExtractDayToPositionMapAsync();
+                var results = extractor.ExtractDayToPositionMap();
                 fileData.LogDate = results.LogDate;
                 fileData.DayToHeuristicsMap = results.Heuristics;
+                fileData.HasValidBytePositions = results.HasValidBytePositions;
+                fileData.LastKnownSizeInBytes = fileLength;
                 needsSaving = true;
             }
             fileData.LastUpdated = Time.Get.LocalNowOffset; 

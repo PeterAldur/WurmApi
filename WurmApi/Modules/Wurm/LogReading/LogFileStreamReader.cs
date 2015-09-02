@@ -7,6 +7,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
 {
     abstract class LogFileStreamReader : IDisposable
     {
+        // Mono implementation differs from .NET, file byte positions are not as easy to obtain
+        // Do not use trackFileBytePositions outside .NET, rely on line indexes, this is much slower but at least it works.
+
+        static readonly Func<StreamReader, int> GetCharPosAccessor =
+            ReflectionHelper.GetFieldAccessor<StreamReader, int>("charPos");
+
+        static readonly Func<StreamReader, int> GetCharLenAccessor =
+            ReflectionHelper.GetFieldAccessor<StreamReader, int>("charLen");
+
         private readonly long startPosition;
         private readonly bool trackFileBytePositions;
         protected readonly StreamReader StreamReader;
@@ -28,7 +37,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             this.trackFileBytePositions = trackFileBytePositions;
 
             var stream = new FileStream(fileFullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            StreamReader = new StreamReader(stream, Encoding.Default);
+            StreamReader = new StreamReader(stream, Encoding.UTF8);
             if (startPosition != 0)
             {
                 StreamReader.BaseStream.Seek(startPosition, SeekOrigin.Begin);
@@ -41,9 +50,19 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
         /// </summary>
         public long LastReadLineStartPosition { get; private set; }
 
-        public void Seek(long offsetFromBeginning)
+        public void Seek(long byteOffsetFromBeginning)
         {
-            StreamReader.BaseStream.Seek(offsetFromBeginning, SeekOrigin.Begin);
+            StreamReader.BaseStream.Seek(byteOffsetFromBeginning, SeekOrigin.Begin);
+        }
+
+        public void SeekToLineIndex(int index)
+        {
+            for (int i = 0; i < index; i++)
+            {
+                // simply read all lines until index is reached
+                // this is not efficient, but works
+                TryReadNextLine();
+            }
         }
 
         private void UpdateCurrentLineStartPosition()
@@ -52,9 +71,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             long charpos = GetCharPosAccessor(StreamReader);
             LastReadLineStartPosition = StreamReader.BaseStream.Position - charlen + charpos;
         }
-
-        private static readonly Func<StreamReader, int> GetCharPosAccessor = ReflectionHelper.GetFieldAccessor<StreamReader, int>("charPos");
-        private static readonly Func<StreamReader, int> GetCharLenAccessor = ReflectionHelper.GetFieldAccessor<StreamReader, int>("charLen");
 
         /// <summary>
         /// -1 if no lines read yet.
@@ -82,13 +98,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
                 return null;
             }
             StringBuilder.Clear();
-            LastReadLineIndex++;
+            
             if (trackFileBytePositions)
             {
                 UpdateCurrentLineStartPosition();
             }
 
-            return ReadCharsForNextLine();
+            var chars = ReadCharsForNextLine();
+            LastReadLineIndex++;
+            return chars;
         }
 
         protected abstract string ReadCharsForNextLine();
@@ -97,5 +115,23 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
         {
             StreamReader.Dispose();
         }
+
+        ~LogFileStreamReader()
+        {
+            var sr = StreamReader;
+            if (sr != null)
+            {
+                try
+                {
+                    sr.Dispose();
+                }
+                catch (Exception)
+                {
+                    // nothing more can be done
+                }
+            }
+        }
+
+        public abstract void FastForwardLinesCount(int lineCountToSkip);
     }
 }

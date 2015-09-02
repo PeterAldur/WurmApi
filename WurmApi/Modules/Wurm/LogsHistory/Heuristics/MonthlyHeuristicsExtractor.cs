@@ -2,6 +2,7 @@
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders;
 using AldursLab.WurmApi.Utility;
+using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 {
@@ -30,26 +31,42 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
     /// </remarks>
     class MonthlyHeuristicsExtractor
     {
-        private readonly LogFileInfo logFileInfo;
-        private readonly LogFileStreamReaderFactory logFileStreamReaderFactory;
-        private readonly ILogger logger;
+        readonly LogFileInfo logFileInfo;
+        readonly LogFileStreamReaderFactory logFileStreamReaderFactory;
+        readonly ILogger logger;
+        readonly IWurmApiConfig wurmApiConfig;
 
         public MonthlyHeuristicsExtractor(
             LogFileInfo logFileInfo,
             LogFileStreamReaderFactory logFileStreamReaderFactory,
-            ILogger logger)
+            ILogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logFileInfo == null) throw new ArgumentNullException("logFileInfo");
             if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
             if (logger == null) throw new ArgumentNullException("logger");
+            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
             this.logFileInfo = logFileInfo;
             this.logFileStreamReaderFactory = logFileStreamReaderFactory;
             this.logger = logger;
+            this.wurmApiConfig = wurmApiConfig;
         }
 
         public HeuristicsExtractionResult ExtractDayToPositionMap()
         {
-            using (var reader = logFileStreamReaderFactory.Create(logFileInfo.FullPath, startPosition: 0, trackFileBytePositions: true))
+            if (wurmApiConfig.Platform == Platform.Windows)
+            {
+                return ExtractForWindows();
+            }
+            else
+            {
+                return ExtractForNonWindows();
+            }
+        }
+
+        HeuristicsExtractionResult ExtractForWindows()
+        {
+            using (var reader = logFileStreamReaderFactory.Create(
+                logFileInfo.FullPath, startPosition: 0, trackFileBytePositions: true))
             {
                 string line;
                 IMonthlyHeuristicsDataBuilder builder = new DataBuilderV2(logFileInfo.FileName, Time.Get.LocalNow, logger);
@@ -60,13 +77,28 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
                 }
                 builder.Complete(reader.LastReadLineStartPosition);
                 var result = builder.GetResult();
+                result.HasValidBytePositions = true;
                 return result;
             }
         }
 
-        public HeuristicsExtractionResult ExtractDayToPositionMapAsync()
+        HeuristicsExtractionResult ExtractForNonWindows()
         {
-            return ExtractDayToPositionMap();
+            using (var reader = logFileStreamReaderFactory.Create(
+                logFileInfo.FullPath, startPosition: 0, trackFileBytePositions: false))
+            {
+                string line;
+                IMonthlyHeuristicsDataBuilder builder = new DataBuilderV2(logFileInfo.FileName, Time.Get.LocalNow, logger);
+
+                while ((line = reader.TryReadNextLine()) != null)
+                {
+                    builder.ProcessLine(line, 0);
+                }
+                builder.Complete(0);
+                var result = builder.GetResult();
+                result.HasValidBytePositions = false;
+                return result;
+            }
         }
     }
 }

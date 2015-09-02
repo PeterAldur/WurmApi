@@ -13,9 +13,13 @@ using Telerik.JustMock;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
 {
-    [TestFixture]
+    [TestFixture(Platform.Windows)]
+    [TestFixture(Platform.Linux)]
+    [TestFixture(Platform.Mac)]
     class MonthlyHeuristicsExtractorTests : TestsBase
     {
+        readonly Platform targetPlatform;
+
         private FileInfo testFile;
         private FileInfo emptyTestFile;
         private FileInfo invalidTestFile;
@@ -26,6 +30,11 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         private FileInfo fileEvent201412;
 
         private DirectoryHandle logsDir;
+
+        public MonthlyHeuristicsExtractorTests(Platform targetPlatform)
+        {
+            this.targetPlatform = targetPlatform;
+        }
 
         [SetUp]
         public void Setup()
@@ -57,7 +66,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             return new MonthlyHeuristicsExtractor(
                 factory.Create(info),
                 new LogFileStreamReaderFactory(new WurmApiConfig()), 
-                Mock.Create<ILogger>());
+                Mock.Create<ILogger>(),
+                new WurmApiConfig() { Platform = targetPlatform });
         }
 
         [Test]
@@ -191,7 +201,11 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             long filePosition,
             int linesCount)
         {
-            Expect(result.Heuristics[day].FilePositionInBytes, EqualTo(filePosition));
+            // file positions are supported only on Windows
+            if (targetPlatform == Platform.Windows)
+            {
+                Expect(result.Heuristics[day].FilePositionInBytes, EqualTo(filePosition));
+            }
             Expect(result.Heuristics[day].LinesCount, EqualTo(linesCount));
         }
 

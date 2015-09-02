@@ -118,7 +118,7 @@
     <Compile Include="Helpers\Subscriber.cs" />
     <Compile Include="TempDirs\TempDirectoriesFactory.cs" />
     <Compile Include="TempDirs\TempDirectoriesManager.cs" />
-    <Compile Include="Tests\Modules\Wurm\LogReading\LogFileStreamReaderTests.cs" />
+    <Compile Include="Tests\Modules\Wurm\LogReading\LogFileStreamReaderLinuxTests.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\CustomDeserializationErrorHandler.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\Dtos.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\PersistentData.cs" />

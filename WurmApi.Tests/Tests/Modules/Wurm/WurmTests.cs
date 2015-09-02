@@ -7,8 +7,18 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm
 {
     abstract class WurmTests : TestsBase
     {
+        readonly Platform targetPlatform;
+
         internal WurmApiIntegrationFixtureV2 Fixture { get; private set; }
         internal WurmClientMock ClientMock { get { return Fixture.WurmClientMock; } }
+
+        public WurmTests() : this(Platform.Windows) 
+        {}
+
+        public WurmTests(Platform targetPlatform)
+        {
+            this.targetPlatform = targetPlatform;
+        }
 
         [SetUp]
         public void WurmTestsSetup()
@@ -19,7 +29,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm
             //Trace.WriteLine(string.Format("ThreadPool: Max worker threads: {0}, Max IO ops: {1}", maxo, maxioo));
             //Trace.WriteLine(string.Format("ThreadPool: Min worker threads: {0}, Min IO ops: {1}", mino, minioo));
 
-            Fixture = new WurmApiIntegrationFixtureV2();
+            Fixture = new WurmApiIntegrationFixtureV2(targetPlatform);
             WurmApiTuningParams.PublicEventMarshallerDelay = TimeSpan.FromMilliseconds(1);
         }
 

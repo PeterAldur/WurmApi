@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AldursLab.WurmApi.Extensions.DotNet.Collections.Generic;
 using AldursLab.WurmApi.Tests.TempDirs;
 using JetBrains.Annotations;
 using Telerik.JustMock;
@@ -12,6 +13,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
     class WurmClientMock : IDisposable
     {
         readonly DirectoryHandle dir;
+        readonly Platform targetPlatform;
 
         DirectoryInfo WurmDir { get; set; }
         DirectoryInfo ConfigsDir { get; set; }
@@ -22,10 +24,11 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 
         readonly List<WurmConfig> configs = new List<WurmConfig>();
 
-        public  WurmClientMock([NotNull] DirectoryHandle dir, bool createBasicDirs)
+        public  WurmClientMock([NotNull] DirectoryHandle dir, bool createBasicDirs, Platform targetPlatform)
         {
             if (dir == null) throw new ArgumentNullException("dir");
             this.dir = dir;
+            this.targetPlatform = targetPlatform;
 
             var dirinfo = new DirectoryInfo(dir.AbsolutePath);
             WurmDir = dirinfo.CreateSubdirectory("wurm");
@@ -89,7 +92,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
         public WurmPlayer AddPlayer(string name)
         {
             CreatePlayersDir();
-            var p = new WurmPlayer(PlayersDir.CreateSubdirectory(name), name);
+            var p = new WurmPlayer(PlayersDir.CreateSubdirectory(name), name, targetPlatform);
             if (players.Any(player => player.Name == name))
             {
                 throw new InvalidOperationException("player already exists");
@@ -119,6 +122,23 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
         public WurmClientMock PopulateFromDir(string sourceDirFullPath)
         {
             dir.AmmendFromSourceDirectory(sourceDirFullPath, "wurm");
+            if (targetPlatform != Platform.Windows)
+            {
+                // replace all CRLF with LF, to simulate Linux log files
+                var allLogFiles =
+                    WurmDir.EnumerateDirectories("players")
+                           .SelectMany(di => di.GetDirectories())
+                           .Select(di => di.GetDirectories("logs").SingleOrDefault())
+                           .Where(di => di != null)
+                           .SelectMany(di => di.GetFiles());
+
+                foreach (var fi in allLogFiles)
+                {
+                    var content = File.ReadAllText(fi.FullName);
+                    content = content.Replace("\r\n", "\n");
+                    File.WriteAllText(fi.FullName, content);
+                }
+            }
             return this;
         }
 

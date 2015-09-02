@@ -18,14 +18,30 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             long startPosition = 0,
             bool trackFileBytePositions = false)
         {
+            // why are there 2 stream readers?
+            // wurm has a nasty habbit of adding /n in log lines on windows, 
+            // this happens if a newline-separated text is pasted into chat input
             if (wurmApiConfig.Platform == Platform.Windows)
             {
                 return new LogFileCrLfStreamReader(fileFullPath, startPosition, trackFileBytePositions);
             }
             else
             {
-                return new LogFileLfStreamReader(fileFullPath, startPosition, trackFileBytePositions);
+                if (trackFileBytePositions)
+                {
+                    throw new NotSupportedException("trackFileBytePositions is not supported outside Windows platform");
+                }
+                return new LogFileLfStreamReader(fileFullPath, startPosition, false);
             }
+        }
+
+        public LogFileStreamReader CreateWithLineCountFastForward(
+            string fileFullPath,
+            int lineCountToSkip)
+        {
+            var reader = Create(fileFullPath, 0, false);
+            reader.FastForwardLinesCount(lineCountToSkip);
+            return reader;
         }
     }
 }

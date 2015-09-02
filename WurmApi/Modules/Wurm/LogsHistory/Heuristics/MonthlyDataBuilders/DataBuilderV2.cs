@@ -175,7 +175,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
             {
                 if (record.Day > day)
                 {
-                    FinalizeLastDay(dayToHeuristicsMap, day, lineCounter, dayBeginFilePosition);
+                    FinalizeCurrentDay(dayToHeuristicsMap, day, lineCounter, dayBeginFilePosition);
                     FillGaps(dayToHeuristicsMap, day, record.Day, record.FilePositionInBytes);
 
                     dayBeginFilePosition = record.FilePositionInBytes;
@@ -185,7 +185,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
                 lineCounter++;
             }
 
-            FinalizeLastDay(dayToHeuristicsMap, day, lineCounter, dayBeginFilePosition, true);
+            FinalizeCurrentDay(dayToHeuristicsMap, day, lineCounter, dayBeginFilePosition, true);
 
         }
 
@@ -201,7 +201,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
             }
         }
 
-        private void FinalizeLastDay(
+        private void FinalizeCurrentDay(
             Dictionary<int, WurmLogMonthlyFileHeuristics> dayToHeuristicsMap,
             int day,
             int lineCounter,

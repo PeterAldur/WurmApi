@@ -2,7 +2,7 @@ namespace AldursLab.WurmApi
 {
     public enum LogType
     {
-        Unspecified,
+        Unspecified = 0,
         Combat,
         Event,
         Friends,

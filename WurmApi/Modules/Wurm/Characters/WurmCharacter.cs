@@ -164,5 +164,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             configFileWatcher.EnableRaisingEvents = false;
             configFileWatcher.Dispose();
         }
+
+        public override string ToString()
+        {
+            return this.Name.ToString();
+        }
     }
 }

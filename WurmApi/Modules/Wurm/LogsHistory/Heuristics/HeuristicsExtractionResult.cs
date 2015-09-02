@@ -8,5 +8,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
     {
         public DateTime LogDate { get; set; }
         public Dictionary<int, WurmLogMonthlyFileHeuristics> Heuristics { get; set; }
+
+        public bool HasValidBytePositions { get; set; }
     }
 }
