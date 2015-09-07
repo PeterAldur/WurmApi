@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Utility
     sealed class RepeatableThreadedOperation : IDisposable
     {
         [CanBeNull]
-        readonly IEventMarshaller eventMarshaller;
+        readonly IWurmApiEventMarshaller eventMarshaller;
         readonly Task task;
         volatile bool exit = false;
         readonly AutoResetEvent autoResetEvent = new AutoResetEvent(false);
@@ -24,7 +24,7 @@ namespace AldursLab.WurmApi.Utility
         /// Delegate to execute after receiving signals.
         /// </param>
         /// <param name="eventMarshaller">Optional thread marshaller of the events.</param>
-        public RepeatableThreadedOperation([NotNull] Action job, IEventMarshaller eventMarshaller = null)
+        public RepeatableThreadedOperation([NotNull] Action job, IWurmApiEventMarshaller eventMarshaller = null)
         {
             this.eventMarshaller = eventMarshaller;
 

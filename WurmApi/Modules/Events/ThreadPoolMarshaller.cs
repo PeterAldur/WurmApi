@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Events
 {
-    class ThreadPoolMarshaller : IEventMarshaller
+    class ThreadPoolMarshaller : IWurmApiEventMarshaller
     {
         readonly ILogger logger;
 

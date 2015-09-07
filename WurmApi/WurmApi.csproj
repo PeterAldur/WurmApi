@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IWurmApiEventMarshaller.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileCrLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileStreamReader.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="Extensions\DotNet\TimeSpanExtensions.cs" />
     <Compile Include="FileSystem\DirectoryOps.cs" />
     <Compile Include="FileSystem\TransactionalFileOps.cs" />
-    <Compile Include="IEventMarshaller.cs" />
     <Compile Include="JobRunning\TaskManager.cs" />
     <Compile Include="Modules\Events\Public\IEventInvoker.cs" />
     <Compile Include="Modules\Wurm\LogsHistory\Heuristics\PersistentModel\WurmCharacterLogsEntity.cs" />

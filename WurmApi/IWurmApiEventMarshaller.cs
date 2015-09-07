@@ -5,7 +5,7 @@ namespace AldursLab.WurmApi
     /// <summary>
     /// Marshalls public WurmApi event invocations to designated thread.
     /// </summary>
-    public interface IEventMarshaller
+    public interface IWurmApiEventMarshaller
     {
         /// <summary>
         /// Invokes provided action on a designated thread.

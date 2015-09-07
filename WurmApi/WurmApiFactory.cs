@@ -40,7 +40,7 @@ namespace AldursLab.WurmApi
         /// </param>
         /// <returns></returns>
         public static IWurmApi Create(string dataDirPath = null, ILogger logger = null,
-            IEventMarshaller eventMarshaller = null, IWurmInstallDirectory installDirectory = null, WurmApiConfig config = null)
+            IWurmApiEventMarshaller eventMarshaller = null, IWurmInstallDirectory installDirectory = null, WurmApiConfig config = null)
         {
             if (dataDirPath == null)
             {

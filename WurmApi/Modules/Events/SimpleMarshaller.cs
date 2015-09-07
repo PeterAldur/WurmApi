@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi.Modules.Events
 {
-    class SimpleMarshaller : IEventMarshaller
+    class SimpleMarshaller : IWurmApiEventMarshaller
     {
         public void Marshal(Action action)
         {

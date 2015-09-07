@@ -37,7 +37,7 @@ namespace AldursLab.WurmApi
             WurmApiDataDirectory dataDirectory,
             IWurmInstallDirectory installDirectory,
             ILogger wurmApiLogger,
-            IEventMarshaller publicEventMarshaller,
+            IWurmApiEventMarshaller publicEventMarshaller,
             WurmApiConfig wurmApiConfig)
         {
             var threadPoolMarshaller = new ThreadPoolMarshaller(wurmApiLogger);
@@ -75,8 +75,8 @@ namespace AldursLab.WurmApi
         }
 
         void ConstructSystems(string wurmApiDataDirectoryFullPath, IWurmInstallDirectory installDirectory,
-            IHttpWebRequests httpWebRequests, ILogger logger, IEventMarshaller publicEventMarshaller,
-            IEventMarshaller internalEventMarshaller, WurmApiConfig wurmApiConfig)
+            IHttpWebRequests httpWebRequests, ILogger logger, IWurmApiEventMarshaller publicEventMarshaller,
+            IWurmApiEventMarshaller internalEventMarshaller, WurmApiConfig wurmApiConfig)
         {
             IWurmApiConfig internalWurmApiConfig = new WurmApiConfig()
             {
