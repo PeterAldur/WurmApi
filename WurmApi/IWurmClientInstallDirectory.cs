@@ -1,6 +1,6 @@
 ﻿namespace AldursLab.WurmApi
 {
-    public interface IWurmInstallDirectory
+    public interface IWurmClientInstallDirectory
     {
         string FullPath { get; }
     }

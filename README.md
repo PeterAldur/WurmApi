@@ -92,7 +92,7 @@ If autodetection doesn't work for Wurm Client install directory, it can be overr
 
 Implement install directory interface:
 
-	class WurmInstallDir : IWurmInstallDirectory
+	class WurmInstallDir : IWurmClientInstallDirectory
     {
         public string FullPath { get { return @"C:\games\Wurm"; } }
     }

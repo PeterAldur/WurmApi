@@ -35,7 +35,7 @@ namespace AldursLab.WurmApi
         /// </summary>
         internal WurmApiManager(
             WurmApiDataDirectory dataDirectory,
-            IWurmInstallDirectory installDirectory,
+            IWurmClientInstallDirectory installDirectory,
             ILogger wurmApiLogger,
             IWurmApiEventMarshaller publicEventMarshaller,
             WurmApiConfig wurmApiConfig)
@@ -60,7 +60,7 @@ namespace AldursLab.WurmApi
         /// </summary>
         internal WurmApiManager(
             string dataDir,
-            IWurmInstallDirectory installDirectory,
+            IWurmClientInstallDirectory installDirectory,
             IHttpWebRequests httpWebRequests,
             ILogger logger,
             WurmApiConfig wurmApiConfig)
@@ -74,7 +74,7 @@ namespace AldursLab.WurmApi
                 wurmApiConfig);
         }
 
-        void ConstructSystems(string wurmApiDataDirectoryFullPath, IWurmInstallDirectory installDirectory,
+        void ConstructSystems(string wurmApiDataDirectoryFullPath, IWurmClientInstallDirectory installDirectory,
             IHttpWebRequests httpWebRequests, ILogger logger, IWurmApiEventMarshaller publicEventMarshaller,
             IWurmApiEventMarshaller internalEventMarshaller, WurmApiConfig wurmApiConfig)
         {

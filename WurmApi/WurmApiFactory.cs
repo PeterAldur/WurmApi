@@ -40,7 +40,7 @@ namespace AldursLab.WurmApi
         /// </param>
         /// <returns></returns>
         public static IWurmApi Create(string dataDirPath = null, ILogger logger = null,
-            IWurmApiEventMarshaller eventMarshaller = null, IWurmInstallDirectory installDirectory = null, WurmApiConfig config = null)
+            IWurmApiEventMarshaller eventMarshaller = null, IWurmClientInstallDirectory installDirectory = null, WurmApiConfig config = null)
         {
             if (dataDirPath == null)
             {
@@ -57,7 +57,7 @@ namespace AldursLab.WurmApi
             }
             if (installDirectory == null)
             {
-                installDirectory = new WurmInstallDirectory();
+                installDirectory = WurmClientInstallDirectory.AutoDetect();
             }
             if (config == null)
             {
