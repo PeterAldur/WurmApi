@@ -38,11 +38,11 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
                 CreateBasicDirectories();
             }
 
-            InstallDirectory = Mock.Create<IWurmInstallDirectory>();
+            InstallDirectory = Mock.Create<IWurmClientInstallDirectory>();
             InstallDirectory.Arrange(directory => directory.FullPath).Returns(Path.Combine(dir.AbsolutePath, "wurm"));
         }
 
-        public IWurmInstallDirectory InstallDirectory { get; private set; }
+        public IWurmClientInstallDirectory InstallDirectory { get; private set; }
 
         public IEnumerable<WurmPlayer> Players
         {
