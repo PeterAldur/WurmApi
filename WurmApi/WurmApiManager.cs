@@ -80,7 +80,8 @@ namespace AldursLab.WurmApi
         {
             IWurmApiConfig internalWurmApiConfig = new WurmApiConfig()
             {
-                Platform = wurmApiConfig.Platform
+                Platform = wurmApiConfig.Platform,
+                ClearAllCaches = wurmApiConfig.ClearAllCaches
             };
 
             LogFileStreamReaderFactory logFileStreamReaderFactory = Wire(new LogFileStreamReaderFactory(internalWurmApiConfig));
@@ -127,6 +128,11 @@ namespace AldursLab.WurmApi
                     taskManager,
                     logFileStreamReaderFactory));
             var heuristicsDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmLogsHistory");
+            if (internalWurmApiConfig.ClearAllCaches)
+            {
+                ClearDir(heuristicsDataDirectory);
+            }
+
             WurmLogsHistory logsHistory =
                 Wire(new WurmLogsHistory(logFiles,
                     logger,
@@ -143,6 +149,10 @@ namespace AldursLab.WurmApi
             WurmAutoruns autoruns = Wire(new WurmAutoruns(wurmConfigs, characterDirectories, logger));
 
             var wurmServerHistoryDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServerHistory");
+            if (internalWurmApiConfig.ClearAllCaches)
+            {
+                ClearDir(wurmApiDataDirectoryFullPath);
+            }
             WurmServerHistory wurmServerHistory =
                 Wire(new WurmServerHistory(wurmServerHistoryDataDirectory,
                     logsHistory,
@@ -152,6 +162,10 @@ namespace AldursLab.WurmApi
                     logFiles));
 
             var wurmServersDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServers");
+            if (internalWurmApiConfig.ClearAllCaches)
+            {
+                ClearDir(wurmServersDataDirectory);
+            }
             WurmServers wurmServers =
                 Wire(new WurmServers(logsHistory,
                     logsMonitor,
@@ -179,13 +193,20 @@ namespace AldursLab.WurmApi
             LogsMonitor = logsMonitor;
             Servers = wurmServers;
             WurmLogFiles = logFiles;
-
-            // internal systems
-
             WurmServerHistory = wurmServerHistory;
             WurmCharacterDirectories = characterDirectories;
             WurmConfigDirectories = configDirectories;
             InternalEventAggregator = internalEventAggregator;
+            Paths = paths;
+        }
+
+        void ClearDir(string directoryPath)
+        {
+            var di = new DirectoryInfo(directoryPath);
+            if (di.Exists)
+            {
+                di.Delete(recursive:true);
+            }
         }
 
         public IWurmAutoruns Autoruns { get; private set; }
@@ -195,6 +216,16 @@ namespace AldursLab.WurmApi
         public IWurmLogsHistory LogsHistory { get; private set; }
         public IWurmLogsMonitor LogsMonitor { get; private set; }
         public IWurmServers Servers { get; private set; }
+
+        public IWurmPaths Paths { get; private set; }
+
+        public IWurmServerHistory WurmServerHistory { get; private set; }
+        public IWurmCharacterDirectories WurmCharacterDirectories { get; private set; }
+        public IWurmConfigDirectories WurmConfigDirectories { get; private set; }
+        public IWurmLogFiles WurmLogFiles { get; private set; }
+
+        internal IInternalEventAggregator InternalEventAggregator { get; private set; }
+        internal IHttpWebRequests HttpWebRequests { get; private set; }
 
         public void Dispose()
         {
@@ -217,15 +248,6 @@ namespace AldursLab.WurmApi
             }
             return system;
         }
-
-        // internal systems
-
-        internal IWurmServerHistory WurmServerHistory { get; private set; }
-        internal IWurmCharacterDirectories WurmCharacterDirectories { get; private set; }
-        internal IWurmConfigDirectories WurmConfigDirectories { get; private set; }
-        internal IInternalEventAggregator InternalEventAggregator { get; private set; }
-        internal IHttpWebRequests HttpWebRequests { get; private set; }
-        internal IWurmLogFiles WurmLogFiles { get; private set; }
     }
 
     internal class WurmApiTuningParams
@@ -250,11 +272,18 @@ namespace AldursLab.WurmApi
         /// Current operating system
         /// </summary>
         public Platform Platform { get; set; }
+
+        /// <summary>
+        /// If set, will clear all WurmApi caches, such as log searching heuristics.
+        /// </summary>
+        public bool ClearAllCaches { get; set; }
     }
 
     internal interface IWurmApiConfig
     {
         Platform Platform { get; }
+
+        bool ClearAllCaches { get; }
     }
 
     /// <summary>

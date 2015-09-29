@@ -9,32 +9,58 @@ namespace AldursLab.WurmApi
     public interface IWurmApi : IDisposable
     {
         /// <summary>
-        /// API that allows to interact and edit wurm client autorun files.
+        /// Wurm client autorun files. Check for commands, add commands.
         /// </summary>
         IWurmAutoruns Autoruns { get; }
         /// <summary>
-        /// API that allows to obtain information about state of wurm characters.
+        /// State of in-game wurm characters.
         /// </summary>
         IWurmCharacters Characters { get; }
         /// <summary>
-        /// API that allows to read and edit wurm client configs.
+        /// State of wurm client configs.
         /// </summary>
         IWurmConfigs Configs { get; }
         /// <summary>
-        /// API that defines game log types supported by WurmApi.
+        /// Definitions of game log types supported by WurmApi.
         /// </summary>
         IWurmLogDefinitions LogDefinitions { get; }
         /// <summary>
-        /// API that allows searching through game log files.
+        /// Enables searching through game log files.
         /// </summary>
         IWurmLogsHistory LogsHistory { get; }
         /// <summary>
-        /// API that monitors game log files in real time.
+        /// Enables monitoring of game log files for new events in real time.
         /// </summary>
         IWurmLogsMonitor LogsMonitor { get; }
         /// <summary>
-        /// API that provides information about wurm servers.
+        /// Provides information about specific wurm servers.
         /// </summary>
         IWurmServers Servers { get; }
+
+        /// <summary>
+        /// Directory paths to Wurm Game Client.
+        /// </summary>
+        IWurmPaths Paths { get; }
+
+        /// <summary>
+        /// Low level access to server history in the context of particular character.
+        /// Similar information can be obtained through IWurmCharacter.
+        /// </summary>
+        IWurmServerHistory WurmServerHistory { get; }
+
+        /// <summary>
+        /// Low level access to wurm client characters directory.
+        /// </summary>
+        IWurmCharacterDirectories WurmCharacterDirectories { get; }
+
+        /// <summary>
+        /// Low level access to wurm client configs directory.
+        /// </summary>
+        IWurmConfigDirectories WurmConfigDirectories { get; }
+
+        /// <summary>
+        /// Low level access to wurm client logs directory.
+        /// </summary>
+        IWurmLogFiles WurmLogFiles { get; }
     }
 }

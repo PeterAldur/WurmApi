@@ -23,5 +23,8 @@ namespace AldursLab.WurmApi
         GlJennKellon,
         Hots,
         GlHots,
+        Trade,
+        Support,
+        Help
     }
 }

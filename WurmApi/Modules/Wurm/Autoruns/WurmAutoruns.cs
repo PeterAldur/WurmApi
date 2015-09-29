@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
@@ -34,14 +35,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
                 foreach (var path in allPossiblePaths)
                 {
                     var file = new FileInfo(Path.Combine(path, "autorun.txt"));
-                    if (file.Exists)
-                    {
-                        AppendCommandIfNotInFile(file, command);
-                    }
-                    else
-                    {
-                        LogThatFileNotFound(file);
-                    }
+                    EnsureFileExists(file);
+                    AppendCommandIfNotInFile(file, command);
                 }
             }
         }
@@ -56,25 +51,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
                 foreach (var path in allPossiblePaths)
                 {
                     var file = new FileInfo(Path.Combine(path, "autorun.txt"));
-                    if (file.Exists)
+                    EnsureFileExists(file);
+                    if (!CommandExists(file, command))
                     {
-                        if (!CommandExists(file, command))
-                        {
-                            filesMissingCommand.Add(file.FullName);
-                        }
-                    }
-                    else
-                    {
-                        LogThatFileNotFound(file);
+                        filesMissingCommand.Add(file.FullName);
                     }
                 }
                 return filesMissingCommand;
             }
         }
 
-        void LogThatFileNotFound(FileInfo file)
+        void EnsureFileExists(FileInfo file)
         {
-            logger.Log(LogLevel.Warn, "autorun.txt file was not found at path " + file.FullName, this, null);
+            if (!file.Exists)
+            {
+                File.WriteAllText(file.FullName, string.Empty, Encoding.UTF8);
+            }
         }
 
         private IEnumerable<string> GetAllAutorunFullFilePaths()

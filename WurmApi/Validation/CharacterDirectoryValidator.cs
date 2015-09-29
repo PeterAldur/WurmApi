@@ -33,7 +33,7 @@ namespace AldursLab.WurmApi.Validation
                 directories.FirstOrDefault(info => info.Name.Equals("logs", StringComparison.InvariantCultureIgnoreCase));
             if (logsDir == null)
             {
-                throw new ValidationException("logs dir does not exist");
+                throw new ValidationException("logs subdir does not exist, character dir path: " + directoryPath);
             }
         }
     }

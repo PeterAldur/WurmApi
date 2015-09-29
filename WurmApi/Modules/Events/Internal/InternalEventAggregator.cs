@@ -28,7 +28,6 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         /// </summary>
         public InternalEventAggregator() 
         {
-            //todo: add message counter with debug-type logging and invocation performance measuring
             PublicationThreadMarshaller = DefaultPublicationThreadMarshaller;
         }
 

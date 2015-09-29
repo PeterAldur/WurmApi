@@ -36,7 +36,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 
         void ProcessLine(string line, ReadResult readResult)
         {
-            // no, this is not a typo. :)
+            // no, this is not my typo. :)
             if (line.Contains("custim_timer_source"))
             {
                 int? val = this.ExtractSettingNumericValue(line);
