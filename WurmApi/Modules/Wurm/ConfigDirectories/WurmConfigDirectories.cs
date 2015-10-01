@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
         readonly IInternalEventAggregator eventAggregator;
 
         public WurmConfigDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator,
-            TaskManager taskManager, ILogger logger)
+            TaskManager taskManager, IWurmApiLogger logger)
             : base(
                 wurmPaths.ConfigsDirFullPath,
                 taskManager,

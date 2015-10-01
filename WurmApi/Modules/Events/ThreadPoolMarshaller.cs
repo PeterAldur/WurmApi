@@ -6,9 +6,9 @@ namespace AldursLab.WurmApi.Modules.Events
 {
     class ThreadPoolMarshaller : IWurmApiEventMarshaller
     {
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
 
-        public ThreadPoolMarshaller([NotNull] ILogger logger)
+        public ThreadPoolMarshaller([NotNull] IWurmApiLogger logger)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             this.logger = logger;

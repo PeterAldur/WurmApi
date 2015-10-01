@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Utility
         readonly TaskManager taskManager;
         readonly Action onChanged;
         readonly Action<string> validateDirectory;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly FileSystemWatcher fileSystemWatcher;
 
         IReadOnlyDictionary<string, string> dirNameToFullPathMap = new Dictionary<string, string>();
@@ -27,7 +27,7 @@ namespace AldursLab.WurmApi.Utility
         readonly Blacklist<string> directoryBlacklist;
 
         public WurmSubdirsMonitor([NotNull] string directoryFullPath, [NotNull] TaskManager taskManager,
-            [NotNull] Action onChanged, [NotNull] ILogger logger,
+            [NotNull] Action onChanged, [NotNull] IWurmApiLogger logger,
             [NotNull] Action<string> validateDirectory)
         {
             if (directoryFullPath == null) throw new ArgumentNullException("directoryFullPath");

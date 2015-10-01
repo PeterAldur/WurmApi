@@ -13,7 +13,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly IWurmConfigs wurmConfigs;
         readonly IWurmServers wurmServers;
         readonly IWurmServerHistory wurmServerHistory;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly TaskManager taskManager;
 
         readonly FileSystemWatcher configFileWatcher;
@@ -27,7 +27,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         public WurmCharacter([NotNull] CharacterName name, [NotNull] string playerDirectoryFullPath,
             [NotNull] IWurmConfigs wurmConfigs, [NotNull] IWurmServers wurmServers,
             [NotNull] IWurmServerHistory wurmServerHistory,
-            [NotNull] ILogger logger, 
+            [NotNull] IWurmApiLogger logger, 
             [NotNull] TaskManager taskManager)
         {
             if (name == null) throw new ArgumentNullException("name");

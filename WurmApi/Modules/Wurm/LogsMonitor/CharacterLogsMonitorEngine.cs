@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
     class CharacterLogsMonitorEngine : IHandle<CharacterLogFilesAddedOrRemoved>
     {
         readonly CharacterName characterName;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly SingleFileMonitorFactory singleFileMonitorFactory;
         readonly IWurmCharacterLogFiles wurmCharacterLogFiles;
 
@@ -24,7 +24,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public CharacterLogsMonitorEngine(
             [NotNull] CharacterName characterName,
-            [NotNull] ILogger logger,
+            [NotNull] IWurmApiLogger logger,
             [NotNull] SingleFileMonitorFactory singleFileMonitorFactory,
             [NotNull] IWurmCharacterLogFiles wurmCharacterLogFiles, 
             [NotNull] IInternalEventAggregator internalEventAggregator)

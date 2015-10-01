@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
     {
         private readonly IHttpWebRequests httpWebRequests;
         private readonly IWurmServerList wurmServerList;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
 
         readonly WebFeedExtractor extractor;
 
@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         private DateTimeOffset lastSync = DateTimeOffset.MinValue;
 
-        public WebFeeds(IHttpWebRequests httpWebRequests, IWurmServerList wurmServerList, ILogger logger)
+        public WebFeeds(IHttpWebRequests httpWebRequests, IWurmServerList wurmServerList, IWurmApiLogger logger)
         {
             if (httpWebRequests == null) throw new ArgumentNullException("httpWebRequests");
             if (wurmServerList == null) throw new ArgumentNullException("wurmServerList");

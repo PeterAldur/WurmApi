@@ -15,7 +15,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
     {
         readonly QueuedJobsSyncRunner<LogSearchParameters, ScanResult> runner;
 
-        public WurmLogsHistory([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] ILogger logger,
+        public WurmLogsHistory([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] IWurmApiLogger logger,
             [NotNull] string heuristicsDataDirectory, [NotNull] LogFileStreamReaderFactory logFileStreamReaderFactory,
             [NotNull] IWurmApiConfig wurmApiConfig)
         {

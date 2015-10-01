@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
     {
         private readonly string logFileName;
         private readonly DateTime today;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
 
         private DateTime ProcessedLogDate { get; set; }
         private bool ThisLogIsForCurrentMonth { get; set; }
@@ -20,7 +20,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
         readonly List<Record> records = new List<Record>();
         private long finalPositionInLogFile;
 
-        public DataBuilderV2(string logFileName, DateTime today, ILogger logger)
+        public DataBuilderV2(string logFileName, DateTime today, IWurmApiLogger logger)
         {
             if (logFileName == null)
                 throw new ArgumentNullException("logFileName");

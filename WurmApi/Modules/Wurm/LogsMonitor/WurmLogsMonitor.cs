@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
     class WurmLogsMonitor : IWurmLogsMonitor, IDisposable, IHandle<CharacterDirectoriesChanged>, IWurmLogsMonitorInternal
     {
         readonly IWurmLogFiles wurmLogFiles;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IPublicEventInvoker publicEventInvoker;
         readonly IInternalEventAggregator internalEventAggregator;
         readonly IWurmCharacterDirectories wurmCharacterDirectories;
@@ -37,7 +37,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         TaskHandle taskHandle;
 
-        public WurmLogsMonitor([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] ILogger logger,
+        public WurmLogsMonitor([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] IWurmApiLogger logger,
             [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] IInternalEventAggregator internalEventAggregator,
             [NotNull] IWurmCharacterDirectories wurmCharacterDirectories,
             [NotNull] InternalEventInvoker internalEventInvoker, [NotNull] TaskManager taskManager,

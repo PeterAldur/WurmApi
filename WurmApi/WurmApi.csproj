@@ -109,7 +109,7 @@
     <Compile Include="Modules\Events\ThreadPoolMarshaller.cs" />
     <Compile Include="Modules\Networking\HttpWebResponse.cs" />
     <Compile Include="IHttpWebRequests.cs" />
-    <Compile Include="ILogger.cs" />
+    <Compile Include="IWurmApiLogger.cs" />
     <Compile Include="InvalidSearchParametersException.cs" />
     <Compile Include="IWurmApi.cs" />
     <Compile Include="IWurmAutoruns.cs" />
@@ -183,6 +183,7 @@
     <Compile Include="Validation\CharacterDirectoryValidator.cs" />
     <Compile Include="WurmApiExceptions.cs" />
     <Compile Include="WurmApiFactory.cs" />
+    <Compile Include="WurmCalendar.cs" />
     <Compile Include="WurmDateTime.cs" />
     <Compile Include="WurmDay.cs" />
     <Compile Include="IWurmServerGroups.cs" />

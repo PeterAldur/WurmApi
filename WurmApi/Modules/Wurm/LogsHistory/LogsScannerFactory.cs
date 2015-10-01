@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         private readonly LogFileStreamReaderFactory streamReaderFactory;
         private readonly MonthlyLogFilesHeuristics heuristics;
         private readonly IWurmLogFiles wurmLogFiles;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
         readonly IWurmApiConfig wurmApiConfig;
 
         public LogsScannerFactory(
@@ -20,7 +20,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             LogFileStreamReaderFactory streamReaderFactory,
             MonthlyLogFilesHeuristics heuristics,
             IWurmLogFiles wurmLogFiles,
-            ILogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
+            IWurmApiLogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logFileParserFactory == null)
                 throw new ArgumentNullException("logFileParserFactory");

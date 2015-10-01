@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
         readonly IInternalEventAggregator eventAggregator;
 
         public WurmCharacterDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator,
-            TaskManager taskManager, ILogger logger)
+            TaskManager taskManager, IWurmApiLogger logger)
             : base(
                 wurmPaths.CharactersDirFullPath,
                 taskManager,

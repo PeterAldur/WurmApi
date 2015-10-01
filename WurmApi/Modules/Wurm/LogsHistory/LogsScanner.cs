@@ -13,7 +13,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         readonly IWurmLogFiles wurmLogFiles;
         readonly MonthlyLogFilesHeuristics monthlyHeuristics;
         readonly LogFileStreamReaderFactory streamReaderFactory;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly LogFileParserFactory logFileParserFactory;
         readonly IWurmApiConfig wurmApiConfig;
 
@@ -26,7 +26,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             [NotNull] IWurmLogFiles wurmLogFiles,
             [NotNull] MonthlyLogFilesHeuristics monthlyHeuristics,
             [NotNull] LogFileStreamReaderFactory streamReaderFactory,
-            [NotNull] ILogger logger,
+            [NotNull] IWurmApiLogger logger,
             [NotNull] LogFileParserFactory logFileParserFactory, 
             [NotNull] IWurmApiConfig wurmApiConfig)
         {

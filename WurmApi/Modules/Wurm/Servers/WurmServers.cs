@@ -31,7 +31,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             string dataDirectory,
             IWurmCharacterDirectories wurmCharacterDirectories,
             IWurmServerHistory wurmServerHistory,
-            ILogger logger)
+            IWurmApiLogger logger)
         {
             if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
             if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
@@ -50,7 +50,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                     new PersObjErrorHandlingStrategy(logger));
             var persistent = persistentCollectionsLibrary.DefaultCollection.GetObject<ServersData>("WurmServers");
             LogHistorySaved logHistorySaved = new LogHistorySaved(persistent);
-            LogHistory logHistory = new LogHistory(wurmLogsHistory, wurmCharacterDirectories, wurmServerHistory, logHistorySaved, new LogEntriesParser());
+            LogHistory logHistory = new LogHistory(wurmLogsHistory,
+                wurmCharacterDirectories,
+                wurmServerHistory,
+                logHistorySaved,
+                new LogEntriesParser(),
+                logger);
             
             WebFeeds webFeeds = new WebFeeds(httpWebRequests, wurmServerList, logger);
 

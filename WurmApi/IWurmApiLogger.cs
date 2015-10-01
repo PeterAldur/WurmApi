@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi
 {
-    public interface ILogger
+    public interface IWurmApiLogger
     {
         /// <summary>
         /// Logs the specified message.

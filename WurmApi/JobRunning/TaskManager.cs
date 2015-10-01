@@ -9,14 +9,14 @@ namespace AldursLab.WurmApi.JobRunning
 {
     sealed class TaskManager : IDisposable
     {
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
 
         Task runner;
         volatile bool stop = false;
         readonly HashSet<TaskHandle> tasks = new HashSet<TaskHandle>();
         readonly object locker = new object();
 
-        public TaskManager([NotNull] ILogger logger)
+        public TaskManager([NotNull] IWurmApiLogger logger)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             this.logger = logger;

@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             string dataDirectoryFullPath,
             IWurmLogsHistory wurmLogsHistory,
             IWurmServerList wurmServerList,
-            ILogger logger,
+            IWurmApiLogger logger,
             IWurmLogsMonitorInternal wurmLogsMonitor,
             IWurmLogFiles wurmLogFiles)
         {

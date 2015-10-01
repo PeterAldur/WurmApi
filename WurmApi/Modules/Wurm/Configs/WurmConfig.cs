@@ -28,7 +28,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
         readonly TaskHandle taskHandle;
 
         internal WurmConfig(string gameSettingsFullPath, [NotNull] IPublicEventInvoker publicEventMarshaller,
-            [NotNull] TaskManager taskManager, ILogger logger)
+            [NotNull] TaskManager taskManager, IWurmApiLogger logger)
         {
             if (gameSettingsFullPath == null) throw new ArgumentNullException("gameSettingsFullPath");
             if (taskManager == null) throw new ArgumentNullException("taskManager");

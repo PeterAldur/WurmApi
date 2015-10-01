@@ -11,7 +11,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
     class InternalEventInvoker : IInternalEventInvoker, IDisposable
     {
         readonly IInternalEventAggregator eventAggregator;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IWurmApiEventMarshaller eventMarshaller;
 
         readonly Task schedulingTask;
@@ -19,7 +19,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
 
         readonly ConcurrentDictionary<InternalEvent, EventManager> events = new ConcurrentDictionary<InternalEvent, EventManager>(); 
 
-        public InternalEventInvoker([NotNull] IInternalEventAggregator eventAggregator, [NotNull] ILogger logger,
+        public InternalEventInvoker([NotNull] IInternalEventAggregator eventAggregator, [NotNull] IWurmApiLogger logger,
             [NotNull] IWurmApiEventMarshaller eventMarshaller)
         {
             if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");

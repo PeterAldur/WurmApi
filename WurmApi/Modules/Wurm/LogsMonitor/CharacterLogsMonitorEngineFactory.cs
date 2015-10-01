@@ -6,13 +6,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     class CharacterLogsMonitorEngineFactory
     {
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly SingleFileMonitorFactory singleFileMonitorFactory;
         readonly IWurmCharacterLogFiles wurmCharacterLogFiles;
         readonly IInternalEventAggregator internalEventAggregator;
 
         public CharacterLogsMonitorEngineFactory(
-            ILogger logger,
+            IWurmApiLogger logger,
             SingleFileMonitorFactory singleFileMonitorFactory,
             IWurmCharacterLogFiles wurmCharacterLogFiles, 
             [NotNull] IInternalEventAggregator internalEventAggregator)

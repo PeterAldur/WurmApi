@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly IWurmConfigs wurmConfigs;
         readonly IWurmServers wurmServers;
         readonly IWurmServerHistory wurmServerHistory;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly TaskManager taskManager;
 
         readonly IDictionary<CharacterName, WurmCharacter> allCharacters = new Dictionary<CharacterName, WurmCharacter>();
@@ -21,7 +21,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public WurmCharacters([NotNull] IWurmCharacterDirectories characterDirectories,
             [NotNull] IWurmConfigs wurmConfigs, [NotNull] IWurmServers wurmServers,
-            [NotNull] IWurmServerHistory wurmServerHistory, [NotNull] ILogger logger, 
+            [NotNull] IWurmServerHistory wurmServerHistory, [NotNull] IWurmApiLogger logger, 
             [NotNull] TaskManager taskManager)
         {
             this.characterDirectories = characterDirectories;

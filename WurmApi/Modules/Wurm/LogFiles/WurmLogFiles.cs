@@ -16,7 +16,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
     class WurmLogFiles : IWurmLogFiles, IDisposable, IHandle<CharacterDirectoriesChanged>
     {
         readonly IWurmCharacterDirectories wurmCharacterDirectories;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IWurmLogDefinitions wurmLogDefinitions;
         readonly IInternalEventAggregator eventAggregator;
         readonly IInternalEventInvoker internalEventInvoker;
@@ -29,7 +29,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         readonly TaskHandle taskHandle;
 
-        internal WurmLogFiles(IWurmCharacterDirectories wurmCharacterDirectories, ILogger logger, IWurmLogDefinitions wurmLogDefinitions,
+        internal WurmLogFiles(IWurmCharacterDirectories wurmCharacterDirectories, IWurmApiLogger logger, IWurmLogDefinitions wurmLogDefinitions,
             [NotNull] IInternalEventAggregator eventAggregator, [NotNull] IInternalEventInvoker internalEventInvoker,
             [NotNull] TaskManager taskManager)
         {

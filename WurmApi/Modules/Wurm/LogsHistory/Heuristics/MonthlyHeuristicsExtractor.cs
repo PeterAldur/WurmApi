@@ -33,13 +33,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
     {
         readonly LogFileInfo logFileInfo;
         readonly LogFileStreamReaderFactory logFileStreamReaderFactory;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IWurmApiConfig wurmApiConfig;
 
         public MonthlyHeuristicsExtractor(
             LogFileInfo logFileInfo,
             LogFileStreamReaderFactory logFileStreamReaderFactory,
-            ILogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
+            IWurmApiLogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logFileInfo == null) throw new ArgumentNullException("logFileInfo");
             if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");

@@ -12,13 +12,13 @@ namespace AldursLab.WurmApi.Modules.Events.Public
     class PublicEventInvoker : IPublicEventInvoker, IDisposable
     {
         readonly IWurmApiEventMarshaller eventMarshaller;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly Task schedulingTask;
         volatile bool stop = false;
 
         readonly ConcurrentDictionary<PublicEvent, EventManager> events = new ConcurrentDictionary<PublicEvent, EventManager>(); 
 
-        public PublicEventInvoker([NotNull] IWurmApiEventMarshaller eventMarshaller, [NotNull] ILogger logger)
+        public PublicEventInvoker([NotNull] IWurmApiEventMarshaller eventMarshaller, [NotNull] IWurmApiLogger logger)
         {
             if (eventMarshaller == null) throw new ArgumentNullException("eventMarshaller");
             if (logger == null) throw new ArgumentNullException("logger");

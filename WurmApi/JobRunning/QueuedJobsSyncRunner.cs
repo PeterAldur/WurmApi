@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.JobRunning
         readonly Task searchJobTask;
         readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-        public QueuedJobsSyncRunner([NotNull] JobExecutor<TJobContext, TResult> jobExecutor, ILogger logger)
+        public QueuedJobsSyncRunner([NotNull] JobExecutor<TJobContext, TResult> jobExecutor, IWurmApiLogger logger)
         {
             if (jobExecutor == null) throw new ArgumentNullException("jobExecutor");
             this.jobExecutor = jobExecutor;

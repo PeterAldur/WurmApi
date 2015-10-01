@@ -14,7 +14,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         readonly CharacterName characterName;
         readonly CharacterLogsMonitorEngineFactory characterLogsMonitorEngineFactory;
         readonly IPublicEventInvoker publicEventInvoker;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IInternalEventInvoker internalEventInvoker;
 
         readonly CharacterLogsMonitorEngine engine;
@@ -29,7 +29,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             [NotNull] CharacterName characterName,
             [NotNull] CharacterLogsMonitorEngineFactory characterLogsMonitorEngineFactory,
             [NotNull] IPublicEventInvoker publicEventInvoker, 
-            [NotNull] ILogger logger,
+            [NotNull] IWurmApiLogger logger,
             [NotNull] IInternalEventInvoker internalEventInvoker)
         {
             if (characterName == null) throw new ArgumentNullException("characterName");

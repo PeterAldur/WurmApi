@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         readonly IWurmLogsMonitorInternal logsMonitor;
         readonly IWurmLogsHistory logsSearcher;
         readonly IWurmServerList wurmServerList;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IWurmCharacterLogFiles wurmCharacterLogFiles;
 
         ServerName currentLiveLogsServer;
@@ -30,7 +30,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             IWurmLogsMonitorInternal logsMonitor,
             IWurmLogsHistory logsSearcher,
             IWurmServerList wurmServerList,
-            ILogger logger,
+            IWurmApiLogger logger,
             IWurmCharacterLogFiles wurmCharacterLogFiles)
         {
             if (characterName == null) throw new ArgumentNullException("characterName");

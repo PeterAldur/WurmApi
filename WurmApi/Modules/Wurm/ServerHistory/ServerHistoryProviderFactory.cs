@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         private readonly IPersistentCollection persistentCollection;
         private readonly IWurmLogsHistory wurmLogsHistory;
         private readonly IWurmServerList wurmServerList;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
         private readonly IWurmLogsMonitorInternal wurmLogsMonitor;
         private readonly IWurmLogFiles wurmLogFiles;
 
@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             IPersistentCollection persistentCollection,
             IWurmLogsHistory wurmLogsHistory,
             IWurmServerList wurmServerList,
-            ILogger logger,
+            IWurmApiLogger logger,
             IWurmLogsMonitorInternal wurmLogsMonitor,
             IWurmLogFiles wurmLogFiles)
         {

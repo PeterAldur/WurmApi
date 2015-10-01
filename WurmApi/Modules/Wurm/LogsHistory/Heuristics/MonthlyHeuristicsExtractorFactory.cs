@@ -8,12 +8,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
     class MonthlyHeuristicsExtractorFactory
     {
         private readonly LogFileStreamReaderFactory logFileStreamReaderFactory;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
         readonly IWurmApiConfig wurmApiConfig;
 
         public MonthlyHeuristicsExtractorFactory(
             LogFileStreamReaderFactory logFileStreamReaderFactory,
-            ILogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
+            IWurmApiLogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
             if (logger == null) throw new ArgumentNullException("logger");

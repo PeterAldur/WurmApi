@@ -7,9 +7,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
     class LogFileInfoFactory
     {
         private readonly IWurmLogDefinitions wurmLogDefinitions;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
 
-        public LogFileInfoFactory(IWurmLogDefinitions wurmLogDefinitions, ILogger logger)
+        public LogFileInfoFactory(IWurmLogDefinitions wurmLogDefinitions, IWurmApiLogger logger)
         {
             if (wurmLogDefinitions == null) throw new ArgumentNullException("wurmLogDefinitions");
             if (logger == null) throw new ArgumentNullException("logger");

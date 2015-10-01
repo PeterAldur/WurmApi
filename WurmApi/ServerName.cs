@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using Newtonsoft.Json;
 
@@ -60,5 +61,7 @@ namespace AldursLab.WurmApi
         {
             return originalName.ToString(CultureInfo.InvariantCulture);
         }
+
+
     }
 }

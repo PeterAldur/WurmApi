@@ -6,9 +6,9 @@ namespace AldursLab.WurmApi.Utility
 {
     class PersObjErrorHandlingStrategy : IObjectDeserializationErrorHandlingStrategy
     {
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
 
-        public PersObjErrorHandlingStrategy([NotNull] ILogger logger)
+        public PersObjErrorHandlingStrategy([NotNull] IWurmApiLogger logger)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             this.logger = logger;

@@ -7,7 +7,7 @@ namespace AldursLab.WurmApi.Validation
 {
     class Blacklist<TKey>
     {
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly string description;
 
         readonly int issueTreshhold;
@@ -16,7 +16,7 @@ namespace AldursLab.WurmApi.Validation
 
         readonly object locker = new object();
 
-        public Blacklist([NotNull] ILogger logger, [NotNull] string description, int issueTreshhold = 10)
+        public Blacklist([NotNull] IWurmApiLogger logger, [NotNull] string description, int issueTreshhold = 10)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             if (description == null) throw new ArgumentNullException("description");

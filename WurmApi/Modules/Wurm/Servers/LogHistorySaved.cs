@@ -53,10 +53,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
         private ServerData GetServerData(ServerName serverName)
         {
             ServerData data;
-            if (!persistenceManager.Entity.ServerDatas.TryGetValue(serverName, out data))
+            if (!persistenceManager.Entity.ServerDatas.TryGetValue(serverName.Normalized, out data))
             {
                 data = new ServerData();
-                persistenceManager.Entity.ServerDatas.Add(serverName, data);
+                persistenceManager.Entity.ServerDatas.Add(serverName.Normalized, data);
                 persistenceManager.FlagAsChanged();
             }
             return data;

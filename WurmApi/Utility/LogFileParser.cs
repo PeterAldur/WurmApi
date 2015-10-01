@@ -6,9 +6,9 @@ namespace AldursLab.WurmApi.Utility
 {
     class LogFileParser
     {
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
 
-        public LogFileParser(ILogger logger)
+        public LogFileParser(IWurmApiLogger logger)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             this.logger = logger;
@@ -158,9 +158,9 @@ namespace AldursLab.WurmApi.Utility
 
     class LogFileParserFactory
     {
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
 
-        public LogFileParserFactory(ILogger logger)
+        public LogFileParserFactory(IWurmApiLogger logger)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             this.logger = logger;

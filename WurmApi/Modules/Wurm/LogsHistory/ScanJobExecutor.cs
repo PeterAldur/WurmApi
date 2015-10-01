@@ -9,10 +9,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
     {
         readonly LogsScannerFactory logsScannerFactory;
         readonly PersistentCollectionsLibrary persistentLibrary;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
 
         public ScanJobExecutor([NotNull] LogsScannerFactory logsScannerFactory,
-            [NotNull] PersistentCollectionsLibrary persistentLibrary, [NotNull] ILogger logger)
+            [NotNull] PersistentCollectionsLibrary persistentLibrary, [NotNull] IWurmApiLogger logger)
         {
             if (logsScannerFactory == null) throw new ArgumentNullException("logsScannerFactory");
             if (persistentLibrary == null) throw new ArgumentNullException("persistentLibrary");

@@ -14,7 +14,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
     class WurmConfigs : IWurmConfigs, IDisposable, IHandle<ConfigDirectoriesChanged>
     {
         readonly IWurmConfigDirectories wurmConfigDirectories;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly IPublicEventInvoker publicEventInvoker;
         readonly IInternalEventAggregator eventAggregator;
         readonly TaskManager taskManager;
@@ -33,7 +33,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 
         internal WurmConfigs(
             [NotNull] IWurmConfigDirectories wurmConfigDirectories,
-            [NotNull] ILogger logger, [NotNull] IPublicEventInvoker publicEventInvoker,
+            [NotNull] IWurmApiLogger logger, [NotNull] IPublicEventInvoker publicEventInvoker,
             [NotNull] IInternalEventAggregator eventAggregator, [NotNull] TaskManager taskManager)
         {
             if (wurmConfigDirectories == null) throw new ArgumentNullException("wurmConfigDirectories");

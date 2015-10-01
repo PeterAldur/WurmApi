@@ -11,13 +11,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
     {
         readonly IWurmConfigs wurmConfigs;
         readonly IWurmCharacterDirectories wurmCharacterDirectories;
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly object locker = new object();
 
         public WurmAutoruns(
             [NotNull] IWurmConfigs wurmConfigs,
             [NotNull] IWurmCharacterDirectories wurmCharacterDirectories, 
-            [NotNull] ILogger logger)
+            [NotNull] IWurmApiLogger logger)
         {
             if (wurmConfigs == null) throw new ArgumentNullException("wurmConfigs");
             if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");

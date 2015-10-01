@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 {
     class WurmCharacterLogFiles : IWurmCharacterLogFiles, IDisposable
     {
-        readonly ILogger logger;
+        readonly IWurmApiLogger logger;
         readonly LogFileInfoFactory logFileInfoFactory;
         readonly TaskManager taskManager;
 
@@ -30,7 +30,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         readonly TaskHandle taskHandle;
 
-        internal WurmCharacterLogFiles([NotNull] CharacterName characterName, [NotNull] string fullDirPathToCharacterLogsDir, [NotNull] ILogger logger, [NotNull] LogFileInfoFactory logFileInfoFactory, [NotNull] IInternalEventInvoker internalEventInvoker,
+        internal WurmCharacterLogFiles([NotNull] CharacterName characterName, [NotNull] string fullDirPathToCharacterLogsDir, [NotNull] IWurmApiLogger logger, [NotNull] LogFileInfoFactory logFileInfoFactory, [NotNull] IInternalEventInvoker internalEventInvoker,
             [NotNull] TaskManager taskManager)
         {
             if (characterName == null) throw new ArgumentNullException("characterName");

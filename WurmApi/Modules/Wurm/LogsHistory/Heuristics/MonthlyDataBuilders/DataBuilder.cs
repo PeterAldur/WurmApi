@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
     {
         private readonly string logFileName;
         private readonly DateTime today;
-        private readonly ILogger logger;
+        private readonly IWurmApiLogger logger;
 
         private Dictionary<int, WurmLogMonthlyFileHeuristics> dayToHeuristicsMap;
 
@@ -56,7 +56,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
             }
         }
 
-        public DataBuilder(string logFileName, DateTime today, ILogger logger)
+        public DataBuilder(string logFileName, DateTime today, IWurmApiLogger logger)
         {
             if (logFileName == null)
                 throw new ArgumentNullException("logFileName");
