@@ -23,7 +23,7 @@ namespace AldursLab.WurmApi.Tests
             var handle = TempDirectoriesFactory.CreateEmpty();
             WurmApiDataDir = new DirectoryInfo(handle.AbsolutePath);
             WurmClientMock = WurmClientMockBuilder.Create(targetPlatform);
-            LoggerMock = Mock.Create<ILogger>().RedirectToTraceOut();
+            LoggerMock = Mock.Create<IWurmApiLogger>().RedirectToTraceOut();
             HttpWebRequestsMock = Mock.Create<IHttpWebRequests>();
         }
 
@@ -31,7 +31,7 @@ namespace AldursLab.WurmApi.Tests
 
         public WurmClientMock WurmClientMock { get; private set; }
 
-        public ILogger LoggerMock { get; set; }
+        public IWurmApiLogger LoggerMock { get; set; }
 
         public WurmApiManager WurmApiManager
         {

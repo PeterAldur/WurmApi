@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.Tests.Builders
 {
     public static class LoggerBuilder
     {
-        public static ILogger RedirectToTraceOut(this ILogger logger, bool verbose = false)
+        public static IWurmApiLogger RedirectToTraceOut(this IWurmApiLogger logger, bool verbose = false)
         {
             logger.Arrange(
                 logger1 => logger1.Log(Arg.IsAny<LogLevel>(), Arg.AnyString, Arg.AnyObject, Arg.IsAny<Exception>())).DoInstead(

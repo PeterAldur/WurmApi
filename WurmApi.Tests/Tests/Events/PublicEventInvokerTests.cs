@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Events
 {
     public class PublicEventInvokerTests : AssertionHelper
     {
-        readonly ILogger logger = Mock.Create<ILogger>().RedirectToTraceOut();
+        readonly IWurmApiLogger logger = Mock.Create<IWurmApiLogger>().RedirectToTraceOut();
         PublicEventInvoker invoker;
         EventAwaiter<EventArgs> eventAwaiter;
             

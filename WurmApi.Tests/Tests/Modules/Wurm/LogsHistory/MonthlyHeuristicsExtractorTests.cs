@@ -61,12 +61,12 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
 
         private MonthlyHeuristicsExtractor ConstructForFilePath(FileInfo info)
         {
-            LogFileInfoFactory factory = new LogFileInfoFactory(new WurmLogDefinitions(), Mock.Create<ILogger>());
+            LogFileInfoFactory factory = new LogFileInfoFactory(new WurmLogDefinitions(), Mock.Create<IWurmApiLogger>());
             
             return new MonthlyHeuristicsExtractor(
                 factory.Create(info),
-                new LogFileStreamReaderFactory(new WurmApiConfig()), 
-                Mock.Create<ILogger>(),
+                new LogFileStreamReaderFactory(new WurmApiConfig()),
+                Mock.Create<IWurmApiLogger>(),
                 new WurmApiConfig() { Platform = targetPlatform });
         }
 
