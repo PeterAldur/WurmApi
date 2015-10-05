@@ -10,7 +10,8 @@ namespace AldursLab.WurmApi
     public interface IWurmLogsHistory
     {
         /// <summary>
-        /// Performs asynchronous logs history scan, returning all events matching parameters, sorted chronologically.
+        /// Performs asynchronous logs history scan, returning all events matching parameters, 
+        /// sorted chronologically in reverse order (newest are first, oldest are last).
         /// If nothing has met search criteria, returns empty list.
         /// </summary>
         /// <param name="specificCharacterLogSearchParameters"></param>
@@ -19,7 +20,8 @@ namespace AldursLab.WurmApi
         Task<IList<LogEntry>> ScanAsync(LogSearchParameters specificCharacterLogSearchParameters);
 
         /// <summary>
-        /// Performs asynchronous logs history scan, returning all events matching parameters, sorted chronologically.
+        /// Performs asynchronous logs history scan, returning all events matching parameters, 
+        /// sorted chronologically in reverse order (newest are first, oldest are last).
         /// If nothing has met search criteria, returns empty list.
         /// </summary>
         /// <param name="specificCharacterLogSearchParameters"></param>
@@ -28,7 +30,8 @@ namespace AldursLab.WurmApi
         IList<LogEntry> Scan(LogSearchParameters specificCharacterLogSearchParameters);
 
         /// <summary>
-        /// Performs asynchronous logs history scan, returning all events matching parameters, sorted chronologically.
+        /// Performs asynchronous logs history scan, returning all events matching parameters, 
+        /// sorted chronologically in reverse order (newest are first, oldest are last).
         /// If nothing has met search criteria, returns empty list.
         /// </summary>
         /// <param name="specificCharacterLogSearchParameters"></param>
@@ -38,7 +41,8 @@ namespace AldursLab.WurmApi
         Task<IList<LogEntry>> ScanAsync(LogSearchParameters specificCharacterLogSearchParameters, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Performs asynchronous logs history scan, returning all events matching parameters, sorted chronologically.
+        /// Performs asynchronous logs history scan, returning all events matching parameters, 
+        /// sorted chronologically in reverse order (newest are first, oldest are last).
         /// If nothing has met search criteria, returns empty list.
         /// </summary>
         /// <param name="specificCharacterLogSearchParameters"></param>

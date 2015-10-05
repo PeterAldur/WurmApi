@@ -80,7 +80,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 
             List<LogEntry> result = new List<LogEntry>();
             IOrderedEnumerable<LogFileInfo> orderedLogFileInfos =
-                logFileInfos.OrderBy(info => info.LogFileDate.DateTime);
+                logFileInfos.OrderByDescending(info => info.LogFileDate.DateTime);
 
             foreach (LogFileInfo logFileInfo in orderedLogFileInfos)
             {
@@ -118,6 +118,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             var heuristics = heuristicsFileMap.GetFullHeuristicsForMonth(logFileInfo);
             var dayToSearchFrom = GetMinDayToSearchFrom(logSearchParameters.DateFrom, logFileInfo.LogFileDate.DateTime);
             var dayToSearchTo = GetMaxDayToSearchUpTo(logSearchParameters.DateTo, logFileInfo.LogFileDate.DateTime);
+
+            List<LogEntry> entries = new List<LogEntry>();
+
             LogFileStreamReader reader = null;
             try
             {
@@ -164,20 +167,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                         }
                     }
 
-                    IEnumerable<LogEntry> parsedLines = logFileParser.ParseLinesForDay(allLines,
+                    IList<LogEntry> parsedLines = logFileParser.ParseLinesForDay(allLines,
                         thisEntryDate,
                         logFileInfo);
-                    result.AddRange(parsedLines);
+
+                    // reversing the array, so that latest entries are first
+                    entries.AddRange(parsedLines);
 
                     cancellationManager.ThrowIfCancelled();
                 }
+
+                result.AddRange(((IList<LogEntry>)entries).Reverse());
             }
             finally
             {
                 if (reader != null) reader.Dispose();
             }
-
-
         }
 
         private int GetMaxDayToSearchUpTo(DateTime to, DateTime logDateTime)
@@ -216,11 +221,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                 }
             }
 
-            IEnumerable<LogEntry> parsedLines = logFileParser.ParseLinesForDay(
+            IList<LogEntry> parsedLines = logFileParser.ParseLinesForDay(
                 allLines,
                 logFileInfo.LogFileDate.DateTime,
                 logFileInfo);
-            result.AddRange(parsedLines);
+            // reversing the array, so that latest entries are first
+            result.AddRange(parsedLines.Reverse());
         }
     }
 }

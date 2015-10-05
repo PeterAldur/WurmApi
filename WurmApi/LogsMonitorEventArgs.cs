@@ -28,7 +28,7 @@ namespace AldursLab.WurmApi
         public IEnumerable<LogEntry> WurmLogEntries { get; private set; }
 
         /// <summary>
-        /// Optional. Name of conversation recipient, if used with dedicated Pm Subscription.
+        /// Optional. Name of conversation recipient, only if used with dedicated Pm Subscription.
         /// For any subscription, names of all chat participants can be read from Source property of LogEntry.
         /// </summary>
         public string ConversationNameNormalized { get; private set; }

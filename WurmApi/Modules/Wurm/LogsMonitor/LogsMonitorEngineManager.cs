@@ -161,27 +161,39 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             foreach (var engineSubscription in subscriptions.Values)
             {
                 MonitorEvents[] outEvents;
-                if (groupedEvents.TryGetValue(engineSubscription.LogType, out outEvents))
+                if (engineSubscription.LogType == LogType.AllLogs)
                 {
-                    if (engineSubscription.InternalSubscription)
+                    foreach (var events in groupedEvents)
                     {
-                        internalEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
-                            new LogsMonitorEventArgs(
-                                characterName,
-                                engineSubscription.LogType,
-                                outEvents.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
-                                null));
-                    }
-                    else
-                    {
-                        publicEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
-                            new LogsMonitorEventArgs(
-                                characterName,
-                                engineSubscription.LogType,
-                                outEvents.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
-                                null));
+                        SendNormalEvents(engineSubscription, events.Value, events.Key);
                     }
                 }
+                if (groupedEvents.TryGetValue(engineSubscription.LogType, out outEvents))
+                {
+                    SendNormalEvents(engineSubscription, outEvents, engineSubscription.LogType);
+                }
+            }
+        }
+
+        void SendNormalEvents(EngineSubscription engineSubscription, MonitorEvents[] outEvents, LogType logType)
+        {
+            if (engineSubscription.InternalSubscription)
+            {
+                internalEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
+                    new LogsMonitorEventArgs(
+                        characterName,
+                        logType,
+                        outEvents.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
+                        null));
+            }
+            else
+            {
+                publicEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
+                    new LogsMonitorEventArgs(
+                        characterName,
+                        logType,
+                        outEvents.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
+                        null));
             }
         }
 

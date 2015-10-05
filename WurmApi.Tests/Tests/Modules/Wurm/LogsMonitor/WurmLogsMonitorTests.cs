@@ -152,6 +152,63 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
             });
         }
 
+        [Test]
+        public void Subscribe_AllLogs()
+        {
+            EventAwaiter<LogsMonitorEventArgs> awaiter = new EventAwaiter<LogsMonitorEventArgs>();
+            var handler = awaiter.GetEventHandler();
+            System.Subscribe(TestGuyCharacterName, LogType.AllLogs, handler);
+
+            WriteToLogFile("_Event.2014-01-01.txt", "Logging started 2014-01-01");
+            WriteToLogFile("_Event.2014-01-01.txt", "[00:00:12] Horses like this one have many uses.");
+
+            WriteToLogFile("_Skills.2014-01-01.txt", "[00:03:15] Smartness increased by 24 to 48.");
+
+            WriteToLogFile("PM__Anotherguy.2014-01-01.txt", "Logging started 2014-01-01");
+            WriteToLogFile("PM__Anotherguy.2014-01-01.txt", "[00:00:18] <Anotherguy> Smartness is a very useful skill!");
+
+            awaiter.WaitUntilMatch(list =>
+            {
+                var match1 = list.Any(
+                    args =>
+                        args.CharacterName == TestGuyCharacterName
+                        && args.LogType == LogType.Event
+                        && args.WurmLogEntries.Any(
+                            entry =>
+                                entry.Content == "Horses like this one have many uses."
+                                && entry.Timestamp == new DateTime(2014, 1, 1, 0, 0, 12)));
+                return match1;
+            });
+            awaiter.WaitUntilMatch(list =>
+            {
+                var match1 = list.Any(
+                    args =>
+                        args.CharacterName == TestGuyCharacterName
+                        && args.LogType == LogType.Skills
+                        && args.WurmLogEntries.Any(
+                            entry =>
+                                entry.Content == "Smartness increased by 24 to 48."
+                                && entry.Timestamp == new DateTime(2014, 1, 1, 0, 3, 15)));
+                return match1;
+            });
+            awaiter.WaitUntilMatch(list =>
+            {
+                var isPm = list.Any(args => args.LogType == LogType.Pm);
+                var match1 = list.Any(
+                    args =>
+                        args.CharacterName == TestGuyCharacterName
+                        && args.LogType == LogType.Pm
+                        && args.WurmLogEntries.Any(
+                            entry =>
+                                entry.Content == "Smartness is a very useful skill!"
+                                && entry.Source.Contains("Anotherguy")
+                                && entry.Timestamp == new DateTime(2014, 1, 1, 0, 0, 18)));
+                return match1;
+            });
+
+            System.Unsubscribe(TestGuyCharacterName, handler);
+        }
+
         void WriteToLogFile(string fileName, string contents)
         {
             var dirpath = Path.Combine(ClientMock.InstallDirectory.FullPath, "players", "Testguy", "logs");

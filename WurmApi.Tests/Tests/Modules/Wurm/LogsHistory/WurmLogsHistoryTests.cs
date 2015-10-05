@@ -53,10 +53,10 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             Expect(results.Count, EqualTo(62));
             var firstResult = results.First();
             var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
-            Expect(firstResult.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 27, 1, 17, 51)));
-            Expect(lastResult.Content, EqualTo("Paving increased  to 19"));
+            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 27, 1, 17, 51)));
+            Expect(firstResult.Content, EqualTo("Paving increased  to 19"));
+            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
+            Expect(lastResult.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
         }
 
         [Test]
@@ -72,10 +72,10 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             Expect(results.Count, EqualTo(8));
             var firstResult = results.First();
             var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 19, 0, 9, 44)));
-            Expect(firstResult.Content, EqualTo("Miscellaneous items increased by 0,0105 to 52,467"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 19, 23, 53, 27)));
-            Expect(lastResult.Content, EqualTo("Mind increased  to 27"));
+            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 19, 23, 53, 27)));
+            Expect(firstResult.Content, EqualTo("Mind increased  to 27"));
+            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 19, 0, 9, 44)));
+            Expect(lastResult.Content, EqualTo("Miscellaneous items increased by 0,0105 to 52,467"));
         }
 
         [Test]
@@ -91,10 +91,10 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             Expect(results.Count, EqualTo(18));
             var firstResult = results.First();
             var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 9, 22, 19, 05, 44)));
-            Expect(firstResult.Content, EqualTo("Mining increased by 0,104 to 47,472"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 9, 22, 22, 51, 57)));
-            Expect(lastResult.Content, EqualTo("Healing increased by 0,104 to 12,295"));
+            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 9, 22, 22, 51, 57)));
+            Expect(firstResult.Content, EqualTo("Healing increased by 0,104 to 12,295"));
+            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 9, 22, 19, 05, 44)));
+            Expect(lastResult.Content, EqualTo("Mining increased by 0,104 to 47,472"));
         }
 
         [Test]
@@ -110,10 +110,10 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             Expect(results.Count, EqualTo(62 + 57 + 18 + 9 + 142));
             var firstResult = results.First();
             var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
-            Expect(firstResult.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 9, 23, 23, 37, 13)));
-            Expect(lastResult.Content, EqualTo("Gardening increased by 0,106 to 26,977"));
+            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 9, 23, 23, 37, 13)));
+            Expect(firstResult.Content, EqualTo("Gardening increased by 0,106 to 26,977"));
+            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
+            Expect(lastResult.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
         }
 
         [Test]

@@ -25,6 +25,7 @@ namespace AldursLab.WurmApi
         GlHots,
         Trade,
         Support,
-        Help
+        Help,
+        AllLogs // special flag, should indicate all other log types except Unspecified
     }
 }

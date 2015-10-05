@@ -107,7 +107,7 @@ namespace AldursLab.WurmApi.JobRunning
         internal void TryExecute()
         {
             var now = Time.Get.LocalNowOffset;
-            if (triggered == 1 && lastInvoke < now - MinimumDelay && lastError < now - ErrorMinimumRetryDelay)
+            if (triggered == 1 && lastInvoke <= now - MinimumDelay && lastError <= now - ErrorMinimumRetryDelay)
             {
                 Interlocked.Exchange(ref triggered, 0);
                 try

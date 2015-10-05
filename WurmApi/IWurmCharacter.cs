@@ -66,6 +66,12 @@ namespace AldursLab.WurmApi
         #endregion
 
         /// <summary>
+        /// Triggered, when WurmApi detects, that this character has traveled between servers 
+        /// (or logged to another server group).
+        /// </summary>
+        event EventHandler<EventArgs> CurrentServerChanged;
+
+            /// <summary>
         /// In-game name of this character.
         /// </summary>
         CharacterName Name { get; }

@@ -157,6 +157,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             return TaskHelper.UnwrapSingularAggegateException(() => GetCurrentServerAsync(cancellationToken).Result);
         }
 
+        public event EventHandler<EventArgs> CurrentServerChanged;
+
         #endregion
 
         public void Dispose()
@@ -168,6 +170,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         public override string ToString()
         {
             return this.Name.ToString();
+        }
+
+        protected virtual void OnCurrentServerChanged()
+        {
+            //todo
+            var handler = CurrentServerChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }
