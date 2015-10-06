@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,7 +83,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                 //mocking current time to avoid test breaking precisely on midnight
                 using (var scope = TimeStub.CreateStubbedScope())
                 {
-                    scope.OverrideNow(new DateTime(2015, 10, 06));
+                    scope.OverrideNow(new DateTime(2015, 10, 06, 03, 10, 30));
 
                     var subscriber =
                         new Subscriber<CharacterDirectoriesChanged>(Fixture.WurmApiManager.InternalEventAggregator);
@@ -97,7 +98,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                     var character = System.Get("Jack");
                     character.LogInOrCurrentServerPotentiallyChanged += serverChangeAwaiter.GetEventHandler();
 
-                    // writing first event, no prior current server history: ServerChanged == true
+                    Trace.WriteLine("writing first event, no prior current server history: ServerChanged == true");
                     playerdir.Logs.WriteEventLog("5 other players are online. You are on Exodus (50 totally in Wurm).");
 
                     serverChangeAwaiter.WaitUntilMatch(
@@ -107,7 +108,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                     var server = await character.GetCurrentServerAsync();
                     Expect(server.ServerName, EqualTo(new ServerName("Exodus")));
 
-                    // writing second event, prior history different than new server: ServerChanged == true 
+                    Trace.WriteLine(
+                        "writing second event, prior history different than new server: ServerChanged == true");
                     playerdir.Logs.WriteEventLog(
                         "5 other players are online. You are on Deliverance (50 totally in Wurm).");
 
@@ -118,7 +120,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                     server = await character.GetCurrentServerAsync();
                     Expect(server.ServerName, EqualTo(new ServerName("Deliverance")));
 
-                    // writing third event, prior history same than new server: ServerChanged == false 
+                    Trace.WriteLine("writing third event, prior history same than new server: ServerChanged == false");
                     playerdir.Logs.WriteEventLog(
                         "5 other players are online. You are on Deliverance (50 totally in Wurm).");
 
