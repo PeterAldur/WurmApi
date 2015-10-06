@@ -3,6 +3,8 @@
 
 WurmApi is a .NET library, realizing mission to enable other programmers, to easily write their own tools for Wurm Online game client and for the game in general.
 
+**This api is in preview! Contracts may change between commits. Usage examples may be out of date.**
+
 ## Usage ##
 
 ### Using in your .NET project
