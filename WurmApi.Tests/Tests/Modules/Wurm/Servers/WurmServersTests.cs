@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.Modules.Networking;
+using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Tests.Helpers;
 using AldursLab.WurmApi.Tests.TempDirs;
 using NUnit.Framework;
@@ -26,6 +27,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
         [SetUp]
         public virtual void Setup()
         {
+            // gotcha: this will spam trace output with exceptions:
             Fixture.HttpWebRequestsMock.Arrange(requests => requests.GetResponseAsync(Arg.IsAny<string>()))
                    .Throws<NotSupportedException>();
 
@@ -57,6 +59,13 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
         {
             var servers = System.All.ToArray();
             Expect(servers.Length, GreaterThan(0));
+        }
+
+        [Test]
+        public void GetsForUnknownServer()
+        {
+            var server = System.GetByName(new ServerName("Idonotexist"));
+            Expect(server.ServerGroup, EqualTo(new UnknownServerGroup()));
         }
 
         [TestFixture]
@@ -148,6 +157,49 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
 
                 var uptime = await server.TryGetCurrentUptimeAsync();
                 var datetime = await server.TryGetCurrentTimeAsync();
+                Expect(uptime, EqualTo(new TimeSpan(3, 15, 30, 0)));
+                Expect(datetime, EqualTo(new WurmDateTime(1045, WurmStarfall.Snake, 2, WurmDay.Ant, 12, 01, 40)));
+            }
+
+            [Test]
+            public async Task ObtainsServerTime_WhenUnknownServer()
+            {
+                var logWriter =
+                    new LogWriter(
+                        Path.Combine(ClientMock.InstallDirectory.FullPath,
+                            "players",
+                            "Testguy",
+                            "Logs",
+                            "_Event.2014-12.txt"),
+                        new DateTime(2014, 12, 1),
+                        true);
+
+                var unknownServer = System.GetByName("Idonotexist");
+
+                logWriter.WriteSection(
+                    new Collection<LogEntry>()
+                    {
+                        new LogEntry(MockedNow, string.Empty, "42 other players are online. You are on Idonotexist (765 totally in Wurm).")
+                    },
+                    true);
+                logWriter.WriteSection(
+                    new Collection<LogEntry>()
+                    {
+                        new LogEntry(MockedNow, string.Empty, "The server has been up 3 days, 15 hours and 30 minutes.")
+                    },
+                    true);
+                logWriter.WriteSection(
+                    new Collection<LogEntry>()
+                    {
+                        new LogEntry(MockedNow,
+                            String.Empty,
+                            "It is 12:01:40 on day of the Ant in week 2 of the Snake's starfall in the year of 1045.")
+                    });
+
+                Thread.Sleep(1000);
+
+                var uptime = await unknownServer.TryGetCurrentUptimeAsync();
+                var datetime = await unknownServer.TryGetCurrentTimeAsync();
                 Expect(uptime, EqualTo(new TimeSpan(3, 15, 30, 0)));
                 Expect(datetime, EqualTo(new WurmDateTime(1045, WurmStarfall.Snake, 2, WurmDay.Ant, 12, 01, 40)));
             }

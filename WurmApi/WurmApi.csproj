@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IWurmApiEventMarshaller.cs" />
+    <Compile Include="Modules\Events\Internal\Messages\YouAreOnEventDetectedOnLiveLogs.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileCrLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileStreamReader.cs" />

@@ -3,10 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 using AldursLab.WurmApi.PersistentObjects;
+using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
@@ -20,18 +23,21 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         readonly IWurmServerList wurmServerList;
         readonly IWurmApiLogger logger;
         readonly IWurmCharacterLogFiles wurmCharacterLogFiles;
+        readonly IInternalEventAggregator eventAggregator;
 
         ServerName currentLiveLogsServer;
 
         readonly ConcurrentQueue<LogEntry[]> liveEventsToParse = new ConcurrentQueue<LogEntry[]>();
 
         public ServerHistoryProvider(
-            CharacterName characterName, IPersistent<PersistentModel.ServerHistory> persistentData,
-            IWurmLogsMonitorInternal logsMonitor,
-            IWurmLogsHistory logsSearcher,
-            IWurmServerList wurmServerList,
-            IWurmApiLogger logger,
-            IWurmCharacterLogFiles wurmCharacterLogFiles)
+            [NotNull] CharacterName characterName, 
+            [NotNull] IPersistent<PersistentModel.ServerHistory> persistentData,
+            [NotNull] IWurmLogsMonitorInternal logsMonitor,
+            [NotNull] IWurmLogsHistory logsSearcher,
+            [NotNull] IWurmServerList wurmServerList,
+            [NotNull] IWurmApiLogger logger,
+            [NotNull] IWurmCharacterLogFiles wurmCharacterLogFiles, 
+            [NotNull] IInternalEventAggregator eventAggregator)
         {
             if (characterName == null) throw new ArgumentNullException("characterName");
             if (persistentData == null) throw new ArgumentNullException("persistentData");
@@ -40,6 +46,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             if (wurmServerList == null) throw new ArgumentNullException("wurmServerList");
             if (logger == null) throw new ArgumentNullException("logger");
             if (wurmCharacterLogFiles == null) throw new ArgumentNullException("wurmCharacterLogFiles");
+            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
             this.characterName = characterName;
             this.sortedServerHistory = new SortedServerHistory(persistentData);
             this.persistentData = persistentData;
@@ -48,7 +55,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             this.wurmServerList = wurmServerList;
             this.logger = logger;
             this.wurmCharacterLogFiles = wurmCharacterLogFiles;
+            this.eventAggregator = eventAggregator;
 
+            eventAggregator.Subscribe(this);
             logsMonitor.SubscribeInternal(characterName, LogType.Event, HandleEventLogEntries);
         }
 
@@ -91,13 +100,25 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                         RegexOptions.Compiled);
                     if (match.Success)
                     {
+                        ServerName previousServerName = null;
+                        if (fromLiveLogs)
+                        {
+                            previousServerName = currentLiveLogsServer
+                                                 ?? sortedServerHistory.TryGetServerAtStamp(Time.Get.LocalNow);
+                        }
+
                         var serverName = new ServerName(match.Groups[1].Value.ToUpperInvariant());
                         var serverStamp = new ServerStamp() { ServerName = serverName, Timestamp = wurmLogEntry.Timestamp };
                         sortedServerHistory.Insert(serverStamp);
                         foundAny = true;
+
                         if (fromLiveLogs)
                         {
                             currentLiveLogsServer = serverName;
+
+                            eventAggregator.Send(new YouAreOnEventDetectedOnLiveLogs(currentLiveLogsServer,
+                                characterName,
+                                previousServerName != currentLiveLogsServer));
                         }
                     }
                     else

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Modules.Wurm.Servers.Jobs;
 using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 using AldursLab.WurmApi.PersistentObjects;
@@ -70,7 +71,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             }
         }
 
-        private void RegisterServer(WurmServerInfo wurmServerInfo)
+        private WurmServer RegisterServer(WurmServerInfo wurmServerInfo)
         {
             var normalizedName = wurmServerInfo.Name;
             if (this.nameToServerMap.ContainsKey(normalizedName))
@@ -81,6 +82,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             var server = wurmServerFactory.Create(wurmServerInfo);
 
             this.nameToServerMap.Add(normalizedName, server);
+
+            return server;
         }
 
         public IEnumerable<IWurmServer> All
@@ -98,9 +101,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             WurmServer server;
             if (!this.nameToServerMap.TryGetValue(name, out server))
             {
-                throw new DataNotFoundException("No server found with name " + name);
+                // registering unknown server
+                return RegisterServer(new WurmServerInfo(name.Original, String.Empty, new UnknownServerGroup()));
             }
             return server;
+        }
+
+        public IWurmServer GetByName(string name)
+        {
+            return GetByName(new ServerName(name));
         }
 
         public void Dispose()

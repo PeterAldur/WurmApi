@@ -1,6 +1,8 @@
 ﻿using System;
+using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.PersistentObjects;
+using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
@@ -12,6 +14,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         private readonly IWurmApiLogger logger;
         private readonly IWurmLogsMonitorInternal wurmLogsMonitor;
         private readonly IWurmLogFiles wurmLogFiles;
+        readonly IInternalEventAggregator internalEventAggregator;
 
         public ServerHistoryProviderFactory(
             IPersistentCollection persistentCollection,
@@ -19,7 +22,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             IWurmServerList wurmServerList,
             IWurmApiLogger logger,
             IWurmLogsMonitorInternal wurmLogsMonitor,
-            IWurmLogFiles wurmLogFiles)
+            IWurmLogFiles wurmLogFiles, [NotNull] IInternalEventAggregator internalEventAggregator)
         {
             if (persistentCollection == null) throw new ArgumentNullException("persistentCollection");
             if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
@@ -27,12 +30,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             if (logger == null) throw new ArgumentNullException("logger");
             if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
             if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
+            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
             this.persistentCollection = persistentCollection;
             this.wurmLogsHistory = wurmLogsHistory;
             this.wurmServerList = wurmServerList;
             this.logger = logger;
             this.wurmLogsMonitor = wurmLogsMonitor;
             this.wurmLogFiles = wurmLogFiles;
+            this.internalEventAggregator = internalEventAggregator;
         }
 
         public ServerHistoryProvider Create(CharacterName characterName)
@@ -47,7 +52,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 wurmLogsHistory,
                 wurmServerList,
                 logger,
-                wurmCharacterLogFiles);
+                wurmCharacterLogFiles,
+                internalEventAggregator);
         }
     }
 }

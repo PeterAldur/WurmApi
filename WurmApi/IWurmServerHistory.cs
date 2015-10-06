@@ -77,5 +77,11 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         /// <exception cref="DataNotFoundException"></exception>
         ServerName GetCurrentServer(CharacterName character, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Informs WurmServerHistory, that it should start tracking live logs for potential current server changes.
+        /// </summary>
+        /// <param name="name"></param>
+        void BeginTracking(CharacterName name);
     }
 }

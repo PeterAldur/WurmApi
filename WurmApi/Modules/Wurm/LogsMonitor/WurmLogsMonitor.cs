@@ -107,6 +107,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         public void SubscribeInternal(CharacterName characterName, LogType logType,
             EventHandler<LogsMonitorEventArgs> eventHandler)
         {
+            Rebuild();
             var manager = GetManager(characterName);
             manager.AddSubscriptionInternal(logType, eventHandler);
         }

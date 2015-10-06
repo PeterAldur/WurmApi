@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AldursLab.WurmApi.Modules.Wurm.Characters;
 
 namespace AldursLab.WurmApi
 {
@@ -66,10 +67,10 @@ namespace AldursLab.WurmApi
         #endregion
 
         /// <summary>
-        /// Triggered, when WurmApi detects, that this character has traveled between servers 
-        /// (or logged to another server group).
+        /// Triggered, when WurmApi detects, that this character has logged into a server.
+        /// This may indicate login into the game or traveling to another server.
         /// </summary>
-        event EventHandler<EventArgs> CurrentServerChanged;
+        event EventHandler<PotentialServerChangeEventArgs> LogInOrCurrentServerPotentiallyChanged;
 
             /// <summary>
         /// In-game name of this character.

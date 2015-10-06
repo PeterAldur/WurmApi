@@ -91,6 +91,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             persistentLibrary.SaveChanged();
         }
 
-        public override TimeSpan IdleJobTreshhold { get { return TimeSpan.FromSeconds(5); } }
+        public override TimeSpan IdleJobTreshhold { get { return TimeSpan.FromSeconds(2); } }
+
+        public void BeginTrackingForCharacter(CharacterName name)
+        {
+            // this causes the provider to be created
+            GetServerHistoryProvider(name);
+        }
     }
 }

@@ -2,6 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Wurm.Characters;
+using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
@@ -71,6 +74,61 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
             {
                 var server = await wurmCharacter.GetCurrentServerAsync();
                 Expect(server.ServerName, EqualTo(new ServerName("Exodus")));
+            }
+
+            [Test]
+            public async Task ReactsToCurrentServerChange()
+            {
+                //mocking current time to avoid test breaking precisely on midnight
+                using (var scope = TimeStub.CreateStubbedScope())
+                {
+                    scope.OverrideNow(new DateTime(2015, 10, 06));
+
+                    var subscriber =
+                        new Subscriber<CharacterDirectoriesChanged>(Fixture.WurmApiManager.InternalEventAggregator);
+                    var serverChangeAwaiter = new EventAwaiter<PotentialServerChangeEventArgs>();
+
+                    var playerdir = ClientMock.AddPlayer("Jack");
+                    // have to immediatelly create file, because during log monitor creation, existing file contents will not trigger events.
+                    playerdir.Logs.CreateEventLogFile();
+                    // have to wait until wurmapi picks up this folder
+                    subscriber.WaitMessages(1);
+
+                    var character = System.Get("Jack");
+                    character.LogInOrCurrentServerPotentiallyChanged += serverChangeAwaiter.GetEventHandler();
+
+                    // writing first event, no prior current server history: ServerChanged == true
+                    playerdir.Logs.WriteEventLog("5 other players are online. You are on Exodus (50 totally in Wurm).");
+
+                    serverChangeAwaiter.WaitUntilMatch(
+                        list =>
+                            list.Any(args => args.ServerChanged && args.ServerName == new ServerName("Exodus")));
+
+                    var server = await character.GetCurrentServerAsync();
+                    Expect(server.ServerName, EqualTo(new ServerName("Exodus")));
+
+                    // writing second event, prior history different than new server: ServerChanged == true 
+                    playerdir.Logs.WriteEventLog(
+                        "5 other players are online. You are on Deliverance (50 totally in Wurm).");
+
+                    serverChangeAwaiter.WaitUntilMatch(
+                        list =>
+                            list.Any(args => args.ServerChanged && args.ServerName == new ServerName("Deliverance")));
+
+                    server = await character.GetCurrentServerAsync();
+                    Expect(server.ServerName, EqualTo(new ServerName("Deliverance")));
+
+                    // writing third event, prior history same than new server: ServerChanged == false 
+                    playerdir.Logs.WriteEventLog(
+                        "5 other players are online. You are on Deliverance (50 totally in Wurm).");
+
+                    serverChangeAwaiter.WaitUntilMatch(
+                        list =>
+                            list.Any(args => !args.ServerChanged && args.ServerName == new ServerName("Deliverance")));
+
+                    server = await character.GetCurrentServerAsync();
+                    Expect(server.ServerName, EqualTo(new ServerName("Deliverance")));
+                }
             }
         }
     }

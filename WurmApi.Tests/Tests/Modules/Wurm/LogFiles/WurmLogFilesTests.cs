@@ -285,7 +285,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogFiles
             private void CreateNewCharacterDirWithALog(string characterName, string logFileName)
             {
                 var player = ClientMock.AddPlayer(characterName);
-                player.Logs.CreateLogFile(logFileName);
+                player.Logs.CreateCustomLogFile(logFileName);
             }
         }
     }

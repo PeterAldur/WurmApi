@@ -1,20 +1,27 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events.Internal;
+using AldursLab.WurmApi.Modules.Events.Internal.Messages;
+using AldursLab.WurmApi.Modules.Events.Public;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters
 {
-    class WurmCharacter : IWurmCharacter, IDisposable
+    class WurmCharacter : IWurmCharacter, IDisposable, IHandle<YouAreOnEventDetectedOnLiveLogs>
     {
         readonly IWurmConfigs wurmConfigs;
         readonly IWurmServers wurmServers;
         readonly IWurmServerHistory wurmServerHistory;
         readonly IWurmApiLogger logger;
         readonly TaskManager taskManager;
+        readonly IWurmLogsMonitor logsMonitor;
+        readonly IPublicEventInvoker publicEventInvoker;
+        readonly InternalEventAggregator internalEventAggregator;
 
         readonly FileSystemWatcher configFileWatcher;
         readonly string configDefiningFileFullPath;
@@ -28,7 +35,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             [NotNull] IWurmConfigs wurmConfigs, [NotNull] IWurmServers wurmServers,
             [NotNull] IWurmServerHistory wurmServerHistory,
             [NotNull] IWurmApiLogger logger, 
-            [NotNull] TaskManager taskManager)
+            [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitor logsMonitor,
+            [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (playerDirectoryFullPath == null) throw new ArgumentNullException("playerDirectoryFullPath");
@@ -37,12 +45,20 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             if (wurmServerHistory == null) throw new ArgumentNullException("wurmServerHistory");
             if (logger == null) throw new ArgumentNullException("logger");
             if (taskManager == null) throw new ArgumentNullException("taskManager");
+            if (logsMonitor == null) throw new ArgumentNullException("logsMonitor");
+            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
+            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
 
             this.wurmConfigs = wurmConfigs;
             this.wurmServers = wurmServers;
             this.wurmServerHistory = wurmServerHistory;
             this.logger = logger;
             this.taskManager = taskManager;
+            this.logsMonitor = logsMonitor;
+            this.publicEventInvoker = publicEventInvoker;
+            this.internalEventAggregator = internalEventAggregator;
+
+            internalEventAggregator.Subscribe(this);
 
             Name = name;
             configDefiningFileFullPath = Path.Combine(playerDirectoryFullPath, ConfigDefinerFileName);
@@ -63,6 +79,18 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             configFileWatcher.EnableRaisingEvents = true;
             
             configUpdateTask.Trigger();
+
+            try
+            {
+                wurmServerHistory.BeginTracking(this.Name);
+            }
+            catch (Exception exception)
+            {
+                logger.Log(LogLevel.Error,
+                    string.Format("Failed to initiate tracking of server history for character {0}", name),
+                    this,
+                    exception);
+            }
         }
 
         void ConfigFileWatcherOnChanged(object sender, FileSystemEventArgs fileSystemEventArgs)
@@ -157,7 +185,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             return TaskHelper.UnwrapSingularAggegateException(() => GetCurrentServerAsync(cancellationToken).Result);
         }
 
-        public event EventHandler<EventArgs> CurrentServerChanged;
+        public event EventHandler<PotentialServerChangeEventArgs> LogInOrCurrentServerPotentiallyChanged;
 
         #endregion
 
@@ -167,16 +195,41 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             configFileWatcher.Dispose();
         }
 
+        public void Handle(YouAreOnEventDetectedOnLiveLogs message)
+        {
+            if (message.CharacterName == Name)
+            {
+                publicEventInvoker.TriggerInstantly(LogInOrCurrentServerPotentiallyChanged,
+                    this,
+                    new PotentialServerChangeEventArgs(message.ServerName, message.CurrentServerNameChanged));
+            }
+        }
+
         public override string ToString()
         {
             return this.Name.ToString();
         }
+    }
 
-        protected virtual void OnCurrentServerChanged()
+    public class PotentialServerChangeEventArgs : EventArgs
+    {
+        public PotentialServerChangeEventArgs(ServerName serverName, bool serverChanged)
         {
-            //todo
-            var handler = CurrentServerChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            ServerName = serverName;
+            ServerChanged = serverChanged;
         }
+
+        /// <summary>
+        /// Parsed server name
+        /// </summary>
+        public ServerName ServerName { get; private set; }
+
+        /// <summary>
+        /// Indicates, if detected server is different from last detected server.
+        /// Note, that this may be a false positive. This would happen, when WurmApi hadn't known previous server for this character. 
+        /// To use this property reliably, first do a GetCurrentServer() and assuming it has returned a server (and thus WurmApi knows it now), 
+        /// this property will give accurate information on successive invocations.
+        /// </summary>
+        public bool ServerChanged { get; private set; }
     }
 }

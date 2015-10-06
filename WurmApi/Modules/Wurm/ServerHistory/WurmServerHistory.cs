@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.JobRunning;
+using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.Jobs;
 using AldursLab.WurmApi.PersistentObjects;
@@ -12,6 +13,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
     class WurmServerHistory : IWurmServerHistory
     {
         readonly QueuedJobsSyncRunner<object, ServerName> runner;
+        JobExecutor jobExecutor;
 
         public WurmServerHistory(
             string dataDirectoryFullPath,
@@ -19,7 +21,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             IWurmServerList wurmServerList,
             IWurmApiLogger logger,
             IWurmLogsMonitorInternal wurmLogsMonitor,
-            IWurmLogFiles wurmLogFiles)
+            IWurmLogFiles wurmLogFiles,
+            IInternalEventAggregator internalEventAggregator)
         {
             var persistentLibrary =
                 new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(dataDirectoryFullPath),
@@ -32,9 +35,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 wurmServerList,
                 logger,
                 wurmLogsMonitor,
-                wurmLogFiles);
+                wurmLogFiles,
+                internalEventAggregator);
 
-            runner = new QueuedJobsSyncRunner<object, ServerName>(new JobExecutor(providerFactory, persistentLibrary), logger);
+
+            jobExecutor = new JobExecutor(providerFactory, persistentLibrary);
+            runner = new QueuedJobsSyncRunner<object, ServerName>(jobExecutor, logger);
         }
 
         public async Task<ServerName> GetServerAsync(CharacterName character, DateTime exactDate)
@@ -77,6 +83,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         public ServerName GetCurrentServer(CharacterName character, CancellationToken cancellationToken)
         {
             return TaskHelper.UnwrapSingularAggegateException(() => GetCurrentServerAsync(character, cancellationToken).Result);
+        }
+
+        public void BeginTracking(CharacterName name)
+        {
+            jobExecutor.BeginTrackingForCharacter(name);
         }
     }
 }

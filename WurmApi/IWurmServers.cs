@@ -14,10 +14,18 @@ namespace AldursLab.WurmApi
 
         /// <summary>
         /// Gets server by its name, case insensitive.
+        /// If WurmApi does not know this server, a new server will be created with a server group of Unknown.
         /// </summary>
         /// <param name="name"></param>
-        /// <exception cref="DataNotFoundException">Server with this name has not been found.</exception>
         /// <returns></returns>
         IWurmServer GetByName(ServerName name);
+
+        /// <summary>
+        /// Gets server by its name, case insensitive.
+        /// If WurmApi does not know this server, a new server will be created with a server group of Unknown.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        IWurmServer GetByName(string name);
     }
 }

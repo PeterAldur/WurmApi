@@ -159,7 +159,8 @@ namespace AldursLab.WurmApi
                     serverList,
                     logger,
                     logsMonitor,
-                    logFiles));
+                    logFiles,
+                    internalEventAggregator));
 
             var wurmServersDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServers");
             if (internalWurmApiConfig.ClearAllCaches)
@@ -182,7 +183,10 @@ namespace AldursLab.WurmApi
                     wurmServers,
                     wurmServerHistory,
                     logger,
-                    taskManager));
+                    taskManager,
+                    logsMonitor,
+                    publicEventInvoker,
+                    internalEventAggregator));
 
             HttpWebRequests = httpWebRequests;
             Autoruns = autoruns;
