@@ -165,35 +165,38 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
                 {
                     foreach (var events in groupedEvents)
                     {
-                        SendNormalEvents(engineSubscription, events.Value, events.Key);
+                        SendNormalEvents(engineSubscription, events.Value);
                     }
                 }
-                if (groupedEvents.TryGetValue(engineSubscription.LogType, out outEvents))
+                else if (groupedEvents.TryGetValue(engineSubscription.LogType, out outEvents))
                 {
-                    SendNormalEvents(engineSubscription, outEvents, engineSubscription.LogType);
+                    SendNormalEvents(engineSubscription, outEvents);
                 }
             }
         }
 
-        void SendNormalEvents(EngineSubscription engineSubscription, MonitorEvents[] outEvents, LogType logType)
+        void SendNormalEvents(EngineSubscription engineSubscription, MonitorEvents[] allEvents)
         {
-            if (engineSubscription.InternalSubscription)
+            foreach (var events in allEvents)
             {
-                internalEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
-                    new LogsMonitorEventArgs(
-                        characterName,
-                        logType,
-                        outEvents.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
-                        null));
-            }
-            else
-            {
-                publicEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
-                    new LogsMonitorEventArgs(
-                        characterName,
-                        logType,
-                        outEvents.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
-                        null));
+                if (engineSubscription.InternalSubscription)
+                {
+                    internalEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
+                        new LogsMonitorEventArgs(
+                            characterName,
+                            events.LogFileInfo.LogType,
+                            events.LogEntries.ToArray(),
+                            events.PmRecipientNormalized));
+                }
+                else
+                {
+                    publicEventInvoker.TriggerInstantly(engineSubscription.LogsMonitorEventHandler, this,
+                        new LogsMonitorEventArgs(
+                            characterName,
+                            events.LogFileInfo.LogType,
+                            events.LogEntries.ToArray(),
+                            events.PmRecipientNormalized));
+                }
             }
         }
 
@@ -201,25 +204,28 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         {
             foreach (var pair in groupedEvents)
             {
-                foreach (var sub in globalSubs)
+                foreach (var events in pair.Value)
                 {
-                    if (sub.InternalSubscription)
+                    foreach (var sub in globalSubs)
                     {
-                        internalEventInvoker.TriggerInstantly(sub.EventHandler, this,
-                            new LogsMonitorEventArgs(
-                                characterName,
-                                pair.Key,
-                                pair.Value.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
-                                null));
-                    }
-                    else
-                    {
-                        publicEventInvoker.TriggerInstantly(sub.EventHandler, this,
-                            new LogsMonitorEventArgs(
-                                characterName,
-                                pair.Key,
-                                pair.Value.SelectMany(monitorEvents => monitorEvents.LogEntries).ToArray(),
-                                null));
+                        if (sub.InternalSubscription)
+                        {
+                            internalEventInvoker.TriggerInstantly(sub.EventHandler, this,
+                                new LogsMonitorEventArgs(
+                                    characterName,
+                                    events.LogFileInfo.LogType,
+                                    events.LogEntries.ToArray(),
+                                    events.PmRecipientNormalized));
+                        }
+                        else
+                        {
+                            publicEventInvoker.TriggerInstantly(sub.EventHandler, this,
+                                new LogsMonitorEventArgs(
+                                    characterName,
+                                    events.LogFileInfo.LogType,
+                                    events.LogEntries.ToArray(),
+                                    events.PmRecipientNormalized));
+                        }
                     }
                 }
             }
@@ -231,7 +237,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             if (groupedEvents.TryGetValue(LogType.Pm, out pmEvents))
             {
                 Dictionary<string, MonitorEvents[]> pmLogEntries =
-                    pmEvents.GroupBy(entry => entry.PmRecipient)
+                    pmEvents.GroupBy(entry => entry.PmRecipientNormalized)
                         .ToDictionary(eventses => eventses.Key, eventses => eventses.ToArray());
 
                 foreach (var enginePmSubscription in pmSubscriptions.Values)

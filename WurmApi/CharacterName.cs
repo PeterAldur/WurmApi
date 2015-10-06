@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using Newtonsoft.Json;
 
@@ -33,8 +34,15 @@ namespace AldursLab.WurmApi
         /// </summary>
         public string Capitalized { get { return UnnormalizeCharacterName(normalizedName); } }
 
-        private static string UnnormalizeCharacterName(string source)
+        /// <summary>
+        /// Converts a string in such way, that first char is uppercase and remaining chars are lowercase
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        internal static string UnnormalizeCharacterName(string source)
         {
+            Debug.Assert(source != null);
+            source = source ?? string.Empty;
             if (source.Length > 0)
             {
                 var result = source.Substring(0, 1).ToUpperInvariant();

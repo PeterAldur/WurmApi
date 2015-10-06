@@ -97,7 +97,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
                 var match1 = list.Any(
                     args =>
                         args.CharacterName == TestGuyCharacterName
-                        && args.ConversationNameNormalized == "ANOTHERGUY"
+                        && args.PmRecipientNormalized == "ANOTHERGUY"
+                        && args.PmRecipientCapitalized == "Anotherguy"
                         && args.WurmLogEntries.Any(
                             entry =>
                                 entry.Content == "Horses like this one have many uses."
@@ -198,6 +199,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
                     args =>
                         args.CharacterName == TestGuyCharacterName
                         && args.LogType == LogType.Pm
+                        && args.PmRecipientNormalized == "ANOTHERGUY"
+                        && args.PmRecipientCapitalized == "Anotherguy"
                         && args.WurmLogEntries.Any(
                             entry =>
                                 entry.Content == "Smartness is a very useful skill!"

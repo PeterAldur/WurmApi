@@ -82,6 +82,14 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogFiles
                     var oldestDate = TestGuyLogFiles.OldestLogFileDate;
                     Expect(oldestDate, EqualTo(new DateTime(2012, 1, 1)));
                 }
+
+                [Test]
+                public void ReadsPmRecipient()
+                {
+                    var logFiles = TestGuyLogFiles.GetLogFiles(DateTime.MinValue, DateTime.MaxValue, LogType.Pm).ToList();
+                    Expect(logFiles.Any(info => info.PmRecipientNormalized == "EVE"));
+                    Expect(logFiles.Any(info => info.PmRecipientNormalized == "JOHN"));
+                }
             }
 
             class GetLogFiles_2ParamOverload : WurmCharacterLogFilesTests
