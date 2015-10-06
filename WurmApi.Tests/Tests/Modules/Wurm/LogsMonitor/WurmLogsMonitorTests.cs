@@ -44,7 +44,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
         {
             EventAwaiter<LogsMonitorEventArgs> awaiter = new EventAwaiter<LogsMonitorEventArgs>();
             var handler = awaiter.GetEventHandler();
-            System.Subscribe(TestGuyCharacterName, LogType.Event, handler);
+            System.Subscribe(TestGuyCharacterName.Capitalized, LogType.Event, handler);
 
             WriteToLogFile("_Event.2014-01-01.txt", "Logging started 2014-01-01");
             WriteToLogFile("_Event.2014-01-01.txt", "[00:00:12] Horses like this one have many uses.");
@@ -62,7 +62,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
                 return match1;
             });
 
-            System.Unsubscribe(TestGuyCharacterName, handler);
+            System.Unsubscribe(TestGuyCharacterName.Capitalized, handler);
 
             WriteToLogFile("_Event.2014-01-01.txt", "[00:00:13] Horses like this one have many uses.");
 
@@ -84,8 +84,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
             EventHandler<LogsMonitorEventArgs> anotherGuyEventHandler = anotherGuyAwaiter.GetEventHandler();
             EventHandler<LogsMonitorEventArgs> unrelatedGuyEventHandler = unrelatedGuyAwaiter.GetEventHandler();
 
-            System.SubscribePm(TestGuyCharacterName, new CharacterName("Anotherguy"), anotherGuyEventHandler);
-            System.SubscribePm(TestGuyCharacterName, new CharacterName("Unrelatedguy"), unrelatedGuyEventHandler);
+            System.SubscribePm(TestGuyCharacterName.Capitalized, "Anotherguy", anotherGuyEventHandler);
+            System.SubscribePm(TestGuyCharacterName.Capitalized, "Unrelatedguy", unrelatedGuyEventHandler);
 
             WriteToLogFile("PM__Anotherguy.2014-01-01.txt", "Logging started 2014-01-01");
             WriteToLogFile("PM__Anotherguy.2014-01-01.txt",
@@ -109,7 +109,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
 
             Expect(unrelatedGuyAwaiter.Invocations.Count(), EqualTo(0));
 
-            System.UnsubscribePm(TestGuyCharacterName, new CharacterName("Anotherguy"), anotherGuyEventHandler);
+            System.UnsubscribePm(TestGuyCharacterName.Capitalized, "Anotherguy", anotherGuyEventHandler);
 
             WriteToLogFile("PM__Anotherguy.2014-01-01.txt",
                 "[00:00:13] <Anotherguy> Horses like this one have many uses.");
@@ -158,7 +158,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
         {
             EventAwaiter<LogsMonitorEventArgs> awaiter = new EventAwaiter<LogsMonitorEventArgs>();
             var handler = awaiter.GetEventHandler();
-            System.Subscribe(TestGuyCharacterName, LogType.AllLogs, handler);
+            System.Subscribe(TestGuyCharacterName.Capitalized, LogType.AllLogs, handler);
 
             WriteToLogFile("_Event.2014-01-01.txt", "Logging started 2014-01-01");
             WriteToLogFile("_Event.2014-01-01.txt", "[00:00:12] Horses like this one have many uses.");
@@ -209,7 +209,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsMonitor
                 return match1;
             });
 
-            System.Unsubscribe(TestGuyCharacterName, handler);
+            System.Unsubscribe(TestGuyCharacterName.Capitalized, handler);
         }
 
         void WriteToLogFile(string fileName, string contents)

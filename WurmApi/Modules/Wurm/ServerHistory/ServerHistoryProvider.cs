@@ -192,7 +192,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             var results = logsSearcher.Scan(
                 new LogSearchParameters()
                 {
-                    CharacterName = characterName,
+                    CharacterName = characterName.Normalized,
                     DateFrom = dateFrom,
                     DateTo = dateTo,
                     LogType = LogType.Event
@@ -243,7 +243,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             var results = logsSearcher.Scan(
                 new LogSearchParameters()
                 {
-                    CharacterName = characterName,
+                    CharacterName = characterName.Normalized,
                     DateFrom = dateFrom,
                     DateTo = datetimeTo,
                     LogType = LogType.Event
@@ -273,7 +273,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 
         public void Dispose()
         {
-            logsMonitor.Unsubscribe(characterName, HandleEventLogEntries);
+            logsMonitor.Unsubscribe(characterName.Normalized, HandleEventLogEntries);
         }
     }
 }

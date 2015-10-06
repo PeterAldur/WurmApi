@@ -7,7 +7,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         void SubscribeInternal(CharacterName characterName, LogType logType,
             EventHandler<LogsMonitorEventArgs> eventHandler);
 
-        void Unsubscribe(CharacterName characterName, EventHandler<LogsMonitorEventArgs> eventHandler);
+        void Unsubscribe(string characterName, EventHandler<LogsMonitorEventArgs> eventHandler);
 
         void SubscribeAllActiveInternal(EventHandler<LogsMonitorEventArgs> eventHandler);
 

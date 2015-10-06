@@ -60,7 +60,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                 var searchResults = wurmLogsHistory.Scan(
                     new LogSearchParameters()
                     {
-                        CharacterName = characterName,
+                        CharacterName = characterName.Normalized,
                         DateFrom = scanSince.DateTime,
                         DateTo = Time.Get.LocalNow,
                         LogType = LogType.Event

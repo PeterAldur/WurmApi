@@ -34,7 +34,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = DateTime.MinValue,
                 DateTo = DateTime.MaxValue,
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
             Expect(results.Any(), True);
@@ -47,7 +47,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = new DateTime(2012, 8, 1),
                 DateTo = new DateTime(2012, 8, 31),
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "testguy",
                 LogType = LogType.Skills
             });
             Expect(results.Count, EqualTo(62));
@@ -66,7 +66,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = new DateTime(2012, 8, 19),
                 DateTo = new DateTime(2012, 8, 19),
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
             Expect(results.Count, EqualTo(8));
@@ -85,7 +85,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = new DateTime(2012, 9, 22),
                 DateTo = new DateTime(2012, 9, 22),
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
             Expect(results.Count, EqualTo(18));
@@ -104,7 +104,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = new DateTime(2011, 8, 22),
                 DateTo = new DateTime(2013, 9, 22),
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
             Expect(results.Count, EqualTo(62 + 57 + 18 + 9 + 142));
@@ -125,7 +125,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = DateTime.MinValue,
                 DateTo = DateTime.MaxValue,
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "Testguy",
                 LogType = LogType.Skills
             }, cts.Token);
             try
@@ -146,7 +146,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 DateFrom = DateTime.MinValue,
                 DateTo = DateTime.MaxValue,
-                CharacterName = new CharacterName("Testguy"),
+                CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
             Expect(results.Any(), True);
@@ -163,7 +163,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
                 {
                     DateFrom = DateTime.MinValue,
                     DateTo = DateTime.MaxValue,
-                    CharacterName = new CharacterName("Testguy"),
+                    CharacterName = "Testguy",
                     LogType = LogType.Skills
                 },
                     cts.Token);

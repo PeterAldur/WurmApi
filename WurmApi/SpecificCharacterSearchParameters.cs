@@ -6,8 +6,9 @@ namespace AldursLab.WurmApi
     {
         /// <summary>
         /// Name of the character, whose logs are to be searched. Case insensitive. Null value is invalid.
+        /// Names are case insensitive.
         /// </summary>
-        public CharacterName CharacterName { get; set; }
+        public string CharacterName { get; set; }
         /// <summary>
         /// General type of logs to search through. Currently, Unspecified types cannot be searched (each type has to be searched separately).
         /// </summary>
@@ -23,8 +24,9 @@ namespace AldursLab.WurmApi
         /// <summary>
         /// Set this only if searching <see cref="LogType"/> of type PM. 
         /// If set, only results matching conversations with this character will be returned.
+        /// Names are case insensitive.
         /// </summary>
-        public CharacterName PmCharacterName { get; set; }
+        public string PmRecipientName { get; set; }
 
         public override string ToString()
         {
@@ -34,7 +36,7 @@ namespace AldursLab.WurmApi
                 LogType,
                 DateFrom,
                 DateTo,
-                PmCharacterName);
+                PmRecipientName);
         }
 
         public virtual void AssertAreValid()
@@ -51,7 +53,7 @@ namespace AldursLab.WurmApi
             {
                 throw new InvalidSearchParametersException("Unspecified log type search is not supported");
             }
-            if (LogType != LogType.Pm && PmCharacterName != null)
+            if (LogType != LogType.Pm && PmRecipientName != null)
             {
                 throw new InvalidSearchParametersException(
                     string.Format(

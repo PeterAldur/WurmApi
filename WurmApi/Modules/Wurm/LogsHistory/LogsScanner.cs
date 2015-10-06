@@ -57,14 +57,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         public ScanResult Scan()
         {
             logSearchParameters.AssertAreValid();
-            var man = this.wurmLogFiles.GetForCharacter(logSearchParameters.CharacterName);
+            var man = this.wurmLogFiles.GetForCharacter(new CharacterName(logSearchParameters.CharacterName));
             LogFileInfo[] logFileInfos =
                 man.GetLogFiles(logSearchParameters.DateFrom, logSearchParameters.DateTo)
                    .Where(info => info.LogType == logSearchParameters.LogType).ToArray();
 
             cancellationManager.ThrowIfCancelled();
 
-            CharacterMonthlyLogHeuristics characterHeuristics = monthlyHeuristics.GetForCharacter(logSearchParameters.CharacterName);
+            CharacterMonthlyLogHeuristics characterHeuristics =
+                monthlyHeuristics.GetForCharacter(new CharacterName(logSearchParameters.CharacterName));
 
             cancellationManager.ThrowIfCancelled();
 

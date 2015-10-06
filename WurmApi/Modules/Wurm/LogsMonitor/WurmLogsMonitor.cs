@@ -98,9 +98,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             taskHandle.Trigger();
         }
 
-        public void Subscribe(CharacterName characterName, LogType logType, EventHandler<LogsMonitorEventArgs> eventHandler)
+        public void Subscribe(string characterName, LogType logType, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
-            var manager = GetManager(characterName);
+            var manager = GetManager(new CharacterName(characterName));
             manager.AddSubscription(logType, eventHandler);
         }
 
@@ -111,22 +111,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             manager.AddSubscriptionInternal(logType, eventHandler);
         }
 
-        public void Unsubscribe(CharacterName characterName, EventHandler<LogsMonitorEventArgs> eventHandler)
+        public void Unsubscribe(string characterName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
-            var manager = GetManager(characterName);
+            var manager = GetManager(new CharacterName(characterName));
             manager.RemoveSubscription(eventHandler);
         }
 
-        public void SubscribePm(CharacterName characterName, CharacterName pmRecipient, EventHandler<LogsMonitorEventArgs> eventHandler)
+        public void SubscribePm(string characterName, string pmRecipientName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
-            var manager = GetManager(characterName);
-            manager.AddPmSubscription(eventHandler, pmRecipient.Normalized);
+            var manager = GetManager(new CharacterName(characterName));
+            manager.AddPmSubscription(eventHandler, new CharacterName(pmRecipientName));
         }
 
-        public void UnsubscribePm(CharacterName characterName, CharacterName pmRecipient, EventHandler<LogsMonitorEventArgs> eventHandler)
+        public void UnsubscribePm(string characterName, string pmRecipientName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
-            var manager = GetManager(characterName);
-            manager.RemovePmSubscription(eventHandler, pmRecipient.Normalized);
+            var manager = GetManager(new CharacterName(characterName));
+            manager.RemovePmSubscription(eventHandler, new CharacterName(pmRecipientName).Normalized);
         }
 
         public void SubscribeAllActive(EventHandler<LogsMonitorEventArgs> eventHandler)
