@@ -41,6 +41,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 return GetCurrentServer(getCurrentServerJob.CharacterName, jobCancellationManager);
             }
 
+            ParsePendingEvents();
+
             persistentLibrary.SaveChanged();
 
             throw new InvalidOperationException("No handler specified for job type: " + jobContext.GetType());
@@ -82,6 +84,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         }
 
         public override void IdleJob(CancellationToken cancellationToken)
+        {
+            ParsePendingEvents();
+        }
+
+        private void ParsePendingEvents()
         {
             foreach (var serverHistoryProvider in historyProviders.Values)
             {

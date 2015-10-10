@@ -114,10 +114,13 @@
     <Compile Include="Helpers\DummyException.cs" />
     <Compile Include="Helpers\EventAwaiter.cs" />
     <Compile Include="Helpers\LogWriter.cs" />
+    <Compile Include="Tests\Extensions\DateTimeExtensionsTests.cs" />
+    <Compile Include="Tests\Extensions\EventHandlerExtensionsTests.cs" />
     <Compile Include="Tests\LogWriterTests.cs" />
     <Compile Include="Helpers\Subscriber.cs" />
     <Compile Include="TempDirs\TempDirectoriesFactory.cs" />
     <Compile Include="TempDirs\TempDirectoriesManager.cs" />
+    <Compile Include="Tests\Modules\Wurm\Characters\Skills\WurmCharacterSkillsTests.cs" />
     <Compile Include="Tests\Modules\Wurm\LogReading\LogFileStreamReaderLinuxTests.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\CustomDeserializationErrorHandler.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\Data\Dtos.cs" />
@@ -201,6 +204,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\TestPaksZipped\ubuntu-wurm-dir.7z">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\TestPaksZipped\WurmCharacterSkillsTests-wurmdir.7z">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Tests\TempDirectoriesTests\SampleZippedDir.7z">
@@ -656,6 +662,7 @@
       <Name>WurmApi</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -42,7 +42,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 
             this.taskManager = taskManager;
 
-            onConfigChanged = publicEventMarshaller.Create(() => ConfigChanged.SafeInvoke(this),
+            onConfigChanged = publicEventMarshaller.Create(() => ConfigChanged.SafeInvoke(this, EventArgs.Empty),
                 WurmApiTuningParams.PublicEventMarshallerDelay);
 
             this.configReader = new ConfigReader(this);

@@ -214,8 +214,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 new LogSearchParameters()
                 {
                     CharacterName = characterName.Normalized,
-                    DateFrom = dateFrom,
-                    DateTo = dateTo,
+                    MinDate = dateFrom,
+                    MaxDate = dateTo,
                     LogType = LogType.Event
                 }, jobCancellationManager.GetLinkedToken());
 
@@ -265,8 +265,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 new LogSearchParameters()
                 {
                     CharacterName = characterName.Normalized,
-                    DateFrom = dateFrom,
-                    DateTo = datetimeTo,
+                    MinDate = dateFrom,
+                    MaxDate = datetimeTo,
                     LogType = LogType.Event
                 }, jobCancellationManager.GetLinkedToken());
 

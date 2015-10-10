@@ -59,7 +59,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             logSearchParameters.AssertAreValid();
             var man = this.wurmLogFiles.GetForCharacter(new CharacterName(logSearchParameters.CharacterName));
             LogFileInfo[] logFileInfos =
-                man.GetLogFiles(logSearchParameters.DateFrom, logSearchParameters.DateTo)
+                man.GetLogFiles(logSearchParameters.MinDate, logSearchParameters.MaxDate)
                    .Where(info => info.LogType == logSearchParameters.LogType).ToArray();
 
             cancellationManager.ThrowIfCancelled();
@@ -117,8 +117,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             LogFileParser logFileParser)
         {
             var heuristics = heuristicsFileMap.GetFullHeuristicsForMonth(logFileInfo);
-            var dayToSearchFrom = GetMinDayToSearchFrom(logSearchParameters.DateFrom, logFileInfo.LogFileDate.DateTime);
-            var dayToSearchTo = GetMaxDayToSearchUpTo(logSearchParameters.DateTo, logFileInfo.LogFileDate.DateTime);
+            var dayToSearchFrom = GetMinDayToSearchFrom(logSearchParameters.MinDate, logFileInfo.LogFileDate.DateTime);
+            var dayToSearchTo = GetMaxDayToSearchUpTo(logSearchParameters.MaxDate, logFileInfo.LogFileDate.DateTime);
 
             List<LogEntry> entries = new List<LogEntry>();
 

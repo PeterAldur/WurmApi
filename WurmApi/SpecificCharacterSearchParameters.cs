@@ -14,13 +14,13 @@ namespace AldursLab.WurmApi
         /// </summary>
         public LogType LogType { get; set; }
         /// <summary>
-        /// Lower search time boundary. Cannot be later than <see cref="DateTo"/>. Only date part is significant.
+        /// Lower search time boundary. Cannot be later than <see cref="MaxDate"/>. Only date part is significant.
         /// </summary>
-        public DateTime DateFrom { get; set; }
+        public DateTime MinDate { get; set; }
         /// <summary>
-        /// Upper search time boundary. Cannot be earlier than <see cref="DateFrom"/>. Only date part is significant.
+        /// Upper search time boundary. Cannot be earlier than <see cref="MinDate"/>. Only date part is significant.
         /// </summary>
-        public DateTime DateTo { get; set; }
+        public DateTime MaxDate { get; set; }
         /// <summary>
         /// Set this only if searching <see cref="LogType"/> of type PM. 
         /// If set, only results matching conversations with this character will be returned.
@@ -34,8 +34,8 @@ namespace AldursLab.WurmApi
                 "CharacterName: {0}, LogType: {1}, DateFrom: {2}, DateTo: {3}, PmCharacterName: {4}",
                 CharacterName,
                 LogType,
-                DateFrom,
-                DateTo,
+                MinDate,
+                MaxDate,
                 PmRecipientName);
         }
 
@@ -45,7 +45,7 @@ namespace AldursLab.WurmApi
             {
                 throw new InvalidSearchParametersException("characterName cannot be null");
             }
-            if (DateTo < DateFrom)
+            if (MaxDate < MinDate)
             {
                 throw new InvalidSearchParametersException("DateTo cannot be smaller than DateFrom");
             }

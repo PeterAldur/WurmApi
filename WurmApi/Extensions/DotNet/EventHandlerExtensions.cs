@@ -19,10 +19,13 @@ namespace AldursLab.WurmApi.Extensions.DotNet
         /// <param name="handler"></param>
         /// <param name="source"></param>
         /// <param name="eventArgs"></param>
-        public static void SafeInvoke(this EventHandler<EventArgs> handler, object source = null, EventArgs eventArgs = null)
+        public static void SafeInvoke<TEventArgs>(this EventHandler<TEventArgs> handler, object source,
+            TEventArgs eventArgs) where TEventArgs : EventArgs
         {
             if (handler != null)
-                handler(source, eventArgs ?? EventArgs.Empty);
+            {
+                handler(source, eventArgs);
+            }
         }
     }
 }

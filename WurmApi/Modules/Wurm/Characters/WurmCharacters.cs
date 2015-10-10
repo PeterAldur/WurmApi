@@ -4,6 +4,7 @@ using System.Linq;
 using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters
@@ -16,9 +17,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly IWurmServerHistory wurmServerHistory;
         readonly IWurmApiLogger logger;
         readonly TaskManager taskManager;
-        readonly IWurmLogsMonitor wurmLogsMonitor;
+        readonly IWurmLogsMonitorInternal wurmLogsMonitor;
         readonly IPublicEventInvoker publicEventInvoker;
         readonly InternalEventAggregator internalEventAggregator;
+        readonly IWurmPaths wurmPaths;
+        readonly IWurmLogsHistory wurmLogsHistory;
 
         readonly IDictionary<CharacterName, WurmCharacter> allCharacters = new Dictionary<CharacterName, WurmCharacter>();
 
@@ -27,8 +30,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         public WurmCharacters([NotNull] IWurmCharacterDirectories characterDirectories,
             [NotNull] IWurmConfigs wurmConfigs, [NotNull] IWurmServers wurmServers,
             [NotNull] IWurmServerHistory wurmServerHistory, [NotNull] IWurmApiLogger logger, 
-            [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitor wurmLogsMonitor,
-            [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator)
+            [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitorInternal wurmLogsMonitor,
+            [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator,
+            [NotNull] IWurmPaths wurmPaths, [NotNull] IWurmLogsHistory wurmLogsHistory)
         {
             this.characterDirectories = characterDirectories;
             this.wurmConfigs = wurmConfigs;
@@ -39,6 +43,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             this.wurmLogsMonitor = wurmLogsMonitor;
             this.publicEventInvoker = publicEventInvoker;
             this.internalEventAggregator = internalEventAggregator;
+            this.wurmPaths = wurmPaths;
+            this.wurmLogsHistory = wurmLogsHistory;
             if (characterDirectories == null) throw new ArgumentNullException("characterDirectories");
             if (wurmConfigs == null) throw new ArgumentNullException("wurmConfigs");
             if (wurmServers == null) throw new ArgumentNullException("wurmServers");
@@ -48,6 +54,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
             if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
             if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
+            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
+            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
 
             var allChars = characterDirectories.GetAllCharacters();
             foreach (var characterName in allChars)
@@ -109,7 +117,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
                     taskManager,
                     wurmLogsMonitor,
                     publicEventInvoker,
-                    internalEventAggregator
+                    internalEventAggregator,
+                    wurmLogsHistory,
+                    wurmPaths
                     );
                 allCharacters.Add(name, character);
                 return character;

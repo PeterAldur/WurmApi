@@ -48,10 +48,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             this.taskManager = taskManager;
 
             onAvailableConfigsChanged = publicEventInvoker.Create(
-                () => AvailableConfigsChanged.SafeInvoke(this), 
+                () => AvailableConfigsChanged.SafeInvoke(this, EventArgs.Empty), 
                 WurmApiTuningParams.PublicEventMarshallerDelay);
             onAnyConfigChanged = publicEventInvoker.Create(
-                () => AnyConfigChanged.SafeInvoke(this),
+                () => AnyConfigChanged.SafeInvoke(this, EventArgs.Empty),
                 WurmApiTuningParams.PublicEventMarshallerDelay);
 
             try

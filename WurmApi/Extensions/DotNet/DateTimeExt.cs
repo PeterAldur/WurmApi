@@ -13,5 +13,30 @@ namespace AldursLab.WurmApi.Extensions.DotNet
         {
             return dateTime.Date == Time.Get.LocalNow.Date;
         }
+
+        public static DateTime AddConstrain(this DateTime dateTime, TimeSpan timeSpan)
+        {
+            try
+            {
+                return dateTime.Add(timeSpan);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                var tsSign = Math.Sign(timeSpan.Ticks);
+                if (tsSign > 0)
+                {
+                    return DateTime.MaxValue;
+                }
+                else
+                {
+                    return DateTime.MinValue;
+                }
+            }
+        }
+
+        public static DateTime SubtractConstrain(this DateTime dateTime, TimeSpan timeSpan)
+        {
+            return AddConstrain(dateTime, -timeSpan);
+        }
     }
 }

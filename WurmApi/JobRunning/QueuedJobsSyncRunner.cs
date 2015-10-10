@@ -143,7 +143,7 @@ namespace AldursLab.WurmApi.JobRunning
 
             public async Task<TResult> AwaitComplete()
             {
-                return await JobHandle.Task;
+                return await JobHandle.Task.ConfigureAwait(false);
             }
 
             public void SetException(Exception exception)

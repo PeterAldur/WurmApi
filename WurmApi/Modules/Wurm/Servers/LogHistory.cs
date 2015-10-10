@@ -61,8 +61,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                     new LogSearchParameters()
                     {
                         CharacterName = characterName.Normalized,
-                        DateFrom = scanSince.DateTime,
-                        DateTo = Time.Get.LocalNow,
+                        MinDate = scanSince.DateTime,
+                        MaxDate = Time.Get.LocalNow,
                         LogType = LogType.Event
                     });
                 foreach (var searchResult in searchResults)

@@ -22,5 +22,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Paths
         {
             get { return playersDirPath; }
         }
+
+        public string GetSkillDumpsFullPathForCharacter(CharacterName characterName)
+        {
+            return Path.Combine(playersDirPath, characterName.Capitalized, "dumps");
+        }
     }
 }

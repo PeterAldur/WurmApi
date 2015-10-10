@@ -7,6 +7,8 @@ using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Modules.Wurm.Characters.Skills;
+using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
@@ -19,9 +21,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly IWurmServerHistory wurmServerHistory;
         readonly IWurmApiLogger logger;
         readonly TaskManager taskManager;
-        readonly IWurmLogsMonitor logsMonitor;
+        readonly IWurmLogsMonitorInternal logsMonitor;
         readonly IPublicEventInvoker publicEventInvoker;
         readonly InternalEventAggregator internalEventAggregator;
+        readonly IWurmLogsHistory logsHistory;
 
         readonly FileSystemWatcher configFileWatcher;
         readonly string configDefiningFileFullPath;
@@ -35,8 +38,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             [NotNull] IWurmConfigs wurmConfigs, [NotNull] IWurmServers wurmServers,
             [NotNull] IWurmServerHistory wurmServerHistory,
             [NotNull] IWurmApiLogger logger, 
-            [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitor logsMonitor,
-            [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator)
+            [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitorInternal logsMonitor,
+            [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator,
+            [NotNull] IWurmLogsHistory logsHistory, [NotNull] IWurmPaths wurmPaths)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (playerDirectoryFullPath == null) throw new ArgumentNullException("playerDirectoryFullPath");
@@ -48,6 +52,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             if (logsMonitor == null) throw new ArgumentNullException("logsMonitor");
             if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
             if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
+            if (logsHistory == null) throw new ArgumentNullException("logsHistory");
+            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
 
             this.wurmConfigs = wurmConfigs;
             this.wurmServers = wurmServers;
@@ -57,6 +63,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             this.logsMonitor = logsMonitor;
             this.publicEventInvoker = publicEventInvoker;
             this.internalEventAggregator = internalEventAggregator;
+            this.logsHistory = logsHistory;
 
             internalEventAggregator.Subscribe(this);
 
@@ -91,6 +98,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
                     this,
                     exception);
             }
+
+            Skills = new WurmCharacterSkills(this,
+                publicEventInvoker,
+                logsMonitor,
+                logsHistory,
+                logger,
+                wurmPaths,
+                internalEventAggregator);
         }
 
         void ConfigFileWatcherOnChanged(object sender, FileSystemEventArgs fileSystemEventArgs)
@@ -135,6 +150,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public IWurmConfig CurrentConfig { get; private set; }
 
+        public IWurmCharacterSkills Skills { get; private set; }
+
         #region GetHistoricServerAtLogStamp
 
         public async Task<IWurmServer> GetHistoricServerAtLogStampAsync(DateTime stamp)
@@ -165,7 +182,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public async Task<IWurmServer> GetCurrentServerAsync()
         {
-            return await GetCurrentServerAsync(CancellationToken.None);
+            return await GetCurrentServerAsync(CancellationToken.None).ConfigureAwait(false);
         }
 
         public IWurmServer GetCurrentServer()

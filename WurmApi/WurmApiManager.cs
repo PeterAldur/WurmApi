@@ -186,7 +186,9 @@ namespace AldursLab.WurmApi
                     taskManager,
                     logsMonitor,
                     publicEventInvoker,
-                    internalEventAggregator));
+                    internalEventAggregator,
+                    paths,
+                    logsHistory));
 
             HttpWebRequests = httpWebRequests;
             Autoruns = autoruns;

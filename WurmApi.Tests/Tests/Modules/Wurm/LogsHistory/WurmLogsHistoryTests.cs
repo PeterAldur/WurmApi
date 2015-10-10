@@ -32,8 +32,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
-                DateFrom = DateTime.MinValue,
-                DateTo = DateTime.MaxValue,
+                MinDate = DateTime.MinValue,
+                MaxDate = DateTime.MaxValue,
                 CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
@@ -45,8 +45,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
-                DateFrom = new DateTime(2012, 8, 1),
-                DateTo = new DateTime(2012, 8, 31),
+                MinDate = new DateTime(2012, 8, 1),
+                MaxDate = new DateTime(2012, 8, 31),
                 CharacterName = "testguy",
                 LogType = LogType.Skills
             });
@@ -64,8 +64,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
-                DateFrom = new DateTime(2012, 8, 19),
-                DateTo = new DateTime(2012, 8, 19),
+                MinDate = new DateTime(2012, 8, 19),
+                MaxDate = new DateTime(2012, 8, 19),
                 CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
@@ -83,8 +83,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
-                DateFrom = new DateTime(2012, 9, 22),
-                DateTo = new DateTime(2012, 9, 22),
+                MinDate = new DateTime(2012, 9, 22),
+                MaxDate = new DateTime(2012, 9, 22),
                 CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
@@ -102,8 +102,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
-                DateFrom = new DateTime(2011, 8, 22),
-                DateTo = new DateTime(2013, 9, 22),
+                MinDate = new DateTime(2011, 8, 22),
+                MaxDate = new DateTime(2013, 9, 22),
                 CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
@@ -123,8 +123,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             cts.Cancel();
             var resultsAwaiter = System.ScanAsync(new LogSearchParameters()
             {
-                DateFrom = DateTime.MinValue,
-                DateTo = DateTime.MaxValue,
+                MinDate = DateTime.MinValue,
+                MaxDate = DateTime.MaxValue,
                 CharacterName = "Testguy",
                 LogType = LogType.Skills
             }, cts.Token);
@@ -144,8 +144,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         {
             var results = System.Scan(new LogSearchParameters()
             {
-                DateFrom = DateTime.MinValue,
-                DateTo = DateTime.MaxValue,
+                MinDate = DateTime.MinValue,
+                MaxDate = DateTime.MaxValue,
                 CharacterName = "Testguy",
                 LogType = LogType.Skills
             });
@@ -161,8 +161,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
             {
                 System.Scan(new LogSearchParameters()
                 {
-                    DateFrom = DateTime.MinValue,
-                    DateTo = DateTime.MaxValue,
+                    MinDate = DateTime.MinValue,
+                    MaxDate = DateTime.MaxValue,
                     CharacterName = "Testguy",
                     LogType = LogType.Skills
                 },

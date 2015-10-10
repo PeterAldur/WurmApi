@@ -41,7 +41,7 @@ namespace AldursLab.WurmApi.Utility
                     try
                     {
                         job();
-                        operationCompletedAtLeastOnceAwaiter.TrySetResult(true);
+                        Task.Run(() => operationCompletedAtLeastOnceAwaiter.TrySetResult(true));
                     }
                     catch (Exception exception)
                     {

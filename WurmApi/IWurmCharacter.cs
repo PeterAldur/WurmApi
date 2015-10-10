@@ -72,7 +72,7 @@ namespace AldursLab.WurmApi
         /// </summary>
         event EventHandler<PotentialServerChangeEventArgs> LogInOrCurrentServerPotentiallyChanged;
 
-            /// <summary>
+        /// <summary>
         /// In-game name of this character.
         /// </summary>
         CharacterName Name { get; }
@@ -82,5 +82,10 @@ namespace AldursLab.WurmApi
         /// Returns null, if config does not exist or could not be read.
         /// </summary>
         IWurmConfig CurrentConfig { get; }
+
+        /// <summary>
+        /// Query current skill levels of this character and subscribe for changes.
+        /// </summary>
+        IWurmCharacterSkills Skills { get; }
     }
 }

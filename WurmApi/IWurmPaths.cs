@@ -4,5 +4,7 @@
     {
         string ConfigsDirFullPath { get; }
         string CharactersDirFullPath { get; }
+
+        string GetSkillDumpsFullPathForCharacter(CharacterName characterName);
     }
 }
