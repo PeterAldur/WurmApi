@@ -8,6 +8,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     class SortedServerHistory
     {
+        // note: at least one method in this class has to be thread safe, check methods for details
+
         readonly IPersistent<PersistentModel.ServerHistory> persistentData;
 
         List<ServerStamp> orderedStamps = new List<ServerStamp>();
@@ -32,6 +34,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         /// </summary>
         public ServerName TryGetServerAtStamp(DateTime timestamp)
         {
+            // note: this method must be thread safe!
             foreach (var orderedStamp in orderedStamps)
             {
                 if (orderedStamp.Timestamp <= timestamp)

@@ -17,6 +17,7 @@ using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.Paths;
+using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
 using AldursLab.WurmApi.Modules.Wurm.Servers;
 using AldursLab.WurmApi.Validation;
@@ -101,6 +102,7 @@ namespace AldursLab.WurmApi
                 Wire(new InternalEventInvoker(internalEventAggregator, logger, internalEventMarshaller));
 
             WurmPaths paths = Wire(new WurmPaths(installDirectory));
+            WurmServerGroups serverGroups = Wire(new WurmServerGroups());
 
             WurmServerList serverList = Wire(new WurmServerList());
 
@@ -160,7 +162,8 @@ namespace AldursLab.WurmApi
                     logger,
                     logsMonitor,
                     logFiles,
-                    internalEventAggregator));
+                    internalEventAggregator,
+                    serverGroups));
 
             var wurmServersDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServers");
             if (internalWurmApiConfig.ClearAllCaches)
@@ -188,7 +191,8 @@ namespace AldursLab.WurmApi
                     publicEventInvoker,
                     internalEventAggregator,
                     paths,
-                    logsHistory));
+                    logsHistory,
+                    serverGroups));
 
             HttpWebRequests = httpWebRequests;
             Autoruns = autoruns;
@@ -204,6 +208,7 @@ namespace AldursLab.WurmApi
             WurmConfigDirectories = configDirectories;
             InternalEventAggregator = internalEventAggregator;
             Paths = paths;
+            ServerGroups = serverGroups;
         }
 
         void ClearDir(string directoryPath)
@@ -224,6 +229,7 @@ namespace AldursLab.WurmApi
         public IWurmServers Servers { get; private set; }
 
         public IWurmPaths Paths { get; private set; }
+        public IWurmServerGroups ServerGroups { get; private set; }
 
         public IWurmServerHistory WurmServerHistory { get; private set; }
         public IWurmCharacterDirectories WurmCharacterDirectories { get; private set; }

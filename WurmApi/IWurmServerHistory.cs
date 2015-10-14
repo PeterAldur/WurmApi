@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,76 +9,68 @@ namespace AldursLab.WurmApi
     public interface IWurmServerHistory
     {
         /// <summary>
-        /// 
+        /// Returns null if not found.
         /// </summary>
         /// <param name="character"></param>
         /// <param name="exactDate"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<ServerName> GetServerAsync(CharacterName character, DateTime exactDate);
+        Task<ServerName> TryGetServerAsync(CharacterName character, DateTime exactDate);
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="character"></param>
-        /// <param name="exactDate"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<ServerName> GetServerAsync(CharacterName character, DateTime exactDate, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="character"></param>
-        /// <param name="exactDate"></param>
-        /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        ServerName GetServer(CharacterName character, DateTime exactDate);
-
-        /// <summary>
-        /// 
+        /// Returns null if not found.
         /// </summary>
         /// <param name="character"></param>
         /// <param name="exactDate"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        ServerName GetServer(CharacterName character, DateTime exactDate, CancellationToken cancellationToken);
+        Task<ServerName> TryGetServerAsync(CharacterName character, DateTime exactDate, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Returns null if not found.
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="exactDate"></param>
+        /// <returns></returns>
+        ServerName TryGetServer(CharacterName character, DateTime exactDate);
+
+        /// <summary>
+        /// Returns null if not found.
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="exactDate"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        ServerName TryGetServer(CharacterName character, DateTime exactDate, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Returns null if not found.
         /// </summary>
         /// <param name="character"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<ServerName> GetCurrentServerAsync(CharacterName character);
+        Task<ServerName> TryGetCurrentServerAsync(CharacterName character);
 
         /// <summary>
-        /// 
+        /// Returns null if not found.
         /// </summary>
         /// <param name="character"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<ServerName> GetCurrentServerAsync(CharacterName character, CancellationToken cancellationToken);
+        Task<ServerName> TryGetCurrentServerAsync(CharacterName character, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Returns null if not found.
         /// </summary>
         /// <param name="character"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        ServerName GetCurrentServer(CharacterName character);
+        ServerName TryGetCurrentServer(CharacterName character);
 
         /// <summary>
-        /// 
+        /// Returns null if not found.
         /// </summary>
         /// <param name="character"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException"></exception>
-        ServerName GetCurrentServer(CharacterName character, CancellationToken cancellationToken);
+        ServerName TryGetCurrentServer(CharacterName character, CancellationToken cancellationToken);
 
         /// <summary>
         /// Informs WurmServerHistory, that it should start tracking live logs for potential current server changes.

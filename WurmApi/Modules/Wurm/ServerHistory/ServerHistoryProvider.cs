@@ -29,6 +29,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 
         readonly ConcurrentQueue<LogEntry[]> liveEventsToParse = new ConcurrentQueue<LogEntry[]>();
 
+        static readonly DateTime NoPreviousSearchBoundary = new DateTime(1901, 1, 1);
+
         public ServerHistoryProvider(
             [NotNull] CharacterName characterName, 
             [NotNull] IPersistent<PersistentModel.ServerHistory> persistentData,
@@ -87,48 +89,31 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             }
         }
 
-        private bool ParseForServerInfo(IEnumerable<LogEntry> logEntries, bool fromLiveLogs = false)
+        bool ParseForServerInfo(IEnumerable<LogEntry> logEntries, bool fromLiveLogs = false)
         {
             bool foundAny = false;
             foreach (var wurmLogEntry in logEntries)
             {
-                if (Regex.IsMatch(wurmLogEntry.Content, @"^\d+ other players", RegexOptions.Compiled))
+                var serverStamp = ServerParsingHelper.TryGetServerFromLogEntry(wurmLogEntry, logger);
+                if (serverStamp != null)
                 {
-                    Match match = Regex.Match(
-                        wurmLogEntry.Content,
-                        @"\d+ other players are online.*\. You are on (.+) \(",
-                        RegexOptions.Compiled);
-                    if (match.Success)
+                    ServerName previousServerName = null;
+                    if (fromLiveLogs)
                     {
-                        ServerName previousServerName = null;
-                        if (fromLiveLogs)
-                        {
-                            previousServerName = currentLiveLogsServer
-                                                 ?? sortedServerHistory.TryGetServerAtStamp(Time.Get.LocalNow);
-                        }
-
-                        var serverName = new ServerName(match.Groups[1].Value.ToUpperInvariant());
-                        var serverStamp = new ServerStamp() { ServerName = serverName, Timestamp = wurmLogEntry.Timestamp };
-                        sortedServerHistory.Insert(serverStamp);
-                        foundAny = true;
-
-                        if (fromLiveLogs)
-                        {
-                            currentLiveLogsServer = serverName;
-
-                            eventAggregator.Send(new YouAreOnEventDetectedOnLiveLogs(currentLiveLogsServer,
-                                characterName,
-                                previousServerName != currentLiveLogsServer));
-                        }
+                        previousServerName = currentLiveLogsServer
+                                             ?? sortedServerHistory.TryGetServerAtStamp(Time.Get.LocalNow);
                     }
-                    else
+
+                    sortedServerHistory.Insert(serverStamp);
+                    foundAny = true;
+
+                    if (fromLiveLogs)
                     {
-                        logger.Log(
-                            LogLevel.Warn,
-                            "ServerHistoryProvider found 'you are on' log line, but could not parse it. Entry: "
-                            + wurmLogEntry,
-                            this,
-                            null);
+                        currentLiveLogsServer = serverStamp.ServerName;
+
+                        eventAggregator.Send(new YouAreOnEventDetectedOnLiveLogs(currentLiveLogsServer,
+                            characterName,
+                            previousServerName != currentLiveLogsServer));
                     }
                 }
             }
@@ -237,12 +222,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 
         private void UpdateEntity(DateTime dateFrom, DateTime dateTo)
         {
-            if (dateTo > persistentData.Entity.SearchedTo)
+            if (persistentData.Entity.SearchedTo < NoPreviousSearchBoundary || dateTo > persistentData.Entity.SearchedTo)
             {
                 persistentData.Entity.SearchedTo = dateTo;
                 persistentData.FlagAsChanged();
             }
-            if (dateFrom < persistentData.Entity.SearchedFrom)
+            if (persistentData.Entity.SearchedFrom < NoPreviousSearchBoundary || dateFrom < persistentData.Entity.SearchedFrom)
             {
                 persistentData.Entity.SearchedFrom = dateFrom;
                 persistentData.FlagAsChanged();
@@ -295,6 +280,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         public void Dispose()
         {
             logsMonitor.Unsubscribe(characterName.Normalized, HandleEventLogEntries);
+        }
+
+        public ServerName CheckCache(DateTime exactDate)
+        {
+            return sortedServerHistory.TryGetServerAtStamp(exactDate);
         }
     }
 }

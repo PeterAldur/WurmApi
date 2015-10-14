@@ -14,27 +14,27 @@ namespace AldursLab.WurmApi
 
         /// <summary>
         /// Returns exact server, that the player was on at given stamp.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<IWurmServer> GetHistoricServerAtLogStampAsync(DateTime stamp);
+        Task<IWurmServer> TryGetHistoricServerAtLogStampAsync(DateTime stamp);
 
         /// <summary>
         /// Returns exact server, that the player was on at given stamp.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        IWurmServer GetHistoricServerAtLogStamp(DateTime stamp);
+        IWurmServer TryGetHistoricServerAtLogStamp(DateTime stamp);
 
         /// <summary>
         /// Returns exact server, that the player was on at given stamp.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<IWurmServer> GetHistoricServerAtLogStampAsync(DateTime stamp, CancellationToken cancellationToken);
+        Task<IWurmServer> TryGetHistoricServerAtLogStampAsync(DateTime stamp, CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns exact server, that the player was on at given stamp.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        IWurmServer GetHistoricServerAtLogStamp(DateTime stamp, CancellationToken cancellationToken);
+        IWurmServer TryGetHistoricServerAtLogStamp(DateTime stamp, CancellationToken cancellationToken);
 
         #endregion
 
@@ -42,27 +42,27 @@ namespace AldursLab.WurmApi
 
         /// <summary>
         /// Returns exact server, that the player is currently on.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<IWurmServer> GetCurrentServerAsync();
+        Task<IWurmServer> TryGetCurrentServerAsync();
 
         /// <summary>
         /// Returns exact server, that the player is currently on.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        IWurmServer GetCurrentServer();
+        IWurmServer TryGetCurrentServer();
 
         /// <summary>
         /// Returns exact server, that the player is currently on.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        Task<IWurmServer> GetCurrentServerAsync(CancellationToken cancellationToken);
+        Task<IWurmServer> TryGetCurrentServerAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns exact server, that the player is currently on.
+        /// Returns null if not found.
         /// </summary>
-        /// <exception cref="DataNotFoundException"></exception>
-        IWurmServer GetCurrentServer(CancellationToken cancellationToken);
+        IWurmServer TryGetCurrentServer(CancellationToken cancellationToken);
 
         #endregion
 
@@ -87,5 +87,7 @@ namespace AldursLab.WurmApi
         /// Query current skill levels of this character and subscribe for changes.
         /// </summary>
         IWurmCharacterSkills Skills { get; }
+
+        IWurmCharacterLogs Logs { get; }
     }
 }

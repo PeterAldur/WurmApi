@@ -70,12 +70,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                     var upt = parser.TryParseUptime(searchResult);
                     if (upt != null)
                     {
-                        try
+                        var server = wurmServerHistory.TryGetServer(characterName, searchResult.Timestamp);
+                        if (server != null)
                         {
-                            var server = wurmServerHistory.GetServer(characterName, searchResult.Timestamp);
                             logHistorySaved.UpdateHistoric(server, upt);
                         }
-                        catch (DataNotFoundException)
+                        else
                         {
                             wurmApiLogger.Log(LogLevel.Info,
                                 string.Format("Server not found for character {0} at timestamp {1}",
@@ -84,17 +84,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                                 this,
                                 null);
                         }
-
                     }
                     var wdt = parser.TryParseWurmDateTime(searchResult);
                     if (wdt != null)
                     {
-                        try
+                        var server = wurmServerHistory.TryGetServer(characterName, searchResult.Timestamp);
+                        if (server != null)
                         {
-                            var server = wurmServerHistory.GetServer(characterName, searchResult.Timestamp);
                             logHistorySaved.UpdateHistoric(server, wdt);
                         }
-                        catch (DataNotFoundException)
+                        else
                         {
                             wurmApiLogger.Log(LogLevel.Info,
                                 string.Format("Server not found for character {0} at timestamp {1}",

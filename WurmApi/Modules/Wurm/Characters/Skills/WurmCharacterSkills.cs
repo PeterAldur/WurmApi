@@ -91,13 +91,21 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         {
             try
             {
-                currentServer = await character.GetCurrentServerAsync().ConfigureAwait(false);
+                var server = await character.TryGetCurrentServerAsync().ConfigureAwait(false);
+                if (server != null)
+                {
+                    currentServer = server;
+                }
+                else
+                {
+                    throw new DataNotFoundException("Current server unknown for: " + character.Name.Capitalized);
+                }
             }
             catch (Exception exception)
             {
                 logger.Log(LogLevel.Error, "error on updating current server", this, exception);
             }
-            currentServerLookupFinished.TrySetResult(Time.Get.LocalNow);
+            await Task.Run(() => currentServerLookupFinished.TrySetResult(Time.Get.LocalNow));
         }
 
         void EventHandler(object sender, LogsMonitorEventArgs logsMonitorEventArgs)
@@ -174,17 +182,31 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 MinDate = minDate,
                 MaxDate = maxDate
             }).ConfigureAwait(false);
-            scannedMinDate = minDate;
+            
             SkillEntryParser parser = new SkillEntryParser(logger);
             foreach (var wurmLogEntry in entries)
             {
                 SkillInfo skillInfo = parser.TryParseSkillInfoFromLogLine(wurmLogEntry);
                 if (skillInfo != null)
                 {
-                    var entryServer = await character.GetHistoricServerAtLogStampAsync(wurmLogEntry.Timestamp).ConfigureAwait(false);
-                    skillsMap.UpdateSkill(skillInfo, entryServer);
+                    var entryServer =
+                        await
+                            character.TryGetHistoricServerAtLogStampAsync(wurmLogEntry.Timestamp).ConfigureAwait(false);
+                    if (entryServer != null)
+                    {
+                        skillsMap.UpdateSkill(skillInfo, entryServer);
+                    }
+                    else
+                    {
+                        logger.Log(LogLevel.Info,
+                            "Skill info rejected, server could not be identified for this entry: " + wurmLogEntry,
+                            this,
+                            null);
+                    }
                 }
             }
+
+            scannedMinDate = minDate;
         }
 
         public void Handle(YouAreOnEventDetectedOnLiveLogs message)

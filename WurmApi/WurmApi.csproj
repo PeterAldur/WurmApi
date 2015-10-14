@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IWurmApiEventMarshaller.cs" />
+    <Compile Include="IWurmCharacterLogs.cs" />
     <Compile Include="IWurmCharacterSkills.cs" />
     <Compile Include="Modules\Events\Internal\Messages\YouAreOnEventDetectedOnLiveLogs.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDump.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Modules\Wurm\LogReading\LogFileCrLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileStreamReader.cs" />
+    <Compile Include="Modules\Wurm\ServerHistory\ServerParsingHelper.cs" />
     <Compile Include="Validation\Blacklist.cs" />
     <Compile Include="CharacterName.cs" />
     <Compile Include="Extensions\DotNet\ActionExtensions.cs" />
@@ -181,7 +183,7 @@
     <Compile Include="ServerGroup.cs" />
     <Compile Include="ServerName.cs" />
     <Compile Include="SkillGainRate.cs" />
-    <Compile Include="SpecificCharacterSearchParameters.cs" />
+    <Compile Include="LogSearchParameters.cs" />
     <Compile Include="Modules\Events\SimpleMarshaller.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Utility\ExceptionEventArgs.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="WurmApiExceptions.cs" />
     <Compile Include="WurmApiFactory.cs" />
     <Compile Include="WurmCalendar.cs" />
+    <Compile Include="Modules\Wurm\Characters\Logs\WurmCharacterLogs.cs" />
     <Compile Include="WurmDateTime.cs" />
     <Compile Include="WurmDay.cs" />
     <Compile Include="IWurmServerGroups.cs" />

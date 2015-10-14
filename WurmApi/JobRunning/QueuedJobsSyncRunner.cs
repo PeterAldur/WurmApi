@@ -138,7 +138,9 @@ namespace AldursLab.WurmApi.JobRunning
 
             public void SetResult(TResult results)
             {
-                JobHandle.SetResult(results);
+                // there is a deadlock of unknown cause, when SetResult is called within async flow.
+                // temporary fix: set on a free threadpool thread, this can't block.
+                Task.Run(() => JobHandle.SetResult(results));
             }
 
             public async Task<TResult> AwaitComplete()
@@ -148,7 +150,9 @@ namespace AldursLab.WurmApi.JobRunning
 
             public void SetException(Exception exception)
             {
-                JobHandle.SetException(exception);
+                // there is a deadlock of unknown cause, when SetException is called within async flow.
+                // temporary fix: set on a free threadpool thread, this can't block.
+                Task.Run(() => JobHandle.SetException(exception));
             }
         }
     }

@@ -120,6 +120,7 @@
     <Compile Include="Helpers\Subscriber.cs" />
     <Compile Include="TempDirs\TempDirectoriesFactory.cs" />
     <Compile Include="TempDirs\TempDirectoriesManager.cs" />
+    <Compile Include="Tests\Modules\Wurm\Characters\Logs\WurmCharacterLogsTests.cs" />
     <Compile Include="Tests\Modules\Wurm\Characters\Skills\WurmCharacterSkillsTests.cs" />
     <Compile Include="Tests\Modules\Wurm\LogReading\LogFileStreamReaderLinuxTests.cs" />
     <Compile Include="Tests\PersistentCollectionsLibraryTests\CustomDeserializationErrorHandler.cs" />
@@ -207,6 +208,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\TestPaksZipped\WurmCharacterSkillsTests-wurmdir.7z">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\TestPaksZipped\WurmCharacterLogsTests-wurmdir.7z">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Tests\TempDirectoriesTests\SampleZippedDir.7z">

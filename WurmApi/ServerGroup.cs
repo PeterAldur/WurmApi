@@ -1,8 +1,21 @@
-﻿namespace AldursLab.WurmApi
+﻿using System;
+using System.Collections.Generic;
+
+namespace AldursLab.WurmApi
 {
     public abstract class ServerGroup
     {
         public abstract ServerGroupId ServerGroupId { get; }
+
+        public virtual string Name
+        {
+            get { return ServerGroupId.ToString(); }
+        }
+
+        public virtual string Description
+        {
+            get { return ServerGroupId.ToString(); }
+        }
 
         protected bool Equals(ServerGroup other)
         {

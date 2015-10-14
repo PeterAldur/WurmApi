@@ -66,14 +66,14 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
             [Test]
             public async Task GetHistoricServerAtLogStamp_Gets()
             {
-                var server = await wurmCharacter.GetHistoricServerAtLogStampAsync(new DateTime(2014, 12, 15));
+                var server = await wurmCharacter.TryGetHistoricServerAtLogStampAsync(new DateTime(2014, 12, 15));
                 Expect(server.ServerName, EqualTo(new ServerName("Exodus")));
             }
 
             [Test]
             public async Task GetCurrentServer()
             {
-                var server = await wurmCharacter.GetCurrentServerAsync();
+                var server = await wurmCharacter.TryGetCurrentServerAsync();
                 Expect(server.ServerName, EqualTo(new ServerName("Exodus")));
             }
 
@@ -107,7 +107,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                         list =>
                             list.Any(args => args.ServerName == new ServerName("Exodus")));
 
-                    var server = await character.GetCurrentServerAsync();
+                    var server = await character.TryGetCurrentServerAsync();
                     Expect(server.ServerName, EqualTo(new ServerName("Exodus")));
 
                     Trace.WriteLine(
@@ -119,7 +119,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                         list =>
                             list.Any(args => args.ServerName == new ServerName("Deliverance")));
 
-                    server = await character.GetCurrentServerAsync();
+                    server = await character.TryGetCurrentServerAsync();
                     Expect(server.ServerName, EqualTo(new ServerName("Deliverance")));
 
                     Trace.WriteLine("writing third event");
@@ -130,7 +130,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
                         list =>
                             list.Any(args => args.ServerName == new ServerName("Deliverance")));
 
-                    server = await character.GetCurrentServerAsync();
+                    server = await character.TryGetCurrentServerAsync();
                     Expect(server.ServerName, EqualTo(new ServerName("Deliverance")));
                 }
             }

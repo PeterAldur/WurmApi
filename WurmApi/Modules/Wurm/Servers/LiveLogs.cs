@@ -36,7 +36,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             {
                 if (data.Uptime != null)
                 {
-                    var serverName = wurmServerHistory.GetServer(data.Character, data.Uptime.Stamp.DateTime);
+                    var serverName = wurmServerHistory.TryGetServer(data.Character, data.Uptime.Stamp.DateTime);
                     if (serverName != null)
                     {
                         TimeDetails details;
@@ -58,7 +58,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                 }
                 if (data.WurmDateTime != null)
                 {
-                    var serverName = wurmServerHistory.GetServer(data.Character, data.WurmDateTime.Stamp.DateTime);
+                    var serverName = wurmServerHistory.TryGetServer(data.Character, data.WurmDateTime.Stamp.DateTime);
                     if (serverName != null)
                     {
                         TimeDetails details;

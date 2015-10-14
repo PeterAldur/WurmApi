@@ -65,11 +65,21 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             SkillDump foundDump = null;
             foreach (var dumpInfo in dumps)
             {
-                var server = await character.GetHistoricServerAtLogStampAsync(dumpInfo.Stamp).ConfigureAwait(false);
-                if (server.ServerGroup.ServerGroupId == serverGroupId)
+                var server = await character.TryGetHistoricServerAtLogStampAsync(dumpInfo.Stamp).ConfigureAwait(false);
+                if (server != null)
                 {
-                    foundDump = new RealSkillDump(serverGroupId, dumpInfo, logger);
-                    break;
+                    if (server.ServerGroup.ServerGroupId == serverGroupId)
+                    {
+                        foundDump = new RealSkillDump(serverGroupId, dumpInfo, logger);
+                        break;
+                    }
+                }
+                else
+                {
+                    logger.Log(LogLevel.Info,
+                        "Could not identify server for skill dump: " + dumpInfo.FileInfo.FullName,
+                        this,
+                        null);
                 }
             }
 

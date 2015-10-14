@@ -43,6 +43,11 @@ namespace AldursLab.WurmApi
         IWurmPaths Paths { get; }
 
         /// <summary>
+        /// Definitions for Wurm Online server groups.
+        /// </summary>
+        IWurmServerGroups ServerGroups { get; }
+
+        /// <summary>
         /// Low level access to server history in the context of particular character.
         /// Similar information can be obtained through IWurmCharacter.
         /// </summary>

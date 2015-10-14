@@ -15,6 +15,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         readonly PersistentCollectionsLibrary persistentLibrary;
         readonly Dictionary<CharacterName, ServerHistoryProvider> historyProviders = new Dictionary<CharacterName, ServerHistoryProvider>();
 
+        private readonly object locker = new object();
+
         public JobExecutor([NotNull] ServerHistoryProviderFactory serverHistoryProviderFactory,
             [NotNull] PersistentCollectionsLibrary persistentLibrary)
         {
@@ -33,12 +35,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             var getServerAtDateJob = jobContext as GetServerAtDateJob;
             if (getServerAtDateJob != null)
             {
-                return GetServer(getServerAtDateJob.CharacterName, getServerAtDateJob.DateTime, jobCancellationManager);
+                return TryGetServer(getServerAtDateJob.CharacterName, getServerAtDateJob.DateTime, jobCancellationManager);
             }
             var getCurrentServerJob = jobContext as GetCurrentServerJob;
             if (getCurrentServerJob != null)
             {
-                return GetCurrentServer(getCurrentServerJob.CharacterName, jobCancellationManager);
+                return TryGetCurrentServer(getCurrentServerJob.CharacterName, jobCancellationManager);
             }
 
             ParsePendingEvents();
@@ -48,39 +50,30 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             throw new InvalidOperationException("No handler specified for job type: " + jobContext.GetType());
         }
 
-        ServerName GetServer(CharacterName character, DateTime exactDate, JobCancellationManager jobCancellationManager)
+        ServerName TryGetServer(CharacterName character, DateTime exactDate, JobCancellationManager jobCancellationManager)
         {
             ServerHistoryProvider provider = GetServerHistoryProvider(character);
-            var result = provider.TryGetAtTimestamp(exactDate, jobCancellationManager);
-            if (result == null)
-            {
-                throw new DataNotFoundException(
-                    string.Format("Server not found for timestamp {0} and character name {1}", exactDate, character));
-            }
-            return result;
+            return provider.TryGetAtTimestamp(exactDate, jobCancellationManager);
         }
 
-        ServerName GetCurrentServer(CharacterName character, JobCancellationManager jobCancellationManager)
+        ServerName TryGetCurrentServer(CharacterName character, JobCancellationManager jobCancellationManager)
         {
             ServerHistoryProvider provider = GetServerHistoryProvider(character);
-            var result = provider.TryGetCurrentServer(jobCancellationManager);
-            if (result == null)
-            {
-                throw new DataNotFoundException(
-                    string.Format("Current server not found for character name {0}", character));
-            }
-            return result;
+            return provider.TryGetCurrentServer(jobCancellationManager);
         }
 
         ServerHistoryProvider GetServerHistoryProvider(CharacterName character)
         {
-            ServerHistoryProvider provider;
-            if (!historyProviders.TryGetValue(character, out provider))
+            lock (locker)
             {
-                provider = serverHistoryProviderFactory.Create(character);
-                historyProviders.Add(character, provider);
+                ServerHistoryProvider provider;
+                if (!historyProviders.TryGetValue(character, out provider))
+                {
+                    provider = serverHistoryProviderFactory.Create(character);
+                    historyProviders.Add(character, provider);
+                }
+                return provider;
             }
-            return provider;
         }
 
         public override void IdleJob(CancellationToken cancellationToken)
@@ -98,12 +91,27 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             persistentLibrary.SaveChanged();
         }
 
-        public override TimeSpan IdleJobTreshhold { get { return TimeSpan.FromSeconds(2); } }
+        public override TimeSpan IdleJobTreshhold { get { return TimeSpan.FromMilliseconds(100); } }
 
         public void BeginTrackingForCharacter(CharacterName name)
         {
-            // this causes the provider to be created
+            // forcing server history provider to be created
             GetServerHistoryProvider(name);
+        }
+
+        /// <summary>
+        /// This method checks synchronously, if ServerName is in cache and if so, retrieves the value.
+        /// It is used as an optimization.
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="exactDate"></param>
+        /// <returns></returns>
+        public ServerName CheckCacheForServerInfo(CharacterName character, DateTime exactDate)
+        {
+            // this method can be called from arbitrary threads!
+            var provider = GetServerHistoryProvider(character);
+            var serverName = provider.CheckCache(exactDate);
+            return serverName;
         }
     }
 }

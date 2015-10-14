@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.JobRunning;
@@ -7,23 +9,32 @@ using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.Jobs;
 using AldursLab.WurmApi.PersistentObjects;
 using AldursLab.WurmApi.Utility;
+using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     class WurmServerHistory : IWurmServerHistory
     {
+        readonly IWurmLogsHistory wurmLogsHistory;
+        readonly IWurmServerGroups wurmServerGroups;
         readonly QueuedJobsSyncRunner<object, ServerName> runner;
         JobExecutor jobExecutor;
 
         public WurmServerHistory(
-            string dataDirectoryFullPath,
-            IWurmLogsHistory wurmLogsHistory,
+            [NotNull] string dataDirectoryFullPath, 
+            [NotNull] IWurmLogsHistory wurmLogsHistory,
             IWurmServerList wurmServerList,
             IWurmApiLogger logger,
             IWurmLogsMonitorInternal wurmLogsMonitor,
             IWurmLogFiles wurmLogFiles,
-            IInternalEventAggregator internalEventAggregator)
+            IInternalEventAggregator internalEventAggregator, 
+            [NotNull] IWurmServerGroups wurmServerGroups)
         {
+            if (dataDirectoryFullPath == null) throw new ArgumentNullException("dataDirectoryFullPath");
+            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
+            if (wurmServerGroups == null) throw new ArgumentNullException("wurmServerGroups");
+            this.wurmLogsHistory = wurmLogsHistory;
+            this.wurmServerGroups = wurmServerGroups;
             var persistentLibrary =
                 new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(dataDirectoryFullPath),
                     new PersObjErrorHandlingStrategy(logger));
@@ -43,46 +54,52 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             runner = new QueuedJobsSyncRunner<object, ServerName>(jobExecutor, logger);
         }
 
-        public async Task<ServerName> GetServerAsync(CharacterName character, DateTime exactDate)
+        public async Task<ServerName> TryGetServerAsync(CharacterName character, DateTime exactDate)
         {
-            return await GetServerAsync(character, exactDate, CancellationToken.None).ConfigureAwait(false);
+            return await TryGetServerAsync(character, exactDate, CancellationToken.None).ConfigureAwait(false);
         }
 
-        public async Task<ServerName> GetServerAsync(CharacterName character, DateTime exactDate, CancellationToken cancellationToken)
+        public async Task<ServerName> TryGetServerAsync(CharacterName character, DateTime exactDate, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            // attempt to check cache directly, result might have been already found by another query.
+            var fastResult = jobExecutor.CheckCacheForServerInfo(character, exactDate);
+            if (fastResult != null)
+            {
+                return fastResult;
+            }
             return await runner.Run(new GetServerAtDateJob(character, exactDate), cancellationToken).ConfigureAwait(false);
         }
 
-        public ServerName GetServer(CharacterName character, DateTime exactDate)
+        public ServerName TryGetServer(CharacterName character, DateTime exactDate)
         {
-            return TaskHelper.UnwrapSingularAggegateException(() => GetServerAsync(character, exactDate).Result);
+            return TaskHelper.UnwrapSingularAggegateException(() => TryGetServerAsync(character, exactDate).Result);
         }
 
-        public ServerName GetServer(CharacterName character, DateTime exactDate, CancellationToken cancellationToken)
+        public ServerName TryGetServer(CharacterName character, DateTime exactDate, CancellationToken cancellationToken)
         {
-            return TaskHelper.UnwrapSingularAggegateException(() => GetServerAsync(character, exactDate, cancellationToken).Result);
+            return TaskHelper.UnwrapSingularAggegateException(() => TryGetServerAsync(character, exactDate, cancellationToken).Result);
         }
 
-        public async Task<ServerName> GetCurrentServerAsync(CharacterName character)
+        public async Task<ServerName> TryGetCurrentServerAsync(CharacterName character)
         {
-            return await GetCurrentServerAsync(character, CancellationToken.None).ConfigureAwait(false);
+            return await TryGetCurrentServerAsync(character, CancellationToken.None).ConfigureAwait(false);
         }
 
-        public async Task<ServerName> GetCurrentServerAsync(CharacterName character, CancellationToken cancellationToken)
+        public async Task<ServerName> TryGetCurrentServerAsync(CharacterName character, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             return await runner.Run(new GetCurrentServerJob(character), cancellationToken).ConfigureAwait(false);
         }
 
-        public ServerName GetCurrentServer(CharacterName character)
+        public ServerName TryGetCurrentServer(CharacterName character)
         {
-            return TaskHelper.UnwrapSingularAggegateException(() => GetCurrentServerAsync(character).Result);
+            return TaskHelper.UnwrapSingularAggegateException(() => TryGetCurrentServerAsync(character).Result);
         }
 
-        public ServerName GetCurrentServer(CharacterName character, CancellationToken cancellationToken)
+        public ServerName TryGetCurrentServer(CharacterName character, CancellationToken cancellationToken)
         {
-            return TaskHelper.UnwrapSingularAggegateException(() => GetCurrentServerAsync(character, cancellationToken).Result);
+            return TaskHelper.UnwrapSingularAggegateException(() => TryGetCurrentServerAsync(character, cancellationToken).Result);
         }
 
         public void BeginTracking(CharacterName name)

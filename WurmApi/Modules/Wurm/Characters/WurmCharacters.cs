@@ -22,6 +22,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly InternalEventAggregator internalEventAggregator;
         readonly IWurmPaths wurmPaths;
         readonly IWurmLogsHistory wurmLogsHistory;
+        readonly IWurmServerGroups serverGroups;
 
         readonly IDictionary<CharacterName, WurmCharacter> allCharacters = new Dictionary<CharacterName, WurmCharacter>();
 
@@ -32,7 +33,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             [NotNull] IWurmServerHistory wurmServerHistory, [NotNull] IWurmApiLogger logger, 
             [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitorInternal wurmLogsMonitor,
             [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator,
-            [NotNull] IWurmPaths wurmPaths, [NotNull] IWurmLogsHistory wurmLogsHistory)
+            [NotNull] IWurmPaths wurmPaths, [NotNull] IWurmLogsHistory wurmLogsHistory,
+            [NotNull] IWurmServerGroups serverGroups)
         {
             this.characterDirectories = characterDirectories;
             this.wurmConfigs = wurmConfigs;
@@ -45,6 +47,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             this.internalEventAggregator = internalEventAggregator;
             this.wurmPaths = wurmPaths;
             this.wurmLogsHistory = wurmLogsHistory;
+            this.serverGroups = serverGroups;
             if (characterDirectories == null) throw new ArgumentNullException("characterDirectories");
             if (wurmConfigs == null) throw new ArgumentNullException("wurmConfigs");
             if (wurmServers == null) throw new ArgumentNullException("wurmServers");
@@ -56,6 +59,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
             if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
             if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
+            if (serverGroups == null) throw new ArgumentNullException("serverGroups");
 
             var allChars = characterDirectories.GetAllCharacters();
             foreach (var characterName in allChars)
@@ -119,7 +123,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
                     publicEventInvoker,
                     internalEventAggregator,
                     wurmLogsHistory,
-                    wurmPaths
+                    wurmPaths,
+                    serverGroups
                     );
                 allCharacters.Add(name, character);
                 return character;

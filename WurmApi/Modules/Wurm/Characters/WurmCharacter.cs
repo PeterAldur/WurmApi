@@ -7,6 +7,7 @@ using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Modules.Events.Public;
+using AldursLab.WurmApi.Modules.Wurm.Characters.Logs;
 using AldursLab.WurmApi.Modules.Wurm.Characters.Skills;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Utility;
@@ -25,6 +26,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly IPublicEventInvoker publicEventInvoker;
         readonly InternalEventAggregator internalEventAggregator;
         readonly IWurmLogsHistory logsHistory;
+        readonly IWurmServerGroups wurmServerGroups;
 
         readonly FileSystemWatcher configFileWatcher;
         readonly string configDefiningFileFullPath;
@@ -40,7 +42,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             [NotNull] IWurmApiLogger logger, 
             [NotNull] TaskManager taskManager, [NotNull] IWurmLogsMonitorInternal logsMonitor,
             [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] InternalEventAggregator internalEventAggregator,
-            [NotNull] IWurmLogsHistory logsHistory, [NotNull] IWurmPaths wurmPaths)
+            [NotNull] IWurmLogsHistory logsHistory, [NotNull] IWurmPaths wurmPaths,
+            [NotNull] IWurmServerGroups wurmServerGroups)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (playerDirectoryFullPath == null) throw new ArgumentNullException("playerDirectoryFullPath");
@@ -54,6 +57,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
             if (logsHistory == null) throw new ArgumentNullException("logsHistory");
             if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
+            if (wurmServerGroups == null) throw new ArgumentNullException("wurmServerGroups");
 
             this.wurmConfigs = wurmConfigs;
             this.wurmServers = wurmServers;
@@ -64,6 +68,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             this.publicEventInvoker = publicEventInvoker;
             this.internalEventAggregator = internalEventAggregator;
             this.logsHistory = logsHistory;
+            this.wurmServerGroups = wurmServerGroups;
 
             internalEventAggregator.Subscribe(this);
 
@@ -106,6 +111,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
                 logger,
                 wurmPaths,
                 internalEventAggregator);
+            Logs = new WurmCharacterLogs(this, wurmServerGroups, logsHistory, wurmServers, logger);
         }
 
         void ConfigFileWatcherOnChanged(object sender, FileSystemEventArgs fileSystemEventArgs)
@@ -151,55 +157,58 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         public IWurmConfig CurrentConfig { get; private set; }
 
         public IWurmCharacterSkills Skills { get; private set; }
+        public IWurmCharacterLogs Logs { get; private set; }
 
         #region GetHistoricServerAtLogStamp
 
-        public async Task<IWurmServer> GetHistoricServerAtLogStampAsync(DateTime stamp)
+        public async Task<IWurmServer> TryGetHistoricServerAtLogStampAsync(DateTime stamp)
         {
-            return await GetHistoricServerAtLogStampAsync(stamp, CancellationToken.None).ConfigureAwait(false);
+            return await TryGetHistoricServerAtLogStampAsync(stamp, CancellationToken.None).ConfigureAwait(false);
         }
 
-        public IWurmServer GetHistoricServerAtLogStamp(DateTime stamp)
+        public IWurmServer TryGetHistoricServerAtLogStamp(DateTime stamp)
         {
-            return GetHistoricServerAtLogStamp(stamp, CancellationToken.None);
+            return TryGetHistoricServerAtLogStamp(stamp, CancellationToken.None);
         }
 
-        public async Task<IWurmServer> GetHistoricServerAtLogStampAsync(DateTime stamp, CancellationToken cancellationToken)
+        public async Task<IWurmServer> TryGetHistoricServerAtLogStampAsync(DateTime stamp, CancellationToken cancellationToken)
         {
-            var serverName = await wurmServerHistory.GetServerAsync(this.Name, stamp, cancellationToken).ConfigureAwait(false);
+            var serverName = await wurmServerHistory.TryGetServerAsync(this.Name, stamp, cancellationToken).ConfigureAwait(false);
+            if (serverName == null) return null;
             var server = wurmServers.GetByName(serverName);
             return server;
         }
 
-        public IWurmServer GetHistoricServerAtLogStamp(DateTime stamp, CancellationToken cancellationToken)
+        public IWurmServer TryGetHistoricServerAtLogStamp(DateTime stamp, CancellationToken cancellationToken)
         {
-            return TaskHelper.UnwrapSingularAggegateException(() => GetHistoricServerAtLogStampAsync(stamp, cancellationToken).Result);
+            return TaskHelper.UnwrapSingularAggegateException(() => TryGetHistoricServerAtLogStampAsync(stamp, cancellationToken).Result);
         }
 
         #endregion
 
         #region GetCurrentServer
 
-        public async Task<IWurmServer> GetCurrentServerAsync()
+        public async Task<IWurmServer> TryGetCurrentServerAsync()
         {
-            return await GetCurrentServerAsync(CancellationToken.None).ConfigureAwait(false);
+            return await TryGetCurrentServerAsync(CancellationToken.None).ConfigureAwait(false);
         }
 
-        public IWurmServer GetCurrentServer()
+        public IWurmServer TryGetCurrentServer()
         {
-            return GetCurrentServer(CancellationToken.None);
+            return TryGetCurrentServer(CancellationToken.None);
         }
 
-        public async Task<IWurmServer> GetCurrentServerAsync(CancellationToken cancellationToken)
+        public async Task<IWurmServer> TryGetCurrentServerAsync(CancellationToken cancellationToken)
         {
-            var serverName = await wurmServerHistory.GetCurrentServerAsync(this.Name, cancellationToken).ConfigureAwait(false);
+            var serverName = await wurmServerHistory.TryGetCurrentServerAsync(this.Name, cancellationToken).ConfigureAwait(false);
+            if (serverName == null) return null;
             var server = wurmServers.GetByName(serverName);
             return server;
         }
 
-        public IWurmServer GetCurrentServer(CancellationToken cancellationToken)
+        public IWurmServer TryGetCurrentServer(CancellationToken cancellationToken)
         {
-            return TaskHelper.UnwrapSingularAggegateException(() => GetCurrentServerAsync(cancellationToken).Result);
+            return TaskHelper.UnwrapSingularAggegateException(() => TryGetCurrentServerAsync(cancellationToken).Result);
         }
 
         public event EventHandler<PotentialServerChangeEventArgs> LogInOrCurrentServerPotentiallyChanged;
