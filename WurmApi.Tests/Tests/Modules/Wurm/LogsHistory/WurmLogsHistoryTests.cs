@@ -41,79 +41,132 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         }
 
         [Test]
-        public async Task RetrievesCorrectData_MonthlyFile_FullMonth()
+        public async Task RetrievesCorrectData_MonthlyFile_FullMonth(
+            [Values(ScanResultOrdering.Ascending, ScanResultOrdering.Descending)] ScanResultOrdering ordering)
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
                 MinDate = new DateTime(2012, 8, 1),
                 MaxDate = new DateTime(2012, 8, 31),
                 CharacterName = "testguy",
-                LogType = LogType.Skills
+                LogType = LogType.Skills,
+                ScanResultOrdering = ordering
             });
             Expect(results.Count, EqualTo(62));
-            var firstResult = results.First();
-            var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 27, 1, 17, 51)));
-            Expect(firstResult.Content, EqualTo("Paving increased  to 19"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
-            Expect(lastResult.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
+
+            LogEntry alphaBoundary;
+            LogEntry betaBoundary;
+            if (ordering == ScanResultOrdering.Ascending)
+            {
+                alphaBoundary = results.First();
+                betaBoundary = results.Last();
+            }
+            else
+            {
+                alphaBoundary = results.Last();
+                betaBoundary = results.First();
+            }
+
+            Expect(betaBoundary.Timestamp, EqualTo(new DateTime(2012, 8, 27, 1, 17, 51)));
+            Expect(betaBoundary.Content, EqualTo("Paving increased  to 19"));
+            Expect(alphaBoundary.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
+            Expect(alphaBoundary.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
         }
 
         [Test]
-        public async Task RetrievesCorrectData_MonthlyFile_SingleDay()
+        public async Task RetrievesCorrectData_MonthlyFile_SingleDay([Values(ScanResultOrdering.Ascending, ScanResultOrdering.Descending)] ScanResultOrdering ordering)
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
                 MinDate = new DateTime(2012, 8, 19),
                 MaxDate = new DateTime(2012, 8, 19),
                 CharacterName = "Testguy",
-                LogType = LogType.Skills
+                LogType = LogType.Skills,
+                ScanResultOrdering = ordering
             });
             Expect(results.Count, EqualTo(8));
-            var firstResult = results.First();
-            var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 8, 19, 23, 53, 27)));
-            Expect(firstResult.Content, EqualTo("Mind increased  to 27"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 19, 0, 9, 44)));
-            Expect(lastResult.Content, EqualTo("Miscellaneous items increased by 0,0105 to 52,467"));
+
+            LogEntry alphaBoundary;
+            LogEntry betaBoundary;
+            if (ordering == ScanResultOrdering.Ascending)
+            {
+                alphaBoundary = results.First();
+                betaBoundary = results.Last();
+            }
+            else
+            {
+                alphaBoundary = results.Last();
+                betaBoundary = results.First();
+            }
+
+            Expect(betaBoundary.Timestamp, EqualTo(new DateTime(2012, 8, 19, 23, 53, 27)));
+            Expect(betaBoundary.Content, EqualTo("Mind increased  to 27"));
+            Expect(alphaBoundary.Timestamp, EqualTo(new DateTime(2012, 8, 19, 0, 9, 44)));
+            Expect(alphaBoundary.Content, EqualTo("Miscellaneous items increased by 0,0105 to 52,467"));
         }
 
         [Test]
-        public async Task RetrievesCorrectData_DailyFile_SingleDay()
+        public async Task RetrievesCorrectData_DailyFile_SingleDay([Values(ScanResultOrdering.Ascending, ScanResultOrdering.Descending)] ScanResultOrdering ordering)
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
                 MinDate = new DateTime(2012, 9, 22),
                 MaxDate = new DateTime(2012, 9, 22),
                 CharacterName = "Testguy",
-                LogType = LogType.Skills
+                LogType = LogType.Skills,
+                ScanResultOrdering = ordering
             });
             Expect(results.Count, EqualTo(18));
-            var firstResult = results.First();
-            var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 9, 22, 22, 51, 57)));
-            Expect(firstResult.Content, EqualTo("Healing increased by 0,104 to 12,295"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 9, 22, 19, 05, 44)));
-            Expect(lastResult.Content, EqualTo("Mining increased by 0,104 to 47,472"));
+
+            LogEntry alphaBoundary;
+            LogEntry betaBoundary;
+            if (ordering == ScanResultOrdering.Ascending)
+            {
+                alphaBoundary = results.First();
+                betaBoundary = results.Last();
+            }
+            else
+            {
+                alphaBoundary = results.Last();
+                betaBoundary = results.First();
+            }
+
+            Expect(betaBoundary.Timestamp, EqualTo(new DateTime(2012, 9, 22, 22, 51, 57)));
+            Expect(betaBoundary.Content, EqualTo("Healing increased by 0,104 to 12,295"));
+            Expect(alphaBoundary.Timestamp, EqualTo(new DateTime(2012, 9, 22, 19, 05, 44)));
+            Expect(alphaBoundary.Content, EqualTo("Mining increased by 0,104 to 47,472"));
         }
 
         [Test]
-        public async Task RetrievesCorrectData_MixedFiles_ManyDays()
+        public async Task RetrievesCorrectData_MixedFiles_ManyDays([Values(ScanResultOrdering.Ascending, ScanResultOrdering.Descending)] ScanResultOrdering ordering)
         {
             var results = await System.ScanAsync(new LogSearchParameters()
             {
                 MinDate = new DateTime(2011, 8, 22),
                 MaxDate = new DateTime(2013, 9, 22),
                 CharacterName = "Testguy",
-                LogType = LogType.Skills
+                LogType = LogType.Skills,
+                ScanResultOrdering = ordering
             });
             Expect(results.Count, EqualTo(62 + 57 + 18 + 9 + 142));
-            var firstResult = results.First();
-            var lastResult = results.Last();
-            Expect(firstResult.Timestamp, EqualTo(new DateTime(2012, 9, 23, 23, 37, 13)));
-            Expect(firstResult.Content, EqualTo("Gardening increased by 0,106 to 26,977"));
-            Expect(lastResult.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
-            Expect(lastResult.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
+
+            LogEntry alphaBoundary;
+            LogEntry betaBoundary;
+            if (ordering == ScanResultOrdering.Ascending)
+            {
+                alphaBoundary = results.First();
+                betaBoundary = results.Last();
+            }
+            else
+            {
+                alphaBoundary = results.Last();
+                betaBoundary = results.First();
+            }
+
+            Expect(betaBoundary.Timestamp, EqualTo(new DateTime(2012, 9, 23, 23, 37, 13)));
+            Expect(betaBoundary.Content, EqualTo("Gardening increased by 0,106 to 26,977"));
+            Expect(alphaBoundary.Timestamp, EqualTo(new DateTime(2012, 8, 18, 17, 28, 19)));
+            Expect(alphaBoundary.Content, EqualTo("First aid increased by 0,0124 to 23,392"));
         }
 
         [Test]

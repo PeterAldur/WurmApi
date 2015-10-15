@@ -70,7 +70,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
                 }
                 catch (Exception exception)
                 {
-                    logger.Log(LogLevel.Error, "Could not initialize character for name {0}", this, exception);
+                    logger.Log(LogLevel.Error,
+                        string.Format("Could not initialize character for name {0}", characterName),
+                        this,
+                        exception);
                 }
             }
         }

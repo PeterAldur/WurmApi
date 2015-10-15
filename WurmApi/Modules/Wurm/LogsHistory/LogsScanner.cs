@@ -70,10 +70,20 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             cancellationManager.ThrowIfCancelled();
 
             var result = GetEntries(logFileInfos, characterHeuristics);
-            return new ScanResult(result);
+
+            switch (logSearchParameters.ScanResultOrdering)
+            {
+                case ScanResultOrdering.Ascending:
+                    return new ScanResult(result);
+                case ScanResultOrdering.Descending:
+                    result.Reverse();
+                    return new ScanResult(result);
+                default:
+                    throw new Exception("Unsupported ScanResultOrdering value: " + logSearchParameters.ScanResultOrdering);
+            }
         }
 
-        private IList<LogEntry> GetEntries(
+        private List<LogEntry> GetEntries(
             IEnumerable<LogFileInfo> logFileInfos,
             CharacterMonthlyLogHeuristics heuristicsFileMap)
         {
@@ -81,7 +91,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
 
             List<LogEntry> result = new List<LogEntry>();
             IOrderedEnumerable<LogFileInfo> orderedLogFileInfos =
-                logFileInfos.OrderByDescending(info => info.LogFileDate.DateTime);
+                logFileInfos.OrderBy(info => info.LogFileDate.DateTime);
 
             foreach (LogFileInfo logFileInfo in orderedLogFileInfos)
             {
@@ -178,7 +188,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                     cancellationManager.ThrowIfCancelled();
                 }
 
-                result.AddRange(((IList<LogEntry>)entries).Reverse());
+                result.AddRange(entries);
             }
             finally
             {
@@ -227,7 +237,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                 logFileInfo.LogFileDate.DateTime,
                 logFileInfo);
             // reversing the array, so that latest entries are first
-            result.AddRange(parsedLines.Reverse());
+            result.AddRange(parsedLines);
         }
     }
 }

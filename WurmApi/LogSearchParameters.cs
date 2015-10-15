@@ -27,6 +27,11 @@ namespace AldursLab.WurmApi
         /// Names are case insensitive.
         /// </summary>
         public string PmRecipientName { get; set; }
+        /// <summary>
+        /// Defines the order, in which result LogEntry are returned.
+        /// Default order is Ascending (oldest first).
+        /// </summary>
+        public ScanResultOrdering ScanResultOrdering { get; set; }
 
         public override string ToString()
         {
@@ -61,5 +66,20 @@ namespace AldursLab.WurmApi
                         ToString()));
             }
         }
+    }
+
+    /// <summary>
+    /// Defines order of the result LogEntries.
+    /// </summary>
+    public enum ScanResultOrdering
+    {
+        /// <summary>
+        /// First result entry is the oldest one.
+        /// </summary>
+        Ascending = 0,
+        /// <summary>
+        /// First result entry is the newest one.
+        /// </summary>
+        Descending
     }
 }
