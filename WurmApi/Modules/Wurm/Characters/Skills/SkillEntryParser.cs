@@ -5,9 +5,16 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 {
-    class SkillEntryParser
+    /// <summary>
+    /// Skill entry parsing helper.
+    /// </summary>
+    public class SkillEntryParser
     {
         readonly IWurmApiLogger logger;
+
+        public SkillEntryParser([NotNull] IWurmApi wurmApi) : this(wurmApi.Logger)
+        {
+        }
 
         public SkillEntryParser([NotNull] IWurmApiLogger logger)
         {
@@ -15,15 +22,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Attempts to parse log entry into a skill gain information.
+        /// Returns null if entry was not recognized as related to skill gains.
+        /// </summary>
+        /// <param name="wurmLogEntry"></param>
+        /// <returns></returns>
         public SkillInfo TryParseSkillInfoFromLogLine(LogEntry wurmLogEntry)
         {
             if (wurmLogEntry.Content.Contains("increased") | wurmLogEntry.Content.Contains("decreased"))
             {
                 var match = Regex.Match(wurmLogEntry.Content,
-                    @"^(.+) (?:increased|decreased) by.* to (\d+(?:\,|\.)\d+|\d+).*$",
+                    @"^(.+) (?:increased|decreased) (.*) to (\d+(?:\,|\.)\d+|\d+).*$",
                     RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
                 string skillName = null;
                 float? parsedLevel = null;
+                float? parsedGain = null;
                 if (match.Success)
                 {
                     skillName = match.Groups[1].Value;
@@ -37,7 +51,26 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                         return null;
                     }
 
-                    var rawSkillLevel = match.Groups[2].Value;
+                    var rawSkillGain = match.Groups[2].Value;
+
+                    // check if 'by xx.xx' can be present in this entry
+                    rawSkillGain = rawSkillGain.Trim();
+                    if (rawSkillGain.Length > 3 && rawSkillGain.StartsWith("by "))
+                    {
+                        //try parse the skill gain
+                        parsedGain = TryParseFloatInvariant(rawSkillGain.Remove(0, 3).Trim());
+
+                        if (parsedGain == null)
+                        {
+                            logger.Log(LogLevel.Error,
+                                "Skill gain appears to be in log entry content, but could not be parsed, raw string: " + rawSkillGain
+                                + " raw entry: " + wurmLogEntry,
+                                this,
+                                null);
+                        }
+                    }
+
+                    var rawSkillLevel = match.Groups[3].Value;
 
                     parsedLevel = TryParseFloatInvariant(rawSkillLevel);
 
@@ -60,7 +93,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                     return null;
                 }
 
-                return new SkillInfo(skillName, parsedLevel.Value, wurmLogEntry.Timestamp);
+                return new SkillInfo(skillName, parsedLevel.Value, wurmLogEntry.Timestamp, parsedGain);
             }
             else
             {

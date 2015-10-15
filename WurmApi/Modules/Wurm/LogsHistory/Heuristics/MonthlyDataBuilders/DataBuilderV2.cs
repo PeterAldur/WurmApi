@@ -88,9 +88,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
             }
         }
 
-        private bool OverflowsBeyondToday(int currentDay)
+        private bool OverflowsBeyondToday(int day)
         {
-            return ThisLogIsForCurrentMonth && currentDay + 1 > today.Day;
+            return ThisLogIsForCurrentMonth && day > today.Day;
         }
 
         private bool OverflowsBeyondMaxMonth(int currentDay)

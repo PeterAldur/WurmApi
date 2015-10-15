@@ -209,6 +209,7 @@ namespace AldursLab.WurmApi
             InternalEventAggregator = internalEventAggregator;
             Paths = paths;
             ServerGroups = serverGroups;
+            Logger = logger;
         }
 
         void ClearDir(string directoryPath)
@@ -235,6 +236,7 @@ namespace AldursLab.WurmApi
         public IWurmCharacterDirectories WurmCharacterDirectories { get; private set; }
         public IWurmConfigDirectories WurmConfigDirectories { get; private set; }
         public IWurmLogFiles WurmLogFiles { get; private set; }
+        public IWurmApiLogger Logger { get; private set; }
 
         internal IInternalEventAggregator InternalEventAggregator { get; private set; }
         internal IHttpWebRequests HttpWebRequests { get; private set; }

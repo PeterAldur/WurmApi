@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
             LogSaveMode = LogSaveMode.Daily;
         }
 
-        //todo: refactor this before adding more
+        //note: refactor this before adding more
 
         public WurmLogs CreateCustomLogFile(string name, string content = null)
         {

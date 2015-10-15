@@ -94,7 +94,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             bool foundAny = false;
             foreach (var wurmLogEntry in logEntries)
             {
-                var serverStamp = ServerParsingHelper.TryGetServerFromLogEntry(wurmLogEntry, logger);
+                var serverStamp = ServerParsingHelper.TryGetServerFromLogEntry(wurmLogEntry, logger, characterName);
                 if (serverStamp != null)
                 {
                     ServerName previousServerName = null;

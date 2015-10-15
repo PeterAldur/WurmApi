@@ -5,15 +5,18 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
+using AldursLab.WurmApi.Extensions.DotNet;
 
 namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 {
     public static class ServerParsingHelper
     {
-        internal static ServerStamp TryGetServerFromLogEntry(LogEntry logEntry, IWurmApiLogger logger)
+        internal static ServerStamp TryGetServerFromLogEntry(LogEntry logEntry, IWurmApiLogger logger, CharacterName sourceCharacterName = null)
         {
             ServerStamp result = null;
-            if (Regex.IsMatch(logEntry.Content, @"^\d+ other players", RegexOptions.Compiled))
+            // attempt some faster matchers first, before trying actual parse
+            if (Regex.IsMatch(logEntry.Content, @"^\d+ other players", RegexOptions.Compiled)
+                && logEntry.Content.Contains("You are on", StringComparison.InvariantCultureIgnoreCase))
             {
                 Match match = Regex.Match(
                     logEntry.Content,
@@ -28,8 +31,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 {
                     logger.Log(
                         LogLevel.Warn,
-                        "ServerHistoryProvider found 'you are on' log line, but could not parse it. Entry: "
-                        + logEntry,
+                        string.Format(
+                            "ServerHistoryProvider found 'you are on' log line, but could not parse it. Character: {0} Entry: {1}",
+                            sourceCharacterName,
+                            logEntry),
                         "ServerParsingHelper",
                         null);
                 }

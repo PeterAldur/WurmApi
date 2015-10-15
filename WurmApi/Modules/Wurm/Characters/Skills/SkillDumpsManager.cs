@@ -114,7 +114,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
 
                 var match = Regex.Match(info.Name,
-                    @"skills\.(\d\d\d\d)(\d\d)(\d\d)\.(\d\d)(\d\d)\.txt",
+                    @"skills\.(\d\d\d\d)(\d\d)(\d\d)\.(\d\d)(\d\d).*\.txt",
                     RegexOptions.Compiled | RegexOptions.CultureInvariant);
                 if (match.Success)
                 {

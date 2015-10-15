@@ -113,7 +113,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             WurmDay? day = null;
             foreach (string name in WurmDay.AllNormalizedNames)
             {
-                //todo might be faster to just catch exception
                 if (Regex.IsMatch(logLine, name, RegexOptions.Compiled | RegexOptions.IgnoreCase))
                 {
                     day = new WurmDay(name);
@@ -131,7 +130,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             WurmStarfall? starfall = null;
             foreach (string name in WurmStarfall.AllNormalizedNames)
             {
-                //todo might be faster to just catch exception
                 if (Regex.IsMatch(logLine, name, RegexOptions.Compiled | RegexOptions.IgnoreCase))
                 {
                     starfall = new WurmStarfall(name);

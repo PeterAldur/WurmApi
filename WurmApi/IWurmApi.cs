@@ -67,5 +67,10 @@ namespace AldursLab.WurmApi
         /// Low level access to wurm client logs directory.
         /// </summary>
         IWurmLogFiles WurmLogFiles { get; }
+
+        /// <summary>
+        /// Internal WurmApi logger.
+        /// </summary>
+        IWurmApiLogger Logger { get; }
     }
 }

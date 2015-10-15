@@ -98,7 +98,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 }
                 else
                 {
-                    throw new DataNotFoundException("Current server unknown for: " + character.Name.Capitalized);
+                    logger.Log(LogLevel.Warn, "Current server unknown for: " + character.Name.Capitalized, this, null);
                 }
             }
             catch (Exception exception)

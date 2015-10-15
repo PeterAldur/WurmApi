@@ -32,7 +32,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
 
         static void ValidateDirectory(string directoryFullPath)
         {
-            // todo: validation
+            // no validation required here
         }
 
         public IEnumerable<string> AllConfigNames
