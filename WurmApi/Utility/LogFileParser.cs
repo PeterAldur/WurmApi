@@ -135,10 +135,11 @@ namespace AldursLab.WurmApi.Utility
 
             Log(
                 string.Format(
-                    "Parsed line has earlier timestamp, than last parsed line. Overriding this timestamp with stamp of last parsed line. Line contents: [{0}], Last entry data: [{1}]",
+                    "Parsed line has earlier timestamp, compared to last parsed line. Overriding this timestamp with stamp of last parsed line. Line contents: [{0}], Last entry data: [{1}]",
                     line,
                     lastLineContents),
-                logFileInfo);
+                logFileInfo, 
+                LogLevel.Info);
         }
 
         private static void AssertOriginDate(DateTime originDate)
@@ -150,9 +151,9 @@ namespace AldursLab.WurmApi.Utility
             }
         }
 
-        private void Log(string message, LogFileInfo logFileInfo)
+        private void Log(string message, LogFileInfo logFileInfo, LogLevel level = LogLevel.Warn)
         {
-            logger.Log(LogLevel.Warn, string.Format("{0}, Log file: [{1}]", message, logFileInfo.FullPath), this, null);
+            logger.Log(level, string.Format("{0}, Log file: [{1}]", message, logFileInfo.FullPath), this, null);
         }
     }
 
