@@ -58,6 +58,7 @@
     <Compile Include="IWurmApiEventMarshaller.cs" />
     <Compile Include="IWurmCharacterLogs.cs" />
     <Compile Include="IWurmCharacterSkills.cs" />
+    <Compile Include="MeditationPaths.cs" />
     <Compile Include="Modules\Events\Internal\Messages\YouAreOnEventDetectedOnLiveLogs.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDump.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDumpInfo.cs" />
