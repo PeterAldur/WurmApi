@@ -19,6 +19,11 @@ namespace AldursLab.WurmApi
         /// </summary>
         ServerGroup ServerGroup { get; }
 
+        /// <summary>
+        /// A special server group, used if this server is not mapped to any server group.
+        /// </summary>
+        ServerGroup ServerScopedServerGroup { get; }
+
         #region TryGetCurrentTime
 
         /// <summary>

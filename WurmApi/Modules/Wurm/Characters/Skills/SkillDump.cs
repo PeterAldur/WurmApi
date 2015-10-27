@@ -8,12 +8,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 {
     abstract class SkillDump
     {
-        protected SkillDump(ServerGroupId serverGroupId)
+        protected SkillDump(ServerGroup serverGroup)
         {
-            this.ServerGroupId = serverGroupId;
+            this.ServerGroupId = serverGroup;
         }
 
-        public ServerGroupId ServerGroupId { get; private set; }
+        public ServerGroup ServerGroupId { get; private set; }
 
         public abstract float? TryGetSkillLevel(string skillName);
 
@@ -26,9 +26,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         readonly IReadOnlyDictionary<string, float> skillLevels;
         readonly IWurmApiLogger logger;
 
-        public RealSkillDump(ServerGroupId serverGroupId, [NotNull] SkillDumpInfo dumpInfo,
+        public RealSkillDump(ServerGroup serverGroup, [NotNull] SkillDumpInfo dumpInfo,
             [NotNull] IWurmApiLogger logger)
-            : base(serverGroupId)
+            : base(serverGroup)
         {
             if (dumpInfo == null) throw new ArgumentNullException("dumpInfo");
             if (logger == null) throw new ArgumentNullException("logger");
@@ -100,7 +100,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
     class StubSkillDump : SkillDump
     {
-        public StubSkillDump(ServerGroupId serverGroupId) : base(serverGroupId)
+        public StubSkillDump(ServerGroup serverGroup) : base(serverGroup)
         {
         }
 

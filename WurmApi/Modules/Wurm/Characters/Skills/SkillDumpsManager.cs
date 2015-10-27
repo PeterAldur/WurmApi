@@ -14,7 +14,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         readonly IWurmCharacter character;
         readonly IWurmApiLogger logger;
         readonly DirectoryInfo skillDumpsDirectory;
-        readonly Dictionary<ServerGroupId, SkillDump> latestSkillDumps = new Dictionary<ServerGroupId, SkillDump>();
+        readonly Dictionary<ServerGroup, SkillDump> latestSkillDumps = new Dictionary<ServerGroup, SkillDump>();
 
         readonly SemaphoreSlim semaphore = new SemaphoreSlim(1,1);
 
@@ -30,16 +30,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             skillDumpsDirectory = new DirectoryInfo(wurmPaths.GetSkillDumpsFullPathForCharacter(character.Name));
         }
 
-        public async Task<SkillDump> TryGetSkillDumpAsync(ServerGroupId serverGroupId)
+        public async Task<SkillDump> TryGetSkillDumpAsync(ServerGroup serverGroup)
         {
             SkillDump dump;
             try
             {
                 await semaphore.WaitAsync().ConfigureAwait(false);
-                if (!latestSkillDumps.TryGetValue(serverGroupId, out dump))
+                if (!latestSkillDumps.TryGetValue(serverGroup, out dump))
                 {
-                    await FindLatestDumpForServerGroup(serverGroupId).ConfigureAwait(false);
-                    latestSkillDumps.TryGetValue(serverGroupId, out dump);
+                    await FindLatestDumpForServerGroup(serverGroup).ConfigureAwait(false);
+                    latestSkillDumps.TryGetValue(serverGroup, out dump);
                 }
             }
             finally
@@ -50,7 +50,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             return dump;
         }
 
-        async Task FindLatestDumpForServerGroup(ServerGroupId serverGroupId)
+        async Task FindLatestDumpForServerGroup(ServerGroup serverGroup)
         {
             var maxBackDate = Time.Get.LocalNow - MaxDaysBack;
             SkillDumpInfo[] dumps = new SkillDumpInfo[0];
@@ -68,9 +68,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 var server = await character.TryGetHistoricServerAtLogStampAsync(dumpInfo.Stamp).ConfigureAwait(false);
                 if (server != null)
                 {
-                    if (server.ServerGroup.ServerGroupId == serverGroupId)
+                    if (server.ServerGroup == serverGroup)
                     {
-                        foundDump = new RealSkillDump(serverGroupId, dumpInfo, logger);
+                        foundDump = new RealSkillDump(serverGroup, dumpInfo, logger);
                         break;
                     }
                 }
@@ -85,12 +85,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
             if (foundDump != null)
             {
-                latestSkillDumps[serverGroupId] = foundDump;
+                latestSkillDumps[serverGroup] = foundDump;
             }
             else
             {
                 // if nothing found, place a stub to prevent another file search
-                latestSkillDumps[serverGroupId] = new StubSkillDump(serverGroupId);
+                latestSkillDumps[serverGroup] = new StubSkillDump(serverGroup);
             }
         }
 

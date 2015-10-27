@@ -48,7 +48,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
         public async Task GetsCurrentSkills()
         {
             var skill = await TestguySkills.TryGetCurrentSkillLevelAsync("Masonry",
-                ServerGroupId.Freedom,
+                new ServerGroup("FREEDOM"), 
                 TimeSpan.FromDays(1000));
             Expect(skill, !Null);
             Expect(skill.Value, EqualTo(58.751f));
@@ -58,7 +58,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
         public async Task FallsBackToDumpsWhenNoSkillLogs()
         {
             var skill = await TestguytwoSkills.TryGetCurrentSkillLevelAsync("Masonry",
-                ServerGroupId.Freedom,
+                new ServerGroup("FREEDOM"),
                 TimeSpan.FromDays(1000));
             Expect(skill, EqualTo(73.73132f));
         }
@@ -86,7 +86,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
             awaiter.WaitInvocations(1);
             awaiter.WaitUntilMatch(list => list.Any(args => args.HasSkillChanged("Masonry")));
 
-            var skill = await skillApi.TryGetCurrentSkillLevelAsync("Masonry", ServerGroupId.Freedom, TimeSpan.MaxValue);
+            var skill = await skillApi.TryGetCurrentSkillLevelAsync("Masonry", new ServerGroup("FREEDOM"), TimeSpan.MaxValue);
             Expect(skill, EqualTo(58.754f));
         }
     }

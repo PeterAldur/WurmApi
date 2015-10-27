@@ -1,46 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace AldursLab.WurmApi
 {
-    public abstract class ServerGroup
+    [JsonObject(MemberSerialization.OptIn)]
+    public sealed class ServerGroup : IEquatable<ServerGroup>
     {
-        public abstract ServerGroupId ServerGroupId { get; }
+        const string ServerScoped = "SERVERSCOPED:";
+        public const string FreedomId = "FREEDOM";
+        public const string EpicId = "EPIC";
+        public const string UnknownId = "CONST:UNKNOWN";
 
-        public virtual string Name
+        [JsonProperty]
+        readonly string serverGroupId;
+
+        /// <summary>
+        /// Creates a server group scoped to a particular server name.
+        /// </summary>
+        /// <param name="serverName"></param>
+        /// <returns></returns>
+        public static ServerGroup CreateServerScoped([NotNull] ServerName serverName)
         {
-            get { return ServerGroupId.ToString(); }
+            if (serverName == null) throw new ArgumentNullException("serverName");
+            return new ServerGroup(ServerScoped + serverName.Normalized);
         }
 
-        public virtual string Description
+        /// <summary>
+        /// Creates a server group with specific Id.
+        /// Id's are always UpperCased.
+        /// </summary>
+        /// <param name="serverGroupId">Case insensitive</param>
+        public ServerGroup([NotNull] string serverGroupId)
         {
-            get { return ServerGroupId.ToString(); }
+            if (serverGroupId == null) throw new ArgumentNullException("serverGroupId");
+            this.serverGroupId = serverGroupId.ToUpperInvariant();
         }
 
-        protected bool Equals(ServerGroup other)
+        /// <summary>
+        /// Returns normalized server group id.
+        /// </summary>
+        public string ServerGroupId { get { return serverGroupId; } }
+
+        /// <summary>
+        /// Determines if this server group is scoped to a particular server name.
+        /// </summary>
+        public bool IsServerScoped { get { return serverGroupId.StartsWith(ServerScoped); } }
+
+        public bool Equals(ServerGroup other)
         {
-            return other.ServerGroupId.Equals(this.ServerGroupId);
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return string.Equals(serverGroupId, other.serverGroupId);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            var other = obj as ServerGroup;
-            return other != null && Equals(other);
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ServerGroup) obj);
         }
 
         public override int GetHashCode()
         {
-            return ServerGroupId.GetHashCode();
+            return serverGroupId.GetHashCode();
         }
-    }
 
-    public enum ServerGroupId
-    {
-        Unknown = 0,
-        Freedom = 1,
-        Epic = 2,
-        Challenge = 3
+        public static bool operator ==(ServerGroup left, ServerGroup right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ServerGroup left, ServerGroup right)
+        {
+            return !Equals(left, right);
+        }
+
+        public override string ToString()
+        {
+            return serverGroupId;
+        }
     }
 }

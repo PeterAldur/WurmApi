@@ -9,9 +9,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         sealed class CompositeSkillKey : IEquatable<CompositeSkillKey>
         {
             public string SkillNameNormalized { get; private set; }
-            public ServerGroupId ServerGroupId { get; private set; }
+            public ServerGroup ServerGroupId { get; private set; }
 
-            public CompositeSkillKey(string skillNameNormalized, ServerGroupId serverGroupId)
+            public CompositeSkillKey(string skillNameNormalized, ServerGroup serverGroupId)
             {
                 SkillNameNormalized = skillNameNormalized;
                 ServerGroupId = serverGroupId;
@@ -19,29 +19,23 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
             public bool Equals(CompositeSkillKey other)
             {
-                if (ReferenceEquals(null, other))
-                    return false;
-                if (ReferenceEquals(this, other))
-                    return true;
-                return string.Equals(SkillNameNormalized, other.SkillNameNormalized) && ServerGroupId == other.ServerGroupId;
+                if (ReferenceEquals(null, other)) return false;
+                if (ReferenceEquals(this, other)) return true;
+                return string.Equals(SkillNameNormalized, other.SkillNameNormalized) && Equals(ServerGroupId, other.ServerGroupId);
             }
 
             public override bool Equals(object obj)
             {
-                if (ReferenceEquals(null, obj))
-                    return false;
-                if (ReferenceEquals(this, obj))
-                    return true;
-                if (obj.GetType() != this.GetType())
-                    return false;
-                return Equals((CompositeSkillKey)obj);
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                return obj is CompositeSkillKey && Equals((CompositeSkillKey) obj);
             }
 
             public override int GetHashCode()
             {
                 unchecked
                 {
-                    return (SkillNameNormalized.GetHashCode() * 397) ^ (int)ServerGroupId;
+                    return ((SkillNameNormalized != null ? SkillNameNormalized.GetHashCode() : 0)*397) ^ (ServerGroupId != null ? ServerGroupId.GetHashCode() : 0);
                 }
             }
 
@@ -66,7 +60,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             if (server == null)
                 throw new ArgumentNullException("server");
 
-            var key = new CompositeSkillKey(newSkillInfo.NameNormalized, server.ServerGroup.ServerGroupId);
+            var key = new CompositeSkillKey(newSkillInfo.NameNormalized, server.ServerGroup);
             bool skillUpdated = false;
             lock (locker)
             {
@@ -88,13 +82,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             return skillUpdated;
         }
 
-        public float? TryGetSkill([NotNull] string skillName, ServerGroupId serverGroupId)
+        public float? TryGetSkill([NotNull] string skillName, ServerGroup serverGroup)
         {
             if (skillName == null)
                 throw new ArgumentNullException("skillName");
             skillName = WurmSkills.NormalizeSkillName(skillName);
 
-            var key = new CompositeSkillKey(skillName, serverGroupId);
+            var key = new CompositeSkillKey(skillName, serverGroup);
 
             lock (locker)
             {

@@ -20,7 +20,7 @@ namespace AldursLab.WurmApi
         }
 
         /// <summary>
-        /// All uppercase character name
+        /// All uppercase server name
         /// </summary>
         public string Normalized { get { return normalizedName; } }
 

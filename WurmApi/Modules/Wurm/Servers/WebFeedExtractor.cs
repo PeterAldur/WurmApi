@@ -21,7 +21,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         public async Task<WebDataExtractionResult> ExtractAsync(WurmServerInfo serverInfo)
         {
-            WebDataExtractionResult result = new WebDataExtractionResult(serverInfo.Name);
+            WebDataExtractionResult result = new WebDataExtractionResult(serverInfo.ServerName);
 
             var res = await this.httpWebRequests.GetResponseAsync(serverInfo.WebStatsUrl).ConfigureAwait(false);
             DateTime headerLastUpdated = res.LastModified;
@@ -42,12 +42,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
                         {
                             Match match = Regex.Match(line, @">.+<");
                             string name = match.Value.Substring(1, match.Value.Length - 2);
-                            if (!string.Equals(name, serverInfo.Name.Original, StringComparison.InvariantCultureIgnoreCase))
+                            if (!string.Equals(name, serverInfo.ServerName.Original, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 throw new WurmApiException(
                                     string.Format(
                                         "Extracted server name does not match server description, expected {0}, actual {1}",
-                                        serverInfo.Name.Original,
+                                        serverInfo.ServerName.Original,
                                         name));
                             }
                             canReadServerName = false;

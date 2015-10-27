@@ -65,7 +65,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
         public void GetsForUnknownServer()
         {
             var server = System.GetByName(new ServerName("Idonotexist"));
-            Expect(server.ServerGroup, EqualTo(new UnknownServerGroup()));
+            Expect(server.ServerGroup, EqualTo(new ServerGroup("SERVERSCOPED:IDONOTEXIST")));
         }
 
         [TestFixture]
@@ -95,7 +95,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
             [Test]
             public void GetsServer_HasCorrectProperties()
             {
-                Expect(server.ServerGroup.ServerGroupId, EqualTo(ServerGroupId.Freedom));
+                Expect(server.ServerGroup, EqualTo(new ServerGroup("FREEDOM")));
                 Expect(server.ServerName, EqualTo(serverName));
             }
 

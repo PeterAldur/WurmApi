@@ -72,5 +72,10 @@ namespace AldursLab.WurmApi
         /// Internal WurmApi logger.
         /// </summary>
         IWurmApiLogger Logger { get; }
+
+        /// <summary>
+        /// Defined Wurm servers (Online and Unlimited).
+        /// </summary>
+        IWurmServerList ServersList { get; }
     }
 }

@@ -13,20 +13,20 @@ namespace AldursLab.WurmApi
         /// Combined data of live logs, logs history and skill dumps is used to obtain this information.
         /// </summary>
         /// <param name="skillName">Name of the skill, case insensitive.</param>
-        /// <param name="serverGroupId">Target servers group.</param>
+        /// <param name="serverGroup"></param>
         /// <param name="maxTimeToLookBackInLogs">Maximum number of days to scan logs history, before giving up.</param>
         /// <returns></returns>
-        Task<float?> TryGetCurrentSkillLevelAsync(string skillName, ServerGroupId serverGroupId, TimeSpan maxTimeToLookBackInLogs);
+        Task<float?> TryGetCurrentSkillLevelAsync(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs);
 
         /// <summary>
         /// Attempts to find out current level of a given skill.
         /// Combined data of live logs, logs history and skill dumps is used to obtain this information.
         /// </summary>
         /// <param name="skillName">Name of the skill, case insensitive.</param>
-        /// <param name="serverGroupId">Target servers group.</param>
+        /// <param name="serverGroup"></param>
         /// <param name="maxTimeToLookBackInLogs">Maximum number of days to scan logs history, before giving up.</param>
         /// <returns></returns>
-        float? TryGetCurrentSkillLevel(string skillName, ServerGroupId serverGroupId, TimeSpan maxTimeToLookBackInLogs);
+        float? TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs);
 
         /// <summary>
         /// Triggered, when some skills have changed since last invocation of this event.

@@ -46,7 +46,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Logs
             var results = await TestguyLogs.ScanLogsServerGroupRestrictedAsync(new DateTime(2012, 08, 01),
                 new DateTime(2012, 09, 24),
                 LogType.Skills,
-                ServerGroupId.Freedom);
+                new ServerGroup("FREEDOM"));
             Expect(results.Any(), "No log entries found");
             Expect(results.All(entry => entry.Timestamp < serverCrossDate));
             Expect(!results.Any(entry => entry.Timestamp > serverCrossDate));
@@ -54,7 +54,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Logs
             var results2 = await TestguyLogs.ScanLogsServerGroupRestrictedAsync(new DateTime(2012, 08, 01),
                 new DateTime(2012, 09, 24),
                 LogType.Skills,
-                ServerGroupId.Epic);
+                new ServerGroup("EPIC"));
             Expect(results.Any(), "No log entries found");
             Expect(results2.All(entry => entry.Timestamp > serverCrossDate));
             Expect(!results2.Any(entry => entry.Timestamp < serverCrossDate));

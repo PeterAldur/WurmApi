@@ -10,14 +10,14 @@ namespace AldursLab.WurmApi
         /// <summary>
         /// Returns all Wurm Online server groups defined in WurmApi.
         /// </summary>
-        IEnumerable<ServerGroup> All { get; }
+        IEnumerable<ServerGroup> AllKnown { get; }
 
         /// <summary>
-        /// Returns server group by it's Id, if exists.
+        /// Gets server group for specific server.
+        /// If server is not mapped to any server group, a server scoped group will be registered.
         /// </summary>
-        /// <param name="serverGroupId"></param>
+        /// <param name="serverName"></param>
         /// <returns></returns>
-        /// <exception cref="DataNotFoundException">Id is outside defined enum values</exception>
-        ServerGroup GetById(ServerGroupId serverGroupId);
+        ServerGroup GetForServer(ServerName serverName);
     }
 }

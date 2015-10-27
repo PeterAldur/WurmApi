@@ -46,13 +46,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Logs
         }
 
         public async Task<IList<LogEntry>> ScanLogsServerGroupRestrictedAsync(DateTime minDate, DateTime maxDate, LogType logType,
-            ServerGroupId serverGroupId)
+            ServerGroup serverGroup)
         {
-            if (serverGroups.All.All(@group => @group.ServerGroupId != serverGroupId))
-            {
-                throw new InvalidSearchParametersException("Unknown enum value for ServerGroupId");
-            }
-
             var results = await logsHistory.ScanAsync(new LogSearchParameters()
             {
                 CharacterName = character.Name.Normalized,
@@ -65,7 +60,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Logs
             foreach (var logEntry in results)
             {
                 var serverForEntry = await TryGetServerAtStamp(logEntry.Timestamp).ConfigureAwait(false);
-                if (serverForEntry != null && serverForEntry.ServerGroup.ServerGroupId == serverGroupId)
+                if (serverForEntry != null && serverForEntry.ServerGroup == serverGroup)
                 {
                     filteredEntries.Add(logEntry);
                 }

@@ -132,8 +132,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             if (anyParsed) onSkillsChanged.Trigger();
         }
 
-        public async Task<float?> TryGetCurrentSkillLevelAsync(string skillName, ServerGroupId serverGroupId,
-            TimeSpan maxTimeToLookBackInLogs)
+        public async Task<float?> TryGetCurrentSkillLevelAsync(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
         {
             // note: semaphore(1,1) in this method ensures, that there are no races
             // be extra careful if loosening this constraint!
@@ -142,11 +141,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
                 await scanJobSemaphore.WaitAsync().ConfigureAwait(false);
                 await ScanLogsHistory(maxTimeToLookBackInLogs).ConfigureAwait(false);
-                var skill = skillsMap.TryGetSkill(skillName, serverGroupId);
+                var skill = skillsMap.TryGetSkill(skillName, serverGroup);
                 if (skill == null)
                 {
                     // as a final option, try to use skill dumps, if available
-                    var dump = await skillDumps.TryGetSkillDumpAsync(serverGroupId).ConfigureAwait(false);
+                    var dump = await skillDumps.TryGetSkillDumpAsync(serverGroup).ConfigureAwait(false);
                     if (dump != null)
                     {
                         skill = dump.TryGetSkillLevel(skillName);
@@ -160,11 +159,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             }
         }
 
-        public float? TryGetCurrentSkillLevel(string skillName, ServerGroupId serverGroupId, TimeSpan maxTimeToLookBackInLogs)
+        public float? TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
         {
             return
                 TaskHelper.UnwrapSingularAggegateException(
-                    () => TryGetCurrentSkillLevelAsync(skillName, serverGroupId, maxTimeToLookBackInLogs).Result);
+                    () => TryGetCurrentSkillLevelAsync(skillName, serverGroup, maxTimeToLookBackInLogs).Result);
         }
 
         private async Task ScanLogsHistory(TimeSpan maxTimeToLookBackInLogs)

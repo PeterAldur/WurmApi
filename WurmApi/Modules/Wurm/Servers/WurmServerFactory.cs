@@ -19,14 +19,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         public WurmServer Create(WurmServerInfo wurmServerInfo)
         {
-            if (createdServers.Contains(wurmServerInfo.Name))
+            if (createdServers.Contains(wurmServerInfo.ServerName))
             {
-                throw new InvalidOperationException("this factory has already created Server for name " + wurmServerInfo.Name);
+                throw new InvalidOperationException("this factory has already created Server for name " + wurmServerInfo.ServerName);
             }
 
             var server = new WurmServer(wurmServerInfo, jobRunner);
 
-            createdServers.Add(wurmServerInfo.Name);
+            createdServers.Add(wurmServerInfo.ServerName);
 
             return server;
         }

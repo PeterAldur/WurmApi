@@ -79,11 +79,7 @@ namespace AldursLab.WurmApi
             IHttpWebRequests httpWebRequests, IWurmApiLogger logger, IWurmApiEventMarshaller publicEventMarshaller,
             IWurmApiEventMarshaller internalEventMarshaller, WurmApiConfig wurmApiConfig)
         {
-            IWurmApiConfig internalWurmApiConfig = new WurmApiConfig()
-            {
-                Platform = wurmApiConfig.Platform,
-                ClearAllCaches = wurmApiConfig.ClearAllCaches
-            };
+            IWurmApiConfig internalWurmApiConfig = wurmApiConfig.CreateCopy();
 
             LogFileStreamReaderFactory logFileStreamReaderFactory = Wire(new LogFileStreamReaderFactory(internalWurmApiConfig));
 
@@ -102,9 +98,9 @@ namespace AldursLab.WurmApi
                 Wire(new InternalEventInvoker(internalEventAggregator, logger, internalEventMarshaller));
 
             WurmPaths paths = Wire(new WurmPaths(installDirectory));
-            WurmServerGroups serverGroups = Wire(new WurmServerGroups());
+            WurmServerGroups serverGroups = Wire(new WurmServerGroups(internalWurmApiConfig.ServerInfoMap));
 
-            WurmServerList serverList = Wire(new WurmServerList());
+            WurmServerList serverList = Wire(new WurmServerList(internalWurmApiConfig.ServerInfoMap));
 
             WurmLogDefinitions logDefinitions = Wire(new WurmLogDefinitions());
 
@@ -178,7 +174,8 @@ namespace AldursLab.WurmApi
                     wurmServersDataDirectory,
                     characterDirectories,
                     wurmServerHistory,
-                    logger));
+                    logger,
+                    serverGroups));
 
             WurmCharacters characters =
                 Wire(new WurmCharacters(characterDirectories,
@@ -210,6 +207,7 @@ namespace AldursLab.WurmApi
             Paths = paths;
             ServerGroups = serverGroups;
             Logger = logger;
+            ServersList = serverList;
         }
 
         void ClearDir(string directoryPath)
@@ -240,6 +238,8 @@ namespace AldursLab.WurmApi
 
         internal IInternalEventAggregator InternalEventAggregator { get; private set; }
         internal IHttpWebRequests HttpWebRequests { get; private set; }
+
+        public IWurmServerList ServersList { get; private set; }
 
         public void Dispose()
         {
@@ -280,6 +280,69 @@ namespace AldursLab.WurmApi
         public WurmApiConfig()
         {
             Platform = Platform.Windows;
+            ServerInfoMap = new Dictionary<ServerName, WurmServerInfo>();
+
+            var defaultDescriptions = new[]
+            {
+                new WurmServerInfo(
+                    "Golden Valley",
+                    "http://jenn001.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Independence",
+                    "http://freedom001.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Deliverance",
+                    "http://freedom002.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Exodus",
+                    "http://freedom003.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Celebration",
+                    "http://freedom004.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Chaos",
+                    "http://wild001.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Pristine",
+                    "http://freedom005.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Release",
+                    "http://freedom006.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Xanadu",
+                    "http://freedom007.game.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.FreedomId)),
+                new WurmServerInfo(
+                    "Elevation",
+                    "http://elevation.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.EpicId)),
+                new WurmServerInfo(
+                    "Serenity",
+                    "http://serenity.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.EpicId)),
+                new WurmServerInfo(
+                    "Desertion",
+                    "http://desertion.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.EpicId)),
+                new WurmServerInfo(
+                    "Affliction",
+                    "http://affliction.wurmonline.com/battles/stats.html",
+                    new ServerGroup(ServerGroup.EpicId)),
+            };
+
+            foreach (var defaultDescription in defaultDescriptions)
+            {
+                ServerInfoMap.Add(defaultDescription.ServerName, defaultDescription);
+            }
+            
         }
 
         /// <summary>
@@ -291,6 +354,23 @@ namespace AldursLab.WurmApi
         /// If set, will clear all WurmApi caches, such as log searching heuristics.
         /// </summary>
         public bool ClearAllCaches { get; set; }
+
+        /// <summary>
+        /// Contains all default mappings between server names and their details - such as server group or stats url.
+        /// Mappings can be modified, added and removed.
+        /// </summary>
+        public IDictionary<ServerName, WurmServerInfo> ServerInfoMap { get; private set; }
+
+        internal WurmApiConfig CreateCopy()
+        {
+            var config = new WurmApiConfig
+            {
+                ClearAllCaches = this.ClearAllCaches,
+                Platform = this.Platform,
+                ServerInfoMap = this.ServerInfoMap
+            };
+            return config;
+        }
     }
 
     internal interface IWurmApiConfig
@@ -298,6 +378,12 @@ namespace AldursLab.WurmApi
         Platform Platform { get; }
 
         bool ClearAllCaches { get; }
+
+        /// <summary>
+        /// Contains all default mappings between server names and their details - such as server group or stats url.
+        /// Mappings can be modified, added and removed.
+        /// </summary>
+        IDictionary<ServerName, WurmServerInfo> ServerInfoMap { get; }
     }
 
     /// <summary>

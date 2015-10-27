@@ -19,7 +19,7 @@ namespace AldursLab.WurmApi
                              RavenNameNormalized = "RAVEN",
                              DancerNameNormalized = "DANCER",
                              OmenNameNormalized = "OMEN",
-                             SilentNameNormalized = "SILENT";
+                             SilentNameNormalized = "SILENCE";
 
         private static readonly string[] WurmStarfallNames =
         {

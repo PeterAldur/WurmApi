@@ -21,9 +21,9 @@ namespace AldursLab.WurmApi
         /// <param name="minDate"></param>
         /// <param name="maxDate"></param>
         /// <param name="logType"></param>
-        /// <param name="serverGroupId"></param>
+        /// <param name="serverGroup"></param>
         /// <returns></returns>
         Task<IList<LogEntry>> ScanLogsServerGroupRestrictedAsync(DateTime minDate, DateTime maxDate, LogType logType,
-            ServerGroupId serverGroupId);
+            ServerGroup serverGroup);
     }
 }
