@@ -11,6 +11,7 @@ using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Modules.Events.Public;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
@@ -157,6 +158,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
                 scanJobSemaphore.Release();
             }
+        }
+
+        public float? TryGetCurrentSkillLevel(string skillName, ServerGroupId serverGroupId, TimeSpan maxTimeToLookBackInLogs)
+        {
+            return
+                TaskHelper.UnwrapSingularAggegateException(
+                    () => TryGetCurrentSkillLevelAsync(skillName, serverGroupId, maxTimeToLookBackInLogs).Result);
         }
 
         private async Task ScanLogsHistory(TimeSpan maxTimeToLookBackInLogs)
