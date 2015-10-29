@@ -1,17 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 using AldursLab.WurmApi.Extensions.DotNet;
+using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 
-namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
+namespace AldursLab.WurmApi
 {
-    public static class ServerParsingHelper
+    /// <summary>
+    /// Contains extensions enabling parsing common information from log entries.
+    /// </summary>
+    public static class LogEntryParsingHelper
     {
-        internal static ServerStamp TryGetServerFromLogEntry(LogEntry logEntry, IWurmApiLogger logger, CharacterName sourceCharacterName = null)
+        /// <summary>
+        /// Attempts to parse server name from a log entry.
+        /// Null if parsing failed.
+        /// </summary>
+        /// <param name="logEntry"></param>
+        /// <param name="logger">Optional, will log parsing errors.</param>
+        /// <param name="sourceCharacterName">Optional, will be appended to log message.</param>
+        /// <returns></returns>
+        public static ServerStamp TryGetServerFromLogEntry(this LogEntry logEntry, IWurmApiLogger logger = null, CharacterName sourceCharacterName = null)
         {
             ServerStamp result = null;
             // attempt some faster matchers first, before trying actual parse
@@ -29,7 +36,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                 }
                 else
                 {
-                    logger.Log(
+                    if (logger != null)
+                    {
+                        logger.Log(
                         LogLevel.Warn,
                         string.Format(
                             "ServerHistoryProvider found 'you are on' log line, but could not parse it. Character: {0} Entry: {1}",
@@ -37,6 +46,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
                             logEntry),
                         "ServerParsingHelper",
                         null);
+                    }
                 }
             }
             return result;

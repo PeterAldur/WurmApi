@@ -114,8 +114,20 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public void Unsubscribe(string characterName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
-            var manager = GetManager(new CharacterName(characterName));
-            manager.RemoveSubscription(eventHandler);
+            try
+            {
+                var manager = GetManager(new CharacterName(characterName));
+                manager.RemoveSubscription(eventHandler);
+            }
+            catch (DataNotFoundException exception)
+            {
+                logger.Log(LogLevel.Info,
+                    string.Format(
+                        "Could not unsubscribe an event handler from logs monitor for character {0}. No manager found for this character",
+                        characterName),
+                    this,
+                    exception);
+            }
         }
 
         public void SubscribePm(string characterName, string pmRecipientName, EventHandler<LogsMonitorEventArgs> eventHandler)
@@ -126,8 +138,21 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public void UnsubscribePm(string characterName, string pmRecipientName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
-            var manager = GetManager(new CharacterName(characterName));
-            manager.RemovePmSubscription(eventHandler, new CharacterName(pmRecipientName).Normalized);
+            try
+            {
+                var manager = GetManager(new CharacterName(characterName));
+                manager.RemovePmSubscription(eventHandler, new CharacterName(pmRecipientName).Normalized);
+            }
+            catch (DataNotFoundException exception)
+            {
+                logger.Log(LogLevel.Info,
+                    string.Format(
+                        "Could not unsubscribe an event handler from logs monitor for character {0} (PM sub: {1}). No manager found for this character",
+                        characterName,
+                        pmRecipientName),
+                    this,
+                    exception);
+            }
         }
 
         public void SubscribeAllActive(EventHandler<LogsMonitorEventArgs> eventHandler)

@@ -191,8 +191,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
             return new WurmDateTime(year, starfall.Value, week, day.Value, hour, minute, second);
         }
-
-
     }
 
     public class WebDataExtractionResult

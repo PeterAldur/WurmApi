@@ -34,26 +34,29 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Logs
             this.logger = logger;
         }
 
-        public async Task<IList<LogEntry>> ScanLogsAsync(DateTime minDate, DateTime maxDate, LogType logType)
+        public async Task<IList<LogEntry>> ScanLogsAsync(DateTime minDate, DateTime maxDate, LogType logType,
+            ScanResultOrdering scanResultOrdering)
         {
             return await logsHistory.ScanAsync(new LogSearchParameters()
             {
                 CharacterName = character.Name.Normalized,
                 LogType = logType,
                 MinDate = minDate,
-                MaxDate = maxDate
+                MaxDate = maxDate,
+                ScanResultOrdering = scanResultOrdering
             }).ConfigureAwait(false);
         }
 
         public async Task<IList<LogEntry>> ScanLogsServerGroupRestrictedAsync(DateTime minDate, DateTime maxDate, LogType logType,
-            ServerGroup serverGroup)
+            ServerGroup serverGroup, ScanResultOrdering scanResultOrdering)
         {
             var results = await logsHistory.ScanAsync(new LogSearchParameters()
             {
                 CharacterName = character.Name.Normalized,
                 LogType = logType,
                 MinDate = minDate,
-                MaxDate = maxDate
+                MaxDate = maxDate,
+                ScanResultOrdering = scanResultOrdering
             }).ConfigureAwait(false);
 
             List<LogEntry> filteredEntries = new List<LogEntry>();

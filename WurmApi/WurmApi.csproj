@@ -71,7 +71,7 @@
     <Compile Include="Modules\Wurm\LogReading\LogFileCrLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileStreamReader.cs" />
-    <Compile Include="Modules\Wurm\ServerHistory\ServerParsingHelper.cs" />
+    <Compile Include="LogEntryParsingHelper.cs" />
     <Compile Include="Validation\Blacklist.cs" />
     <Compile Include="CharacterName.cs" />
     <Compile Include="Extensions\DotNet\ActionExtensions.cs" />
