@@ -39,6 +39,7 @@ namespace AldursLab.WurmApi.PersistentObjects
                 {
                     var data = persistent.Value.GetSerializedData(serializationStrategy);
                     persistenceStrategy.Save(persistent.Key, collectionId, data);
+                    persistent.Value.HasChanged = false;
                 }
             }
         }

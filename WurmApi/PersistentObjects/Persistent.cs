@@ -4,7 +4,7 @@
     {
         internal abstract string GetSerializedData(ISerializationStrategy serializationStrategy);
 
-        internal abstract bool HasChanged { get; }
+        internal abstract bool HasChanged { get; set; }
     }
 
     class Persistent<TEntity> : Persistent, IPersistent<TEntity> where TEntity : Entity, new()
@@ -26,6 +26,7 @@
         internal override bool HasChanged
         {
             get { return hasChanged; }
+            set { hasChanged = value; }
         }
 
         public void FlagAsChanged()
