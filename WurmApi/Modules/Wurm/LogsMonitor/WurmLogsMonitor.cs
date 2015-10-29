@@ -114,6 +114,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public void Unsubscribe(string characterName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
+            if (characterName == null)
+            {
+                logger.Log(LogLevel.Error,
+                    string.Format("Unsubscribe attempted with null characterName, handler details: {0} ",
+                        eventHandler.MethodInformationToString()),
+                    this,
+                    null);
+                return;
+            }
+
             try
             {
                 var manager = GetManager(new CharacterName(characterName));
@@ -123,8 +133,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             {
                 logger.Log(LogLevel.Info,
                     string.Format(
-                        "Could not unsubscribe an event handler from logs monitor for character {0}. No manager found for this character",
-                        characterName),
+                        "Could not unsubscribe an event handler from logs monitor for character {0}. No manager found for this character. , handler details: {1}",
+                        characterName,
+                        eventHandler.MethodInformationToString()),
                     this,
                     exception);
             }
@@ -138,6 +149,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public void UnsubscribePm(string characterName, string pmRecipientName, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
+            if (characterName == null)
+            {
+                logger.Log(LogLevel.Error,
+                    string.Format("UnsubscribePm attempted with null characterName, handler details: {0} ",
+                        eventHandler.MethodInformationToString()),
+                    this,
+                    null);
+                return;
+            }
+
             try
             {
                 var manager = GetManager(new CharacterName(characterName));
@@ -147,9 +168,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             {
                 logger.Log(LogLevel.Info,
                     string.Format(
-                        "Could not unsubscribe an event handler from logs monitor for character {0} (PM sub: {1}). No manager found for this character",
+                        "Could not unsubscribe an event handler from logs monitor for character {0} (PM sub: {1}). No manager found for this character. Handler details: {2}",
                         characterName,
-                        pmRecipientName),
+                        pmRecipientName,
+                        eventHandler),
                     this,
                     exception);
             }

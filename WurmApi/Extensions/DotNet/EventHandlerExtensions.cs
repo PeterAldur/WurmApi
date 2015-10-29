@@ -6,6 +6,7 @@ namespace AldursLab.WurmApi.Extensions.DotNet
     {
         public static string MethodInformationToString<T>(this EventHandler<T> eventHandler) where T : EventArgs
         {
+            if (eventHandler == null) return "Handler is NULL";
             return string.Format("{0}.{1}",
                 eventHandler.Method.DeclaringType != null
                     ? eventHandler.Method.DeclaringType.FullName
