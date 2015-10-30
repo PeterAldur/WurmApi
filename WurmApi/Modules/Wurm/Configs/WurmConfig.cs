@@ -114,6 +114,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
         private bool? noSkillMessageOnFavorChange;
         private bool? saveSkillsOnQuit;
         private bool? timestampMessages;
+        private bool? saveSkillDumpsOnQuit;
 
         public event EventHandler<EventArgs> ConfigChanged;
 
