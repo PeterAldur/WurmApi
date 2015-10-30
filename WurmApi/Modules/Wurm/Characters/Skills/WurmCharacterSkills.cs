@@ -36,7 +36,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
         public event EventHandler<SkillsChangedEventArgs> SkillsChanged;
 
-        readonly ConcurrentBag<string> changedSkills = new ConcurrentBag<string>();
+        readonly ConcurrentQueue<SkillInfo> changedSkills = new ConcurrentQueue<SkillInfo>();
 
         readonly PublicEvent onSkillsChanged;
 
@@ -77,15 +77,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             SkillsChanged.SafeInvoke(this, new SkillsChangedEventArgs(TakeChangedSkills()));
         }
 
-        string[] TakeChangedSkills()
+        SkillInfo[] TakeChangedSkills()
         {
-            List<string> skills = new List<string>();
-            string skill;
-            while (changedSkills.TryTake(out skill))
+            List<SkillInfo> skills = new List<SkillInfo>();
+            SkillInfo skill;
+            while (changedSkills.TryDequeue(out skill))
             {
                 skills.Add(skill);
             }
-            return skills.Distinct().ToArray();
+            return skills.OrderBy(info => info.Stamp).ToArray();
         }
 
         async void UpdateCurrentServer()
@@ -123,7 +123,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 SkillInfo skillInfo = parser.TryParseSkillInfoFromLogLine(wurmLogEntry);
                 if (skillInfo != null)
                 {
-                    changedSkills.Add(skillInfo.NameNormalized);
+                    skillInfo.Server = currentServer;
+                    changedSkills.Enqueue(skillInfo);
                     skillsMap.UpdateSkill(skillInfo, currentServer);
                     anyParsed = true;
                 }
@@ -132,7 +133,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             if (anyParsed) onSkillsChanged.Trigger();
         }
 
-        public async Task<float?> TryGetCurrentSkillLevelAsync(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
+        public async Task<SkillInfo> TryGetCurrentSkillLevelAsync(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
         {
             // note: semaphore(1,1) in this method ensures, that there are no races
             // be extra careful if loosening this constraint!
@@ -148,7 +149,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                     var dump = await skillDumps.TryGetSkillDumpAsync(serverGroup).ConfigureAwait(false);
                     if (dump != null)
                     {
-                        skill = dump.TryGetSkillLevel(skillName);
+                        var skillinfo = dump.TryGetSkillLevel(skillName);
+                        if (skillinfo != null)
+                        {
+                            skill = new SkillInfo(skillName, skillinfo.Value, dump.Stamp, null);
+                        }
                     }
                 }
                 return skill;
@@ -159,7 +164,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             }
         }
 
-        public float? TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
+        public SkillInfo TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
         {
             return
                 TaskHelper.UnwrapSingularAggegateException(
@@ -201,6 +206,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                             character.TryGetHistoricServerAtLogStampAsync(wurmLogEntry.Timestamp).ConfigureAwait(false);
                     if (entryServer != null)
                     {
+                        skillInfo.Server = entryServer;
                         skillsMap.UpdateSkill(skillInfo, entryServer);
                     }
                     else

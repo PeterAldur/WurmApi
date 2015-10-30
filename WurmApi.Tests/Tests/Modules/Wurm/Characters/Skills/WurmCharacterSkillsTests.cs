@@ -60,7 +60,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
             var skill = await TestguytwoSkills.TryGetCurrentSkillLevelAsync("Masonry",
                 new ServerGroup("FREEDOM"),
                 TimeSpan.FromDays(1000));
-            Expect(skill, EqualTo(73.73132f));
+            Expect(skill.Value, EqualTo(73.73132f));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
             awaiter.WaitUntilMatch(list => list.Any(args => args.HasSkillChanged("Masonry")));
 
             var skill = await skillApi.TryGetCurrentSkillLevelAsync("Masonry", new ServerGroup("FREEDOM"), TimeSpan.MaxValue);
-            Expect(skill, EqualTo(58.754f));
+            Expect(skill.Value, EqualTo(58.754f));
         }
     }
 }

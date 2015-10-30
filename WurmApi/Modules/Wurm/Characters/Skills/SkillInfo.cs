@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 {
@@ -31,8 +32,27 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         public DateTime Stamp { get; private set; }
 
         /// <summary>
-        /// Skill gain value, if parsed.
+        /// Skill gain value, if parsed. Null otherwise.
         /// </summary>
+        [CanBeNull]
         public float? Gain { get; private set; }
+
+        /// <summary>
+        /// Server where this skill info originates from.
+        /// Can be null if server could not be established or skill info originates from outside WurmApi.
+        /// </summary>
+        [CanBeNull]
+        public IWurmServer Server { get; internal set; }
+
+        /// <summary>
+        /// Checks if this skill entry matches skill name. Case insensitive.
+        /// </summary>
+        /// <param name="skillName"></param>
+        /// <returns></returns>
+        public bool IsSkillName(string skillName)
+        {
+            skillName = skillName.ToUpperInvariant();
+            return NameNormalized.Equals(skillName);
+        }
     }
 }

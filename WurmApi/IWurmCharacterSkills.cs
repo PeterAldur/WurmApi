@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AldursLab.WurmApi.Modules.Wurm.Characters.Skills;
 
 namespace AldursLab.WurmApi
 {
@@ -16,7 +17,7 @@ namespace AldursLab.WurmApi
         /// <param name="serverGroup"></param>
         /// <param name="maxTimeToLookBackInLogs">Maximum number of days to scan logs history, before giving up.</param>
         /// <returns></returns>
-        Task<float?> TryGetCurrentSkillLevelAsync(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs);
+        Task<SkillInfo> TryGetCurrentSkillLevelAsync(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs);
 
         /// <summary>
         /// Attempts to find out current level of a given skill.
@@ -26,7 +27,7 @@ namespace AldursLab.WurmApi
         /// <param name="serverGroup"></param>
         /// <param name="maxTimeToLookBackInLogs">Maximum number of days to scan logs history, before giving up.</param>
         /// <returns></returns>
-        float? TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs);
+        SkillInfo TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs);
 
         /// <summary>
         /// Triggered, when some skills have changed since last invocation of this event.
@@ -38,15 +39,15 @@ namespace AldursLab.WurmApi
     public class SkillsChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Skills, that changed since last invocation of this event.
+        /// List of skill changes since last invocation of this event.
+        /// List is ordered ascending by skill info timestamp (oldest first).
         /// Names of the skills are always normalized to uppercase.
         /// </summary>
-        public IReadOnlyList<string> ChangedSkills { get; private set; }
+        public IReadOnlyList<SkillInfo> SkillChanges { get; private set; }
 
-
-        public SkillsChangedEventArgs(string[] changedSkills)
+        public SkillsChangedEventArgs(SkillInfo[] skillChanges)
         {
-            ChangedSkills = changedSkills;
+            SkillChanges = skillChanges;
         }
 
         /// <summary>
@@ -56,8 +57,7 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         public bool HasSkillChanged(string skillName)
         {
-            skillName = skillName.ToUpperInvariant();
-            return ChangedSkills.Any(s => s.Equals(skillName));
+            return SkillChanges.Any(s => s.IsSkillName(skillName));
         }
     }
 }

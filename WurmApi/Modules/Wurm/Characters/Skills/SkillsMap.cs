@@ -82,7 +82,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             return skillUpdated;
         }
 
-        public float? TryGetSkill([NotNull] string skillName, ServerGroup serverGroup)
+        public SkillInfo TryGetSkill([NotNull] string skillName, ServerGroup serverGroup)
         {
             if (skillName == null)
                 throw new ArgumentNullException("skillName");
@@ -95,7 +95,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 SkillInfo info;
                 if (skillsMap.TryGetValue(key, out info))
                 {
-                    return info.Value;
+                    return info;
                 }
                 else
                 {
