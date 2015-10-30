@@ -153,6 +153,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                         if (skillinfo != null)
                         {
                             skill = new SkillInfo(skillName, skillinfo.Value, dump.Stamp, null);
+                            skill.Server = await character.TryGetHistoricServerAtLogStampAsync(dump.Stamp);
                         }
                     }
                 }
