@@ -16,7 +16,8 @@ namespace AldursLab.WurmApi.Utility
         protected readonly string DirectoryFullPath;
         readonly TaskManager taskManager;
         readonly Action onChanged;
-        readonly Action<string> validateDirectory;
+        readonly Action<string, IWurmPaths> validateDirectory;
+        readonly IWurmPaths wurmPaths;
         readonly IWurmApiLogger logger;
         readonly FileSystemWatcher fileSystemWatcher;
 
@@ -28,17 +29,19 @@ namespace AldursLab.WurmApi.Utility
 
         public WurmSubdirsMonitor([NotNull] string directoryFullPath, [NotNull] TaskManager taskManager,
             [NotNull] Action onChanged, [NotNull] IWurmApiLogger logger,
-            [NotNull] Action<string> validateDirectory)
+            [NotNull] Action<string, IWurmPaths> validateDirectory, [NotNull] IWurmPaths wurmPaths)
         {
             if (directoryFullPath == null) throw new ArgumentNullException("directoryFullPath");
             if (taskManager == null) throw new ArgumentNullException("taskManager");
             if (onChanged == null) throw new ArgumentNullException("onChanged");
             if (validateDirectory == null) throw new ArgumentNullException("validateDirectory");
+            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
             if (logger == null) throw new ArgumentNullException("logger");
             this.DirectoryFullPath = directoryFullPath;
             this.taskManager = taskManager;
             this.onChanged = onChanged;
             this.validateDirectory = validateDirectory;
+            this.wurmPaths = wurmPaths;
             this.logger = logger;
 
             directoryBlacklist = new Blacklist<string>(logger, "Character directories blacklist");
@@ -72,8 +75,6 @@ namespace AldursLab.WurmApi.Utility
 
         private void Refresh()
         {
-            List<Exception> exceptions = new List<Exception>();
-
             var di = new DirectoryInfo(DirectoryFullPath);
             var allDirs = di.GetDirectories();
             var newMap = new Dictionary<string, string>();
@@ -86,13 +87,16 @@ namespace AldursLab.WurmApi.Utility
                 }
                 try
                 {
-                    validateDirectory(directoryInfo.FullName);
+                    validateDirectory(directoryInfo.FullName, wurmPaths);
                     newMap.Add(directoryInfo.Name.ToUpperInvariant(), directoryInfo.FullName);
                 }
                 catch (ValidationException exception)
                 {
                     directoryBlacklist.ReportIssue(directoryInfo.FullName);
-                    exceptions.Add(exception);
+                    logger.Log(LogLevel.Warn, "Validation issue", this, exception);
+                    // todo: need to log this as warking, solving with quick solution
+                    // consider: extend AggregateException to carry logging level and handle that universally in TaskManager
+                    task.SetErrorAndRetrigger();
                 }
             }
             
@@ -105,11 +109,6 @@ namespace AldursLab.WurmApi.Utility
             {
                 dirNameToFullPathMap = newMap;
                 OnDirectoriesChanged();
-            }
-
-            if (exceptions.Any())
-            {
-                throw new AggregateException("At least one directory failed validation.", exceptions);
             }
         }
 

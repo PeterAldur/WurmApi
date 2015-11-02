@@ -132,5 +132,11 @@ namespace AldursLab.WurmApi.JobRunning
         {
             Interlocked.Exchange(ref triggered, 1);
         }
+
+        public void SetErrorAndRetrigger()
+        {
+            lastError = Time.Get.LocalNowOffset;
+            Trigger();
+        }
     }
 }

@@ -15,24 +15,28 @@ namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
     /// </summary>
     class WurmCharacterDirectories : WurmSubdirsMonitor, IWurmCharacterDirectories
     {
+        readonly IWurmPaths wurmPaths;
         readonly IInternalEventAggregator eventAggregator;
 
-        public WurmCharacterDirectories(IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator,
+        public WurmCharacterDirectories([NotNull] IWurmPaths wurmPaths, [NotNull] IInternalEventAggregator eventAggregator,
             TaskManager taskManager, IWurmApiLogger logger)
             : base(
                 wurmPaths.CharactersDirFullPath,
                 taskManager,
                 () => eventAggregator.Send(new CharacterDirectoriesChanged()),
                 logger,
-                ValidateDirectory)
+                ValidateDirectory,
+                wurmPaths)
         {
+            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
             if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
+            this.wurmPaths = wurmPaths;
             this.eventAggregator = eventAggregator;
         }
 
-        static void ValidateDirectory(string directoryPath)
+        static void ValidateDirectory(string directoryPath, IWurmPaths wurmPaths)
         {
-            CharacterDirectoryValidator.ValidateFullPath(directoryPath);
+            CharacterDirectoryValidator.ValidateFullPath(directoryPath, wurmPaths);
         }
 
         public string GetFullDirPathForCharacter([NotNull] CharacterName characterName)

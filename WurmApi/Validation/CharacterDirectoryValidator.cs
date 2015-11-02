@@ -9,7 +9,9 @@ namespace AldursLab.WurmApi.Validation
 {
     static class CharacterDirectoryValidator
     {
-        public static void ValidateFullPath(string directoryPath)
+        //todo: consider converting to non-static dependency
+
+        public static void ValidateFullPath(string directoryPath, IWurmPaths wurmPaths)
         {
             var dirInfo = new DirectoryInfo(directoryPath);
             if (!dirInfo.Exists)
@@ -28,9 +30,13 @@ namespace AldursLab.WurmApi.Validation
             {
                 throw new ValidationException("config.txt is empty at: " + directoryPath);
             }
+
             var directories = dirInfo.EnumerateDirectories();
             var logsDir =
-                directories.FirstOrDefault(info => info.Name.Equals("logs", StringComparison.InvariantCultureIgnoreCase));
+                directories.FirstOrDefault(
+                    info =>
+                        info.Name.Equals(wurmPaths.LogsDirName,
+                            StringComparison.InvariantCultureIgnoreCase));
             if (logsDir == null)
             {
                 throw new ValidationException("logs subdir does not exist, character dir path: " + directoryPath);

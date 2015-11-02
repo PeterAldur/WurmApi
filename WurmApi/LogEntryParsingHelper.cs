@@ -22,19 +22,14 @@ namespace AldursLab.WurmApi
         {
             ServerStamp result = null;
             // attempt some faster matchers first, before trying actual parse
-            if (Regex.IsMatch(logEntry.Content, @"^\d+ other players", RegexOptions.Compiled)
-                && logEntry.Content.Contains("You are on", StringComparison.InvariantCultureIgnoreCase))
+            if (Regex.IsMatch(logEntry.Content, @"other players are online", RegexOptions.Compiled))
             {
-                Match match = Regex.Match(
-                    logEntry.Content,
-                    @"\d+ other players are online.*\. You are on (.+) \(",
-                    RegexOptions.Compiled);
-                if (match.Success)
+                result = TryGetMatchResult(TryMatch1(logEntry), logEntry);
+                if (result == null)
                 {
-                    var serverName = new ServerName(match.Groups[1].Value.ToUpperInvariant());
-                    result = new ServerStamp() {ServerName = serverName, Timestamp = logEntry.Timestamp};
+                    result = TryGetMatchResult(TryMatch2(logEntry), logEntry);
                 }
-                else
+                if (result == null)
                 {
                     if (logger != null)
                     {
@@ -48,6 +43,33 @@ namespace AldursLab.WurmApi
                         null);
                     }
                 }
+            }
+            return result;
+        }
+
+        private static Match TryMatch1(LogEntry logEntry)
+        {
+            return Regex.Match(
+                    logEntry.Content,
+                    @"\d+ other players are online.*\. You are on (.+) \(",
+                    RegexOptions.Compiled);
+        }
+
+        private static Match TryMatch2(LogEntry logEntry)
+        {
+            return Regex.Match(
+                    logEntry.Content,
+                    @"No other players are online on (.+) \(",
+                    RegexOptions.Compiled);
+        }
+
+        private static ServerStamp TryGetMatchResult(Match match, LogEntry logEntry)
+        {
+            ServerStamp result = null;
+            if (match.Success)
+            {
+                var serverName = new ServerName(match.Groups[1].Value.ToUpperInvariant());
+                result = new ServerStamp() { ServerName = serverName, Timestamp = logEntry.Timestamp };
             }
             return result;
         }

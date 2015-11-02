@@ -46,7 +46,10 @@ namespace AldursLab.WurmApi
         /// <summary>
         /// Determines if this server group is scoped to a particular server name.
         /// </summary>
-        public bool IsServerScoped { get { return serverGroupId.StartsWith(ServerScoped); } }
+        public bool IsServerScoped
+        {
+            get { return serverGroupId.StartsWith(ServerScoped); }
+        }
 
         public bool Equals(ServerGroup other)
         {

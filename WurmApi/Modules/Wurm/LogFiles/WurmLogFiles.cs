@@ -21,6 +21,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
         readonly IInternalEventAggregator eventAggregator;
         readonly IInternalEventInvoker internalEventInvoker;
         readonly TaskManager taskManager;
+        readonly IWurmPaths wurmPaths;
 
         IReadOnlyDictionary<CharacterName, WurmCharacterLogFiles> characterNormalizedNameToWatcherMap =
             new Dictionary<CharacterName, WurmCharacterLogFiles>();
@@ -31,7 +32,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         internal WurmLogFiles(IWurmCharacterDirectories wurmCharacterDirectories, IWurmApiLogger logger, IWurmLogDefinitions wurmLogDefinitions,
             [NotNull] IInternalEventAggregator eventAggregator, [NotNull] IInternalEventInvoker internalEventInvoker,
-            [NotNull] TaskManager taskManager)
+            [NotNull] TaskManager taskManager, [NotNull] IWurmPaths wurmPaths)
         {
             if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
             if (logger == null) throw new ArgumentNullException("logger");
@@ -39,12 +40,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
             if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
             if (internalEventInvoker == null) throw new ArgumentNullException("internalEventInvoker");
             if (taskManager == null) throw new ArgumentNullException("taskManager");
+            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
             this.wurmCharacterDirectories = wurmCharacterDirectories;
             this.logger = logger;
             this.wurmLogDefinitions = wurmLogDefinitions;
             this.eventAggregator = eventAggregator;
             this.internalEventInvoker = internalEventInvoker;
             this.taskManager = taskManager;
+            this.wurmPaths = wurmPaths;
 
             try
             {
@@ -114,7 +117,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
                     try
                     {
                         var fullDirPathForCharacter = wurmCharacterDirectories.GetFullDirPathForCharacter(charName);
-                        var logsDirPath = Path.Combine(fullDirPathForCharacter, "logs");
+                        var logsDirPath = Path.Combine(fullDirPathForCharacter, wurmPaths.LogsDirName);
 
                         logFiles = new WurmCharacterLogFiles(
                             charName,

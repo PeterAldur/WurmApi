@@ -24,13 +24,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
                 taskManager,
                 () => eventAggregator.Send(new ConfigDirectoriesChanged()),
                 logger,
-                ValidateDirectory)
+                ValidateDirectory,
+                wurmPaths)
         {
             if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
             this.eventAggregator = eventAggregator;
         }
 
-        static void ValidateDirectory(string directoryFullPath)
+        static void ValidateDirectory(string directoryFullPath, IWurmPaths wurmPaths)
         {
             // no validation required here
         }

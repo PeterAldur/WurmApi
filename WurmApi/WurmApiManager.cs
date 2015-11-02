@@ -86,7 +86,8 @@ namespace AldursLab.WurmApi
             Wire(installDirectory);
             Wire(httpWebRequests);
 
-            if (logger == null) logger = new LoggerStub();
+            if (logger == null)
+                logger = new LoggerStub();
 
             PublicEventInvoker publicEventInvoker = Wire(new PublicEventInvoker(publicEventMarshaller, logger));
 
@@ -97,7 +98,7 @@ namespace AldursLab.WurmApi
             InternalEventInvoker internalEventInvoker =
                 Wire(new InternalEventInvoker(internalEventAggregator, logger, internalEventMarshaller));
 
-            WurmPaths paths = Wire(new WurmPaths(installDirectory));
+            WurmPaths paths = Wire(new WurmPaths(installDirectory, wurmApiConfig));
             WurmServerGroups serverGroups = Wire(new WurmServerGroups(internalWurmApiConfig.ServerInfoMap));
 
             WurmServerList serverList = Wire(new WurmServerList(internalWurmApiConfig.ServerInfoMap));
@@ -114,7 +115,8 @@ namespace AldursLab.WurmApi
                     logDefinitions,
                     internalEventAggregator,
                     internalEventInvoker,
-                    taskManager));
+                    taskManager,
+                    paths));
 
             WurmLogsMonitor logsMonitor =
                 Wire(new WurmLogsMonitor(logFiles,
@@ -215,7 +217,7 @@ namespace AldursLab.WurmApi
             var di = new DirectoryInfo(directoryPath);
             if (di.Exists)
             {
-                di.Delete(recursive:true);
+                di.Delete(recursive: true);
             }
         }
 
@@ -342,7 +344,7 @@ namespace AldursLab.WurmApi
             {
                 ServerInfoMap.Add(defaultDescription.ServerName, defaultDescription);
             }
-            
+
         }
 
         /// <summary>
@@ -356,6 +358,11 @@ namespace AldursLab.WurmApi
         public bool ClearAllCaches { get; set; }
 
         /// <summary>
+        /// Set to maximize compatibility with Wurm Unlimited.
+        /// </summary>
+        public bool WurmUnlimitedMode { get; set; }
+
+        /// <summary>
         /// Contains all default mappings between server names and their details - such as server group or stats url.
         /// Mappings can be modified, added and removed.
         /// </summary>
@@ -367,7 +374,8 @@ namespace AldursLab.WurmApi
             {
                 ClearAllCaches = this.ClearAllCaches,
                 Platform = this.Platform,
-                ServerInfoMap = this.ServerInfoMap
+                ServerInfoMap = this.ServerInfoMap,
+                WurmUnlimitedMode = this.WurmUnlimitedMode
             };
             return config;
         }
@@ -378,6 +386,8 @@ namespace AldursLab.WurmApi
         Platform Platform { get; }
 
         bool ClearAllCaches { get; }
+
+        bool WurmUnlimitedMode { get; }
 
         /// <summary>
         /// Contains all default mappings between server names and their details - such as server group or stats url.

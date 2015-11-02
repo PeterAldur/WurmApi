@@ -10,6 +10,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.InstallDirectory
         {
             FullPath = path;
         }
+
+        /// <summary>
+        /// Full directory path to the Wurm client directory
+        /// </summary>
         public string FullPath { get; private set; }
 
         /// <summary>
