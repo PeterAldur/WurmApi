@@ -62,6 +62,14 @@ namespace AldursLab.WurmApi
             return originalName.ToString(CultureInfo.InvariantCulture);
         }
 
-
+        /// <summary>
+        /// Checks if string matches this server name, culture invariant ignore case.
+        /// </summary>
+        /// <param name="serverName"></param>
+        /// <returns></returns>
+        public bool Matches(string serverName)
+        {
+            return originalName.Equals(serverName, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }
