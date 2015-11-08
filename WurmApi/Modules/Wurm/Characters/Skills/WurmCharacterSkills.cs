@@ -114,7 +114,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             // note: event needs to be triggered regardless of skill being already known and up to date
 
             // there is no point in updating skill values, if server is not known
-            //if (currentServer == null) return;
+            var currentSvr = currentServer;
+            if (currentSvr == null) return;
 
             SkillEntryParser parser = new SkillEntryParser(logger);
             bool anyParsed = false;
@@ -123,9 +124,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 SkillInfo skillInfo = parser.TryParseSkillInfoFromLogLine(wurmLogEntry);
                 if (skillInfo != null)
                 {
-                    skillInfo.Server = currentServer;
+                    skillInfo.Server = currentSvr;
                     changedSkills.Enqueue(skillInfo);
-                    skillsMap.UpdateSkill(skillInfo, currentServer);
+                    skillsMap.UpdateSkill(skillInfo, currentSvr);
                     anyParsed = true;
                 }
             }
