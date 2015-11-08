@@ -32,6 +32,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         {
             if (wurmLogEntry.Content.Contains("increased") | wurmLogEntry.Content.Contains("decreased"))
             {
+                if (wurmLogEntry.Content.EndsWith("affinity", StringComparison.InvariantCulture))
+                {
+                    logger.Log(LogLevel.Error,
+                        "Skill message appears to inform about affinity, not supported. Raw entry: " + wurmLogEntry,
+                        this,
+                        null);
+                    return null;
+                }
+
                 var match = Regex.Match(wurmLogEntry.Content,
                     @"^(.+) (?:increased|decreased) (.*) to (\d+(?:\,|\.)\d+|\d+).*$",
                     RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
