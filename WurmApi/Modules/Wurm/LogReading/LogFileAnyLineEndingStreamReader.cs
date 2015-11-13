@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogReading
 {
-    class LogFileCrLfStreamReader : LogFileStreamReader
+    class LogFileAnyLineEndingStreamReader : LogFileStreamReader
     {
-        public LogFileCrLfStreamReader(string fileFullPath, long startPosition = 0, bool trackFileBytePositions = false)
+        public LogFileAnyLineEndingStreamReader(string fileFullPath, long startPosition = 0, bool trackFileBytePositions = false)
             : base(fileFullPath, startPosition, trackFileBytePositions)
         {
         }
@@ -41,6 +41,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
                         StringBuilder.Append(CurrentChar);
                     }
                 }
+                else if (CurrentChar == '\n')
+                {
+                    return StringBuilder.ToString();
+                }
                 else
                 {
                     StringBuilder.Append(CurrentChar);
@@ -58,17 +62,25 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             {
                 var result = StreamReader.Read();
                 CheckEndOfFile(result, lineCountToSkip, lineIndex);
-                if ((char) result == '\r')
+                if ((char)result == '\r')
                 {
                     var result2 = StreamReader.Read();
                     CheckEndOfFile(result, lineCountToSkip, lineIndex);
-                    if ((char) result2 == '\n')
+                    if ((char)result2 == '\n')
                     {
                         lineIndex++;
                         if (lineIndex == targetLineIndex)
                         {
                             return;
                         }
+                    }
+                }
+                else if ((char)result == '\n')
+                {
+                    lineIndex++;
+                    if (lineIndex == targetLineIndex)
+                    {
+                        return;
                     }
                 }
             }

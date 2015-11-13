@@ -68,6 +68,7 @@
     <Compile Include="Modules\Wurm\Characters\Skills\SkillsMap.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\WurmCharacterSkills.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\WurmSkills.cs" />
+    <Compile Include="Modules\Wurm\LogReading\LogFileAnyLineEndingStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileCrLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileLfStreamReader.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileStreamReader.cs" />

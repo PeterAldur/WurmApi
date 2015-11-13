@@ -21,9 +21,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             // why are there 2 stream readers?
             // wurm has a nasty habbit of adding /n in log lines on windows, 
             // this happens if a newline-separated text is pasted into chat input
+
+            // update: well well, it seems wurms habbits have improved, replacing SR's with universal one!
+
             if (wurmApiConfig.Platform == Platform.Windows)
             {
-                return new LogFileCrLfStreamReader(fileFullPath, startPosition, trackFileBytePositions);
+                return new LogFileAnyLineEndingStreamReader(fileFullPath, startPosition, trackFileBytePositions);
             }
             else
             {
@@ -31,7 +34,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
                 {
                     throw new NotSupportedException("trackFileBytePositions is not supported outside Windows platform");
                 }
-                return new LogFileLfStreamReader(fileFullPath, startPosition, false);
+                return new LogFileAnyLineEndingStreamReader(fileFullPath, startPosition, false);
             }
         }
 
@@ -39,9 +42,18 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             string fileFullPath,
             int lineCountToSkip)
         {
-            var reader = Create(fileFullPath, 0, false);
-            reader.FastForwardLinesCount(lineCountToSkip);
-            return reader;
+            LogFileStreamReader reader = null;
+            try
+            {
+                reader = Create(fileFullPath, 0, false);
+                reader.FastForwardLinesCount(lineCountToSkip);
+                return reader;
+            }
+            catch (Exception)
+            {
+                if (reader != null) reader.Dispose();
+                throw;
+            }
         }
     }
 }
