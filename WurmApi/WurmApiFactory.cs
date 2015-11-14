@@ -53,7 +53,7 @@ namespace AldursLab.WurmApi
             }
             if (logger == null)
             {
-                logger = new LoggerStub();
+                logger = new WurmApiLoggerStub();
             }
             if (installDirectory == null)
             {

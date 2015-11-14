@@ -2,7 +2,7 @@
 
 namespace AldursLab.WurmApi
 {
-    public class LoggerStub : IWurmApiLogger
+    public class WurmApiLoggerStub : IWurmApiLogger
     {
         public void Log(LogLevel level, string message, object source, Exception exception)
         {

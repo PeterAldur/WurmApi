@@ -87,7 +87,7 @@ namespace AldursLab.WurmApi
             Wire(httpWebRequests);
 
             if (logger == null)
-                logger = new LoggerStub();
+                logger = new WurmApiLoggerStub();
 
             PublicEventInvoker publicEventInvoker = Wire(new PublicEventInvoker(publicEventMarshaller, logger));
 

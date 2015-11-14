@@ -263,7 +263,7 @@
     <Compile Include="Modules\Wurm\Servers\WurmServer.cs" />
     <Compile Include="Modules\Wurm\Servers\WurmServerFactory.cs" />
     <Compile Include="Modules\Wurm\Servers\WurmServers.cs" />
-    <Compile Include="LoggerStub.cs" />
+    <Compile Include="WurmApiLoggerStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WurmApiManager.cs" />
     <Compile Include="WurmApiDataDirectory.cs" />
