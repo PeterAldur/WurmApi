@@ -126,13 +126,13 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         }
 
         [Test]
-        public void ExtractDataToPositionMap_InvalidFile_ShouldThrow()
+        public void ExtractDataToPositionMap_EmptyFile_ShouldThrow()
         {
             MonthlyHeuristicsExtractor extractor = ConstructForFilePath(emptyTestFile);
             Assert.Throws<WurmApiException>(() => extractor.ExtractDayToPositionMap());
         }
         [Test]
-        public void ExtractDataToPositionMap_EmptyFile_ShouldThrow()
+        public void ExtractDataToPositionMap_InvalidFile_ShouldThrow()
         {
             MonthlyHeuristicsExtractor extractor = ConstructForFilePath(invalidTestFile);
             Assert.Catch<Exception>(() => extractor.ExtractDayToPositionMap());

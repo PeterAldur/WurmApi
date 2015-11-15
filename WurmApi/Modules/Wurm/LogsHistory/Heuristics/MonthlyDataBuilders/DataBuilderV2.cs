@@ -144,7 +144,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
 
         public HeuristicsExtractionResult GetResult()
         {
-            if (!records.Any())
+            if (!records.Any() || records.All(record => record.Day == 0))
             {
                 throw new WurmApiException("Empty results, may indicate malformed file data. File name: " + this.logFileName);
             }
