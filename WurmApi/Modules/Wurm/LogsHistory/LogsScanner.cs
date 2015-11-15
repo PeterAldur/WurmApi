@@ -74,10 +74,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             switch (logSearchParameters.ScanResultOrdering)
             {
                 case ScanResultOrdering.Ascending:
-                    return new ScanResult(result);
+                    return new ScanResult(result.OrderBy(entry => entry.Timestamp).ToList());
                 case ScanResultOrdering.Descending:
-                    result.Reverse();
-                    return new ScanResult(result);
+                    return new ScanResult(result.OrderByDescending(entry => entry.Timestamp).ToList());
                 default:
                     throw new Exception("Unsupported ScanResultOrdering value: " + logSearchParameters.ScanResultOrdering);
             }
@@ -90,10 +89,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             var parsingHelper = logFileParserFactory.Create();
 
             List<LogEntry> result = new List<LogEntry>();
-            IOrderedEnumerable<LogFileInfo> orderedLogFileInfos =
-                logFileInfos.OrderBy(info => info.LogFileDate.DateTime);
 
-            foreach (LogFileInfo logFileInfo in orderedLogFileInfos)
+            foreach (LogFileInfo logFileInfo in logFileInfos)
             {
                 if (logFileInfo.LogFileDate.LogSavingType == LogSavingType.Monthly)
                 {
@@ -182,7 +179,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
                         thisEntryDate,
                         logFileInfo);
 
-                    // reversing the array, so that latest entries are first
                     entries.AddRange(parsedLines);
 
                     cancellationManager.ThrowIfCancelled();

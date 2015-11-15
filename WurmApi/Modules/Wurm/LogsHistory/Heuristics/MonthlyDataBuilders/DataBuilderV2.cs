@@ -46,7 +46,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
         {
             try
             {
-                if (line.StartsWith("Logging started", StringComparison.Ordinal))
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    var currentDay = records.Any() ? records.Last().Day : 0;
+                    records.Add(new Record(currentDay, lastReadLineStartPosition));
+                }
+                else if (line.StartsWith("Logging started", StringComparison.Ordinal))
                 {
                     var lastDay = records.Any() ? records.Last().Day : 0;
                     var dayStamp = ParsingHelper.GetDateFromLogFileLoggingStarted(line);
@@ -58,7 +63,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
                 }
                 else
                 {
-                    var currentDay = records.Last().Day;
+                    var currentDay = records.Any() ? records.Last().Day : 0;
                     var lineStamp = ParsingHelper.GetTimestampFromLogLine(line);
 
                     if (OverflowsToNextDay(lineStamp))
@@ -79,6 +84,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
             }
             catch (WurmApiException exception)
             {
+                // this line must be added to records, because lastReadLineStartPosition 
+                var currentDay = records.Any() ? records.Last().Day : 0;
+                records.Add(new Record(currentDay, lastReadLineStartPosition));
                 // ignore this line
                 logger.Log(
                     LogLevel.Warn,

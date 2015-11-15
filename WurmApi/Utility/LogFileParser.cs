@@ -39,16 +39,17 @@ namespace AldursLab.WurmApi.Utility
                 var lineStamp = ParsingHelper.TryParseTimestampFromLogLine(line);
                 if (lineStamp == TimeSpan.MinValue)
                 {
+                    // maybe just empty line (eg. happens on examining signs)
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        continue;
+                    }
+
                     // bad timestamp may indicate corrupted file, special unforseen case 
                     // or log file from when "log timestamps" was disabled in game.
                     HandleUnparseableTimestamp(logFileInfo, line, result);
                     continue;
                 }
-
-                //if (originDate == new DateTime(2012, 8, 26) || originDate == new DateTime(2012, 8, 27))
-                //{
-                //    var debug = true;
-                //}
 
                 if (lineStamp < currentLineStamp)
                 {

@@ -34,13 +34,13 @@ namespace AldursLab.WurmApi
                     if (logger != null)
                     {
                         logger.Log(
-                        LogLevel.Warn,
-                        string.Format(
-                            "ServerHistoryProvider found 'you are on' log line, but could not parse it. Character: {0} Entry: {1}",
-                            sourceCharacterName,
-                            logEntry),
-                        "ServerParsingHelper",
-                        null);
+                            LogLevel.Warn,
+                            string.Format(
+                                "ServerHistoryProvider found 'other players are online' log line, but could not parse it. Character: {0} Entry: {1}",
+                                sourceCharacterName,
+                                logEntry),
+                            "ServerParsingHelper",
+                            null);
                     }
                 }
             }
