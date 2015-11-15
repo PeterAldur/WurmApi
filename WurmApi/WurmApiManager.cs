@@ -130,7 +130,7 @@ namespace AldursLab.WurmApi
             var heuristicsDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmLogsHistory");
             if (internalWurmApiConfig.ClearAllCaches)
             {
-                ClearDir(heuristicsDataDirectory);
+                ClearDir(heuristicsDataDirectory, logger);
             }
 
             WurmLogsHistory logsHistory =
@@ -151,7 +151,7 @@ namespace AldursLab.WurmApi
             var wurmServerHistoryDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServerHistory");
             if (internalWurmApiConfig.ClearAllCaches)
             {
-                ClearDir(wurmApiDataDirectoryFullPath);
+                ClearDir(wurmServerHistoryDataDirectory, logger);
             }
             WurmServerHistory wurmServerHistory =
                 Wire(new WurmServerHistory(wurmServerHistoryDataDirectory,
@@ -166,7 +166,7 @@ namespace AldursLab.WurmApi
             var wurmServersDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServers");
             if (internalWurmApiConfig.ClearAllCaches)
             {
-                ClearDir(wurmServersDataDirectory);
+                ClearDir(wurmServersDataDirectory, logger);
             }
             WurmServers wurmServers =
                 Wire(new WurmServers(logsHistory,
@@ -212,12 +212,13 @@ namespace AldursLab.WurmApi
             ServersList = serverList;
         }
 
-        void ClearDir(string directoryPath)
+        void ClearDir(string directoryPath, IWurmApiLogger logger)
         {
             var di = new DirectoryInfo(directoryPath);
             if (di.Exists)
             {
                 di.Delete(recursive: true);
+                logger.Log(LogLevel.Info, "Clearing cache completed for dir " + directoryPath, this, null);
             }
         }
 
