@@ -40,6 +40,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             }
         }
 
+        [Obsolete]
         public ServerGroup ServerScopedServerGroup
         {
             get { return serverScopedServerGroup; }

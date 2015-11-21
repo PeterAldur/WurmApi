@@ -15,14 +15,9 @@ namespace AldursLab.WurmApi
         ServerName ServerName { get; }
 
         /// <summary>
-        /// Server group for this server.
+        /// Server group for this server. Returns defined server group name or server scoped name if not defined.
         /// </summary>
         ServerGroup ServerGroup { get; }
-
-        /// <summary>
-        /// A special server group, used if this server is not mapped to any server group.
-        /// </summary>
-        ServerGroup ServerScopedServerGroup { get; }
 
         #region TryGetCurrentTime
 
