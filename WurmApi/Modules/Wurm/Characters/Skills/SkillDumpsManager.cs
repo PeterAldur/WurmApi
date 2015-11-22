@@ -30,7 +30,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             skillDumpsDirectory = new DirectoryInfo(wurmPaths.GetSkillDumpsFullPathForCharacter(character.Name));
         }
 
-        public async Task<SkillDump> TryGetSkillDumpAsync(ServerGroup serverGroup)
+        /// <summary>
+        /// If skill dump is not found, empty skill dump is returned.
+        /// </summary>
+        /// <param name="serverGroup"></param>
+        /// <returns></returns>
+        public async Task<SkillDump> GetSkillDumpAsync(ServerGroup serverGroup)
         {
             SkillDump dump;
             try

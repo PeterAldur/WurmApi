@@ -147,7 +147,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 if (skill == null)
                 {
                     // as a final option, try to use skill dumps, if available
-                    var dump = await skillDumps.TryGetSkillDumpAsync(serverGroup).ConfigureAwait(false);
+                    var dump = await skillDumps.GetSkillDumpAsync(serverGroup).ConfigureAwait(false);
                     if (dump != null)
                     {
                         var skillinfo = dump.TryGetSkillLevel(skillName);
@@ -222,6 +222,17 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             }
 
             scannedMinDate = minDate;
+        }
+
+        /// <summary>
+        /// If skill dump is not found, returned SkillDump.IsNull will be true.
+        /// </summary>
+        /// <param name="serverGroupId"></param>
+        /// <returns></returns>
+        public async Task<SkillDump> GetLatestSkillDumpAsync(string serverGroupId)
+        {
+            var dump = await skillDumps.GetSkillDumpAsync(new ServerGroup(serverGroupId)).ConfigureAwait(false);
+            return dump;
         }
 
         public void Handle(YouAreOnEventDetectedOnLiveLogs message)

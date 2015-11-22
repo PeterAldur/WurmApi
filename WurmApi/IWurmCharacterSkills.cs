@@ -34,6 +34,13 @@ namespace AldursLab.WurmApi
         /// Only live logs feed is being monitored.
         /// </summary>
         event EventHandler<SkillsChangedEventArgs> SkillsChanged;
+
+        /// <summary>
+        /// Obtains latest skill group for specific server group.
+        /// </summary>
+        /// <param name="serverGroupId"></param>
+        /// <returns></returns>
+        Task<SkillDump> GetLatestSkillDumpAsync(string serverGroupId);
     }
 
     public class SkillsChangedEventArgs : EventArgs

@@ -60,12 +60,14 @@
     <Compile Include="IWurmCharacterSkills.cs" />
     <Compile Include="MeditationPaths.cs" />
     <Compile Include="Modules\Events\Internal\Messages\YouAreOnEventDetectedOnLiveLogs.cs" />
-    <Compile Include="Modules\Wurm\Characters\Skills\SkillDump.cs" />
+    <Compile Include="Modules\Wurm\Characters\Skills\RealSkillDump.cs" />
+    <Compile Include="SkillDump.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDumpInfo.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDumpsManager.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillEntryParser.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillInfo.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillsMap.cs" />
+    <Compile Include="Modules\Wurm\Characters\Skills\StubSkillDump.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\WurmCharacterSkills.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\WurmSkills.cs" />
     <Compile Include="Modules\Wurm\LogReading\LogFileAnyLineEndingStreamReader.cs" />

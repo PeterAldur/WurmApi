@@ -1,25 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 {
-    abstract class SkillDump
-    {
-        protected SkillDump(ServerGroup serverGroup)
-        {
-            this.ServerGroupId = serverGroup;
-        }
-
-        public ServerGroup ServerGroupId { get; private set; }
-
-        public abstract float? TryGetSkillLevel(string skillName);
-
-        public abstract DateTime Stamp { get; }
-    }
-
     class RealSkillDump : SkillDump
     {
         readonly SkillDumpInfo dumpInfo;
@@ -96,22 +83,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         {
             get { return dumpInfo.Stamp; }
         }
-    }
 
-    class StubSkillDump : SkillDump
-    {
-        public StubSkillDump(ServerGroup serverGroup) : base(serverGroup)
+        public override IEnumerable<SkillInfo> All
         {
+            get { return skillLevels.Select(pair => new SkillInfo(pair.Key, pair.Value, Stamp, null)); }
         }
 
-        public override float? TryGetSkillLevel(string skillName)
+        public override bool IsNull
         {
-            return null;
-        }
-
-        public override DateTime Stamp
-        {
-            get { return DateTime.MinValue; }
+            get { return false; }
         }
     }
 }
