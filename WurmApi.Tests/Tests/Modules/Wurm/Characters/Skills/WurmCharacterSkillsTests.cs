@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using AldursLab.WurmApi.Tests.Builders.WurmClient;
 using AldursLab.WurmApi.Tests.Helpers;
 using NUnit.Framework;
 
@@ -34,7 +36,9 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
                 timeScope = null;
             }
             timeScope = TimeStub.CreateStubbedScope();
-            timeScope.OverrideNow(new DateTime(2012, 09, 23, 23, 37, 13));
+            var date = new DateTime(2012, 09, 23, 23, 37, 13);
+            timeScope.OverrideNow(date);
+            timeScope.OverrideNowOffset(date);
         }
 
         [TearDown]
@@ -61,6 +65,31 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
                 new ServerGroup("FREEDOM"),
                 TimeSpan.FromDays(1000));
             Expect(skill.Value, EqualTo(73.73132f));
+        }
+
+        [Test]
+        public async Task RefreshesDumpsWhenNewFound()
+        {
+            var skill = await TestguytwoSkills.TryGetCurrentSkillLevelAsync("Masonry",
+                new ServerGroup("FREEDOM"),
+                TimeSpan.FromDays(1000));
+            Expect(skill.Value, EqualTo(73.73132f));
+
+            DumpFileBuilder builder = new DumpFileBuilder(
+                new DirectoryInfo(Path.Combine(ClientMock.InstallDirectory.FullPath, "players", "Testguytwo", "dumps")));
+
+            builder.SetStamp(TimeStub.LocalNowOffset);
+            builder.Add(new DumpEntry() { SkillName = "Masonry", Level = 80f });
+            builder.CreateFile();
+
+            timeScope.AdvanceTime(15);
+
+            Thread.Sleep(100);
+
+            skill = await TestguytwoSkills.TryGetCurrentSkillLevelAsync("Masonry",
+                new ServerGroup("FREEDOM"),
+                TimeSpan.FromDays(1000));
+            Expect(skill.Value, EqualTo(80f));
         }
 
         [Test]

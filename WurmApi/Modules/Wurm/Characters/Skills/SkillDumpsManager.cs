@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 {
-    class SkillDumpsManager
+    class SkillDumpsManager : IDisposable
     {
         readonly IWurmCharacter character;
         readonly IWurmApiLogger logger;
@@ -20,6 +21,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
         static readonly TimeSpan MaxDaysBack = TimeSpan.FromDays(336);
 
+        DateTimeOffset lastSpottedNewFile = DateTimeOffset.MinValue;
+        DateTimeOffset lastRebuild = DateTimeOffset.MinValue;
+        readonly FileSystemWatcher skillDumpFilesMonitor;
+
         public SkillDumpsManager([NotNull] IWurmCharacter character, [NotNull] IWurmPaths wurmPaths, IWurmApiLogger logger)
         {
             if (character == null) throw new ArgumentNullException("character");
@@ -28,6 +33,18 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             this.logger = logger;
 
             skillDumpsDirectory = new DirectoryInfo(wurmPaths.GetSkillDumpsFullPathForCharacter(character.Name));
+            skillDumpsDirectory.Create();
+
+            skillDumpFilesMonitor = new FileSystemWatcher()
+            { 
+                Path = skillDumpsDirectory.FullName,
+                IncludeSubdirectories = false
+            };
+            skillDumpFilesMonitor.Created += (sender, args) =>
+            {
+                lastSpottedNewFile = Time.Get.LocalNowOffset;
+            };
+            skillDumpFilesMonitor.EnableRaisingEvents = true;
         }
 
         /// <summary>
@@ -41,6 +58,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             try
             {
                 await semaphore.WaitAsync().ConfigureAwait(false);
+                if (HasNewSkillDumpAppeared())
+                {
+                    latestSkillDumps.Clear();
+                }
                 if (!latestSkillDumps.TryGetValue(serverGroup, out dump))
                 {
                     await FindLatestDumpForServerGroup(serverGroup).ConfigureAwait(false);
@@ -55,8 +76,17 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             return dump;
         }
 
+        bool HasNewSkillDumpAppeared()
+        {
+            // grace period to avoid reading incomplete file
+            return lastSpottedNewFile < Time.Get.LocalNowOffset - TimeSpan.FromSeconds(10)
+                && lastRebuild <= lastSpottedNewFile;
+        }
+
         async Task FindLatestDumpForServerGroup(ServerGroup serverGroup)
         {
+            var beginDate = Time.Get.LocalNowOffset;
+
             var maxBackDate = Time.Get.LocalNow - MaxDaysBack;
             SkillDumpInfo[] dumps = new SkillDumpInfo[0];
             if (skillDumpsDirectory.Exists)
@@ -97,6 +127,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 // if nothing found, place a stub to prevent another file search
                 latestSkillDumps[serverGroup] = new StubSkillDump(serverGroup);
             }
+
+            lastRebuild = beginDate;
         }
 
         SkillDumpInfo ConvertFileInfoToSkillDumpInfo(FileInfo fileInfo)
@@ -147,6 +179,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                     exception);
                 return null;
             }
+        }
+
+        public void Dispose()
+        {
+            skillDumpFilesMonitor.EnableRaisingEvents = false;
+            skillDumpFilesMonitor.Dispose();
         }
     }
 }
