@@ -27,6 +27,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly InternalEventAggregator internalEventAggregator;
         readonly IWurmLogsHistory logsHistory;
         readonly IWurmServerGroups wurmServerGroups;
+        readonly WurmCharacterSkills skills;
 
         readonly FileSystemWatcher configFileWatcher;
         readonly string configDefiningFileFullPath;
@@ -104,7 +105,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
                     exception);
             }
 
-            Skills = new WurmCharacterSkills(this,
+            skills = new WurmCharacterSkills(this,
                 publicEventInvoker,
                 logsMonitor,
                 logsHistory,
@@ -156,7 +157,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public IWurmConfig CurrentConfig { get; private set; }
 
-        public IWurmCharacterSkills Skills { get; private set; }
+        public IWurmCharacterSkills Skills => skills;
+
         public IWurmCharacterLogs Logs { get; private set; }
 
         #region GetHistoricServerAtLogStamp
@@ -217,6 +219,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public void Dispose()
         {
+            skills.Dispose();
             configFileWatcher.EnableRaisingEvents = false;
             configFileWatcher.Dispose();
         }

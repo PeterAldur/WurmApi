@@ -5,6 +5,8 @@ WurmApi is a .NET library, realizing mission to enable other programmers, to eas
 
 **This api is in preview! Contracts may change between commits. Usage examples may be out of date.**
 
+Note: Requires Visual Studio 2015
+
 ## Usage ##
 
 ### Using in your .NET project
@@ -157,11 +159,6 @@ Expensive methods have async and cancellable overloads.
 
 Exact behavior and corner cases are documented on the API itself (xml docs).
 
-## To-Do ##
-
-1. Mono builds for all major desktop platforms.
-2. Cross-platform Java bindings for the Mono build.
-
-## Contribution ##
+## Contributions ##
 
 WurmApi is an opensource project. It is shared, so that other developers can not only use it, but continously improve it. Feedback is welcome, if there are features needed, they can be added. Feel free to ask any questions.

@@ -16,7 +16,7 @@ using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 {
-    class WurmCharacterSkills : IWurmCharacterSkills, IHandle<YouAreOnEventDetectedOnLiveLogs>
+    class WurmCharacterSkills : IWurmCharacterSkills, IHandle<YouAreOnEventDetectedOnLiveLogs>, IDisposable
     {
         readonly IWurmCharacter character;
         readonly IPublicEventInvoker publicEventInvoker;
@@ -241,6 +241,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
                 UpdateCurrentServer();
             }
+        }
+
+        public void Dispose()
+        {
+            skillDumps.Dispose();
         }
     }
 }
