@@ -40,11 +40,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 Path = skillDumpsDirectory.FullName,
                 IncludeSubdirectories = false
             };
-            skillDumpFilesMonitor.Created += (sender, args) =>
-            {
-                lastSpottedNewFile = Time.Get.LocalNowOffset;
-            };
+            skillDumpFilesMonitor.Created += SkillDumpFilesMonitorOnChanged;
+            skillDumpFilesMonitor.Changed += SkillDumpFilesMonitorOnChanged;
+            skillDumpFilesMonitor.Renamed += SkillDumpFilesMonitorOnChanged;
+            skillDumpFilesMonitor.Deleted += SkillDumpFilesMonitorOnChanged;
             skillDumpFilesMonitor.EnableRaisingEvents = true;
+        }
+
+        void SkillDumpFilesMonitorOnChanged(object sender, FileSystemEventArgs fileSystemEventArgs)
+        {
+            lastSpottedNewFile = Time.Get.LocalNowOffset;
         }
 
         /// <summary>

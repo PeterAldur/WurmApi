@@ -75,6 +75,9 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
                 TimeSpan.FromDays(1000));
             Expect(skill.Value, EqualTo(73.73132f));
 
+            // allow file watcher to begin tracking directories
+            await Task.Delay(500);
+
             DumpFileBuilder builder = new DumpFileBuilder(
                 new DirectoryInfo(Path.Combine(ClientMock.InstallDirectory.FullPath, "players", "Testguytwo", "dumps")));
 
@@ -84,8 +87,8 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
 
             timeScope.AdvanceTime(15);
 
-            // allow WurmApi to pick everything
-            await Task.Delay(1000);
+            // allow system to pick up the file change and set cache as dirty
+            await Task.Delay(500);
 
             skill = await TestguytwoSkills.TryGetCurrentSkillLevelAsync("Masonry",
                 new ServerGroup("FREEDOM"),
