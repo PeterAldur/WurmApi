@@ -85,7 +85,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
             timeScope.AdvanceTime(15);
 
             // allow WurmApi to pick everything
-            await Task.Delay(1000);
+            await Task.Delay(5000);
 
             skill = await TestguytwoSkills.TryGetCurrentSkillLevelAsync("Masonry",
                 new ServerGroup("FREEDOM"),
