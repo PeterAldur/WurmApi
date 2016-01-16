@@ -143,27 +143,44 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
                 await scanJobSemaphore.WaitAsync().ConfigureAwait(false);
                 await ScanLogsHistory(maxTimeToLookBackInLogs).ConfigureAwait(false);
-                var skill = skillsMap.TryGetSkill(skillName, serverGroup);
-                if (skill == null)
-                {
-                    // as a final option, try to use skill dumps, if available
-                    var dump = await skillDumps.GetSkillDumpAsync(serverGroup).ConfigureAwait(false);
-                    if (dump != null)
-                    {
-                        var skillinfo = dump.TryGetSkillLevel(skillName);
-                        if (skillinfo != null)
-                        {
-                            skill = new SkillInfo(skillName, skillinfo.Value, dump.Stamp, null);
-                            skill.Server = await character.TryGetHistoricServerAtLogStampAsync(dump.Stamp);
-                        }
-                    }
-                }
-                return skill;
+                var mapSkill = TryGetSkillFromMap(skillName, serverGroup);
+                var dumpSkill = await TryGetSkillFromDumps(skillName, serverGroup);
+                return ChooseLatestSkillOrNull(mapSkill, dumpSkill);
             }
             finally
             {
                 scanJobSemaphore.Release();
             }
+        }
+
+        SkillInfo TryGetSkillFromMap(string skillName, ServerGroup serverGroup)
+        {
+            return skillsMap.TryGetSkill(skillName, serverGroup);
+        }
+
+        async Task<SkillInfo> TryGetSkillFromDumps(string skillName, ServerGroup serverGroup)
+        {
+            SkillInfo skill = null;
+            var dump = await skillDumps.GetSkillDumpAsync(serverGroup).ConfigureAwait(false);
+            var skillinfo = dump?.TryGetSkillLevel(skillName);
+            if (skillinfo != null)
+            {
+
+                skill = new SkillInfo(skillName, skillinfo.Value, dump.Stamp, null);
+                skill.Server = await character.TryGetHistoricServerAtLogStampAsync(dump.Stamp);
+            }
+            return skill;
+        }
+
+        SkillInfo ChooseLatestSkillOrNull(SkillInfo mapSkill, SkillInfo dumpSkill)
+        {
+            if (mapSkill != null && dumpSkill != null)
+            {
+                return mapSkill.Stamp > dumpSkill.Stamp ? mapSkill : dumpSkill;
+            }
+            if (mapSkill != null) return mapSkill;
+            if (dumpSkill != null) return dumpSkill;
+            return null;
         }
 
         public SkillInfo TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)
