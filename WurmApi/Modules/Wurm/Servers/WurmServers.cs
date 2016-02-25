@@ -6,6 +6,7 @@ using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Modules.Wurm.Servers.Jobs;
 using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 using AldursLab.WurmApi.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects.SqLite;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
@@ -17,6 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
     class WurmServers : IWurmServers, IDisposable
     {
         readonly IWurmServerGroups wurmServerGroups;
+        readonly IWurmApiConfig wurmApiConfig;
         readonly Dictionary<ServerName, WurmServer> nameToServerMap = new Dictionary<ServerName, WurmServer>();
 
         readonly WurmServerFactory wurmServerFactory;
@@ -35,7 +37,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             [NotNull] IWurmCharacterDirectories wurmCharacterDirectories,
             [NotNull] IWurmServerHistory wurmServerHistory,
             [NotNull] IWurmApiLogger logger, 
-            [NotNull] IWurmServerGroups wurmServerGroups)
+            [NotNull] IWurmServerGroups wurmServerGroups, 
+            [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
             if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
@@ -46,14 +49,30 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             if (wurmServerHistory == null) throw new ArgumentNullException("wurmServerHistory");
             if (logger == null) throw new ArgumentNullException("logger");
             if (wurmServerGroups == null) throw new ArgumentNullException("wurmServerGroups");
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
 
             this.wurmServerGroups = wurmServerGroups;
+            this.wurmApiConfig = wurmApiConfig;
 
             liveLogsDataQueue = new LiveLogsDataQueue(wurmLogsMonitor);
             LiveLogs liveLogs = new LiveLogs(liveLogsDataQueue, wurmServerHistory);
 
+            IPersistenceStrategy persistenceStrategy;
+            if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.FlatFiles)
+            {
+                persistenceStrategy = new FlatFilesPersistenceStrategy(dataDirectory);
+            }
+            else if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.SqLite)
+            {
+                persistenceStrategy = new SqLitePersistenceStrategy(dataDirectory);
+            }
+            else
+            {
+                throw new WurmApiException("Unsupported PersistenceMethod: " + wurmApiConfig.PersistenceMethod);
+            }
+
             persistentCollectionsLibrary =
-                new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(dataDirectory),
+                new PersistentCollectionsLibrary(persistenceStrategy,
                     new PersObjErrorHandlingStrategy(logger));
             var persistent = persistentCollectionsLibrary.DefaultCollection.GetObject<ServersData>("WurmServers");
             LogHistorySaved logHistorySaved = new LogHistorySaved(persistent);

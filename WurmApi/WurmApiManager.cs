@@ -161,7 +161,8 @@ namespace AldursLab.WurmApi
                     logsMonitor,
                     logFiles,
                     internalEventAggregator,
-                    serverGroups));
+                    serverGroups,
+                    wurmApiConfig));
 
             var wurmServersDataDirectory = Path.Combine(wurmApiDataDirectoryFullPath, "WurmServers");
             if (internalWurmApiConfig.ClearAllCaches)
@@ -177,7 +178,8 @@ namespace AldursLab.WurmApi
                     characterDirectories,
                     wurmServerHistory,
                     logger,
-                    serverGroups));
+                    serverGroups,
+                    wurmApiConfig));
 
             WurmCharacters characters =
                 Wire(new WurmCharacters(characterDirectories,
@@ -364,6 +366,11 @@ namespace AldursLab.WurmApi
         public bool WurmUnlimitedMode { get; set; }
 
         /// <summary>
+        /// Flat files are supported on Windows, Linux and Mac and are default saving method. Sqlite is currently supported only on Windows.
+        /// </summary>
+        public WurmApiPersistenceMethod PersistenceMethod { get; set; }
+
+        /// <summary>
         /// Contains all default mappings between server names and their details - such as server group or stats url.
         /// Mappings can be modified, added and removed.
         /// </summary>
@@ -376,7 +383,8 @@ namespace AldursLab.WurmApi
                 ClearAllCaches = this.ClearAllCaches,
                 Platform = this.Platform,
                 ServerInfoMap = this.ServerInfoMap,
-                WurmUnlimitedMode = this.WurmUnlimitedMode
+                WurmUnlimitedMode = this.WurmUnlimitedMode,
+                PersistenceMethod = this.PersistenceMethod
             };
             return config;
         }
@@ -395,6 +403,8 @@ namespace AldursLab.WurmApi
         /// Mappings can be modified, added and removed.
         /// </summary>
         IDictionary<ServerName, WurmServerInfo> ServerInfoMap { get; }
+
+        WurmApiPersistenceMethod PersistenceMethod { get; }
     }
 
     /// <summary>

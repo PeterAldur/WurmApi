@@ -17,57 +17,78 @@ namespace AldursLab.WurmApi
         /// Always call Dispose on the Manager, before closing app or dropping the instance. This will ensure proper cleanup and internal cache consistency.
         /// Not calling Dispose without terminating hosting process, may result in resource leaks.
         /// </summary>
-        /// <param name="dataDirPath">
+        /// <param name="creationOptions">
+        /// Optional configurable parameters of the WurmApi.
+        /// </param>
+        public static IWurmApi Create(WurmApiCreationOptions creationOptions = null)
+        {
+            if (creationOptions == null)
+            {
+                creationOptions = new WurmApiCreationOptions();
+            }
+
+            if (creationOptions.DataDirPath == null)
+            {
+                creationOptions.DataDirPath = "WurmApi";
+            }
+            if (!Path.IsPathRooted(creationOptions.DataDirPath))
+            {
+                var codebase = typeof(WurmApiFactory).Assembly.GetAssemblyDllDirectoryAbsolutePath();
+                creationOptions.DataDirPath = Path.Combine(codebase, creationOptions.DataDirPath);
+            }
+            if (creationOptions.WurmApiLogger == null)
+            {
+                creationOptions.WurmApiLogger = new WurmApiLoggerStub();
+            }
+            if (creationOptions.WurmClientInstallDirectory == null)
+            {
+                creationOptions.WurmClientInstallDirectory = WurmClientInstallDirectory.AutoDetect();
+            }
+            if (creationOptions.WurmApiConfig == null)
+            {
+                creationOptions.WurmApiConfig = new WurmApiConfig();
+            }
+            return new WurmApiManager(new WurmApiDataDirectory(creationOptions.DataDirPath, true),
+                creationOptions.WurmClientInstallDirectory,
+                creationOptions.WurmApiLogger,
+                creationOptions.WurmApiEventMarshaller,
+                creationOptions.WurmApiConfig);
+        }
+    }
+
+    public class WurmApiCreationOptions
+    {
+        /// <summary>
         /// Directory path, where this instance of WurmApiManager can store data caches. Defaults to \WurmApi in the library DLL location. 
         /// If relative path is provided, it will also be in relation to DLL location.
-        /// </param>
-        /// <param name="logger">
+        /// </summary>
+        public string DataDirPath { get; set; }
+        /// <summary>
         /// An optional implementation of ILogger, where all WurmApi errors and warnings can be forwarded. 
         /// Defaults to no logging. 
         /// Providing this parameter is highly is recommended.
-        /// </param>
-        /// <param name="eventMarshaller">
+        /// </summary>
+        public IWurmApiLogger WurmApiLogger { get; set; }
+        /// <summary>
         /// An optional event marshaller, used to marshal all events in a specific way (for example to GUI thread).
         /// Defaults to running events on ThreadPool threads.
         /// Providing this parameter will greatly simplify usage in any application, that has synchronization context.
-        /// </param>
-        /// <param name="installDirectory">
+        /// </summary>
+        public IWurmApiEventMarshaller WurmApiEventMarshaller { get; set; }
+        /// <summary>
         /// An optional Wurm Game Client directory path provider.
         /// Defaults to autodetection.
-        /// </param>
-        /// <param name="config">
+        /// </summary>
+        public IWurmClientInstallDirectory WurmClientInstallDirectory { get; set; }
+        /// <summary>
         /// Optional extra configuration options.
-        /// </param>
-        /// <returns></returns>
-        public static IWurmApi Create(string dataDirPath = null, IWurmApiLogger logger = null,
-            IWurmApiEventMarshaller eventMarshaller = null, IWurmClientInstallDirectory installDirectory = null, WurmApiConfig config = null)
-        {
-            if (dataDirPath == null)
-            {
-                dataDirPath = "WurmApi";
-            }
-            if (!Path.IsPathRooted(dataDirPath))
-            {
-                var codebase = typeof(WurmApiFactory).Assembly.GetAssemblyDllDirectoryAbsolutePath();
-                dataDirPath = Path.Combine(codebase, dataDirPath);
-            }
-            if (logger == null)
-            {
-                logger = new WurmApiLoggerStub();
-            }
-            if (installDirectory == null)
-            {
-                installDirectory = WurmClientInstallDirectory.AutoDetect();
-            }
-            if (config == null)
-            {
-                config = new WurmApiConfig();
-            }
-            return new WurmApiManager(new WurmApiDataDirectory(dataDirPath, true),
-                installDirectory,
-                logger,
-                eventMarshaller,
-                config);
-        }
+        /// </summary>
+        public WurmApiConfig WurmApiConfig { get; set; }
+    }
+
+    public enum WurmApiPersistenceMethod
+    {
+        FlatFiles = 0,
+        SqLite
     }
 }

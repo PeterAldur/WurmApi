@@ -34,7 +34,7 @@ namespace AldursLab.WurmApi.PersistentObjects
         /// </summary>
         public string RawSerializedData
         {
-            get { return rawSerializedData ?? (rawSerializedData = persistenceStrategy.Load(objectId, collectionId)); }
+            get { return rawSerializedData ?? (rawSerializedData = persistenceStrategy.TryLoad(objectId, collectionId)); }
         }
 
         /// <summary>

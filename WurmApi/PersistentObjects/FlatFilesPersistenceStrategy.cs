@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.PersistentObjects
 
         public FlatFilesPersistenceStrategy(string storageDirectoryAbsolutePath)
         {
-            if (storageDirectoryAbsolutePath == null) throw new ArgumentNullException("storageDirectoryAbsolutePath");
+            if (storageDirectoryAbsolutePath == null) throw new ArgumentNullException(nameof(storageDirectoryAbsolutePath));
             this.storageDirectoryAbsolutePath = storageDirectoryAbsolutePath;
 
             if (!Directory.Exists(storageDirectoryAbsolutePath))
@@ -19,7 +19,7 @@ namespace AldursLab.WurmApi.PersistentObjects
             }
         }
 
-        public string Load(string objectId, string collectionId)
+        public string TryLoad(string objectId, string collectionId)
         {
             try
             {

@@ -23,7 +23,16 @@ namespace WindowsFormsApplication3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            wurmApi = WurmApiFactory.Create(null, new WumrApiLogger(this.textBox1), new Marshaller(this));
+            wurmApi = WurmApiFactory.Create(
+                new WurmApiCreationOptions()
+                {
+                    WurmApiLogger = new WumrApiLogger(this.textBox1),
+                    WurmApiEventMarshaller = new Marshaller(this),     
+                    WurmApiConfig = new WurmApiConfig()
+                    {
+                        PersistenceMethod = WurmApiPersistenceMethod.FlatFiles
+                    }
+                });
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -32,7 +41,7 @@ namespace WindowsFormsApplication3
             try
             {
                 List<Task> tasks = new List<Task>();
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     tasks.Add(tasker.DoAsync());
                 }
