@@ -16,13 +16,13 @@ namespace AldursLab.WurmApi.FileSystem
         {
             if (!File.Exists(absolutePath))
             {
-                if (File.Exists(absolutePath + FileExtensionNew))
-                {
-                    File.Move(absolutePath + FileExtensionNew, absolutePath);
-                }
-                else if (File.Exists(absolutePath + FileExtensionOld))
+                if (File.Exists(absolutePath + FileExtensionOld))
                 {
                     File.Move(absolutePath + FileExtensionOld, absolutePath);
+                }
+                else if (File.Exists(absolutePath + FileExtensionNew))
+                {
+                    File.Move(absolutePath + FileExtensionNew, absolutePath);
                 }
                 else
                 {
@@ -60,7 +60,19 @@ namespace AldursLab.WurmApi.FileSystem
                 File.Delete(absolutePath + FileExtensionOld);
             }
 
-            File.WriteAllText(absolutePath + FileExtensionNew, newContents, Encoding.UTF8);
+            using (
+                var fs = new FileStream(absolutePath + FileExtensionNew,
+                    FileMode.Create,
+                    FileAccess.ReadWrite,
+                    FileShare.None))
+            {
+                using (var sw = new StreamWriter(fs, Encoding.UTF8))
+                {
+                    sw.Write(newContents);
+                    // forcing hard flushing to avoid incomplete physical file write, which can cause corruption on system crash
+                    fs.Flush(true);
+                }
+            }
 
             if (File.Exists(absolutePath))
             {
