@@ -118,7 +118,7 @@ namespace AldursLab.WurmApi.PersistentObjects
             public Persistent<TEntity> GetObject()
             {
                 var o = new Persistent<TEntity>(objectId);
-                var data = persistenceStrategy.Load(objectId, collectionId);
+                var data = persistenceStrategy.TryLoad(objectId, collectionId);
                 if (data == null)
                 {
                     // data does not exist, return new with default

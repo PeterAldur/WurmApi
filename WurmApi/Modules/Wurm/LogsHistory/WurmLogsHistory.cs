@@ -6,6 +6,7 @@ using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects.SqLite;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
@@ -25,8 +26,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
             if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
 
+            IPersistenceStrategy persistenceStrategy;
+            if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.FlatFiles)
+            {
+                persistenceStrategy = new FlatFilesPersistenceStrategy(heuristicsDataDirectory);
+            }
+            else if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.SqLite)
+            {
+                persistenceStrategy = new SqLitePersistenceStrategy(heuristicsDataDirectory);
+            }
+            else
+            {
+                throw new WurmApiException("Unsupported PersistenceMethod: " + wurmApiConfig.PersistenceMethod);
+            }
+
             var persistentLibrary =
-                new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(heuristicsDataDirectory),
+                new PersistentCollectionsLibrary(persistenceStrategy,
                     new PersObjErrorHandlingStrategy(logger));
             var heuristicsCollection = persistentLibrary.GetCollection("heuristics");
 

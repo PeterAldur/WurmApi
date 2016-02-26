@@ -133,7 +133,7 @@ namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Tests
         string BreakPersistedData()
         {
             var lib = CreateLibrary();
-            var fileContents = lib.PersistenceStrategy.Load(ObjectId, PersistentCollectionsLibrary.DefaultCollectionId);
+            var fileContents = lib.PersistenceStrategy.TryLoad(ObjectId, PersistentCollectionsLibrary.DefaultCollectionId);
             // creating malformed json
             var newContent = fileContents.Replace("{", "").Replace("}", "");
             lib.PersistenceStrategy.Save(ObjectId, PersistentCollectionsLibrary.DefaultCollectionId, newContent);
@@ -143,7 +143,7 @@ namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Tests
         string BreakNumericFieldInData()
         {
             var lib = CreateLibrary();
-            var fileContents = lib.PersistenceStrategy.Load(ObjectId, PersistentCollectionsLibrary.DefaultCollectionId);
+            var fileContents = lib.PersistenceStrategy.TryLoad(ObjectId, PersistentCollectionsLibrary.DefaultCollectionId);
             // creating malformed json
             var newContent = fileContents.Replace("\"NumericValue\": 123,", "\"NumericValue\": \"dfg34tdfg\",");
             lib.PersistenceStrategy.Save(ObjectId, PersistentCollectionsLibrary.DefaultCollectionId, newContent);

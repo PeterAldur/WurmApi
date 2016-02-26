@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.PersistentObjects
         /// <param name="collectionId"></param>
         /// <returns></returns>
         /// <exception cref="PersistenceException">An error occured, while attempting to load data, from persistence store.</exception>
-        string Load(string objectId, string collectionId);
+        string TryLoad(string objectId, string collectionId);
 
         /// <summary>
         /// </summary>

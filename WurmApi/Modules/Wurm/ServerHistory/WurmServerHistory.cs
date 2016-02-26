@@ -8,6 +8,7 @@ using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.Jobs;
 using AldursLab.WurmApi.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects.SqLite;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
@@ -17,6 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
     {
         readonly IWurmLogsHistory wurmLogsHistory;
         readonly IWurmServerGroups wurmServerGroups;
+        readonly IWurmApiConfig wurmApiConfig;
         readonly QueuedJobsSyncRunner<object, ServerName> runner;
         JobExecutor jobExecutor;
 
@@ -28,15 +30,33 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             IWurmLogsMonitorInternal wurmLogsMonitor,
             IWurmLogFiles wurmLogFiles,
             IInternalEventAggregator internalEventAggregator, 
-            [NotNull] IWurmServerGroups wurmServerGroups)
+            [NotNull] IWurmServerGroups wurmServerGroups, 
+            [NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (dataDirectoryFullPath == null) throw new ArgumentNullException("dataDirectoryFullPath");
-            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
-            if (wurmServerGroups == null) throw new ArgumentNullException("wurmServerGroups");
+            if (dataDirectoryFullPath == null) throw new ArgumentNullException(nameof(dataDirectoryFullPath));
+            if (wurmLogsHistory == null) throw new ArgumentNullException(nameof(wurmLogsHistory));
+            if (wurmServerGroups == null) throw new ArgumentNullException(nameof(wurmServerGroups));
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
             this.wurmLogsHistory = wurmLogsHistory;
             this.wurmServerGroups = wurmServerGroups;
+            this.wurmApiConfig = wurmApiConfig;
+
+            IPersistenceStrategy persistenceStrategy;
+            if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.FlatFiles)
+            {
+                persistenceStrategy = new FlatFilesPersistenceStrategy(dataDirectoryFullPath);
+            }
+            else if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.SqLite)
+            {
+                persistenceStrategy = new SqLitePersistenceStrategy(dataDirectoryFullPath);
+            }
+            else
+            {
+                throw new WurmApiException("Unsupported PersistenceMethod: " + wurmApiConfig.PersistenceMethod);
+            }
+
             var persistentLibrary =
-                new PersistentCollectionsLibrary(new FlatFilesPersistenceStrategy(dataDirectoryFullPath),
+                new PersistentCollectionsLibrary(persistenceStrategy,
                     new PersObjErrorHandlingStrategy(logger));
             var collection = persistentLibrary.GetCollection("serverhistory");
 

@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\AldursLab.WurmApi.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,12 @@
     <DocumentationFile>bin\Release\AldursLab.WurmApi.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DbLinq">
+      <HintPath>..\lib\DbLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="DbLinq.Sqlite">
+      <HintPath>..\lib\DbLinq.Sqlite.dll</HintPath>
+    </Reference>
     <Reference Include="JetBrains.Annotations, Version=9.2.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.9.2.0\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
@@ -47,6 +54,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\lib\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\lib\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +73,11 @@
     <Compile Include="MeditationPaths.cs" />
     <Compile Include="Modules\Events\Internal\Messages\YouAreOnEventDetectedOnLiveLogs.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\RealSkillDump.cs" />
+    <Compile Include="PersistentObjects\SqLite\Migrations\DbMigrator.cs" />
+    <Compile Include="PersistentObjects\SqLite\Migrations\SqlExecutor.cs" />
+    <Compile Include="PersistentObjects\SqLite\Model\PersistentData.cs" />
+    <Compile Include="PersistentObjects\SqLite\PersistentDataRepository.cs" />
+    <Compile Include="PersistentObjects\SqLite\SqLitePersistenceStrategy.cs" />
     <Compile Include="SkillDump.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDumpInfo.cs" />
     <Compile Include="Modules\Wurm\Characters\Skills\SkillDumpsManager.cs" />
@@ -274,6 +292,14 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -284,4 +310,3 @@
   </Target>
   -->
 </Project>
-
