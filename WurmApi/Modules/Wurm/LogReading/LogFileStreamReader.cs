@@ -51,10 +51,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
 
         protected readonly StringBuilder StringBuilder = new StringBuilder();
 
-        public LogFileStreamReader(string fileFullPath, long startPosition = 0, bool trackFileBytePositions = false)
+        protected LogFileStreamReader(string fileFullPath, long startPosition = 0, bool trackFileBytePositions = false)
         {
             if (fileFullPath == null)
-                throw new ArgumentNullException("fileFullPath");
+                throw new ArgumentNullException(nameof(fileFullPath));
             if (startPosition < 0)
                 throw new ArgumentException("startPosition must be non-negative");
             this.startPosition = startPosition;
@@ -102,12 +102,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
         /// </summary>
         public int LastReadLineIndex { get; private set; }
 
-        public long StreamPosition
-        {
-            get { return StreamReader.BaseStream.Position; }
-        }
+        public long StreamPosition => StreamReader.BaseStream.Position;
 
-        private bool endOfStreamPositionUpdated = false;
+        bool endOfStreamPositionUpdated;
 
         public string TryReadNextLine()
         {

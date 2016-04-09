@@ -8,20 +8,20 @@ using NUnit.Framework;
 namespace AldursLab.WurmApi.Tests.Tests
 {
     [TestFixture]
-    class LogWriterTests : TestsBase
+    internal class LogWriterTests : TestsBase
     {
-        private DirectoryHandle testDir;
-        private LogWriter monthlyWriter;
-        private LogWriter dailyWriter;
-        private string pathDaily;
-        private string pathMonthly;
+        DirectoryHandle testDir;
+        LogWriter monthlyWriter;
+        LogWriter dailyWriter;
+        string pathDaily;
+        string pathMonthly;
 
         [SetUp]
         public void Setup()
         {
             testDir = TempDirectoriesFactory.CreateEmpty();
-            this.pathDaily = Path.Combine(testDir.AbsolutePath, "_event.2014-01-01.txt");
-            this.pathMonthly = Path.Combine(testDir.AbsolutePath, "_event.2014-01.txt");
+            pathDaily = Path.Combine(testDir.AbsolutePath, "_event.2014-01-01.txt");
+            pathMonthly = Path.Combine(testDir.AbsolutePath, "_event.2014-01.txt");
             monthlyWriter = new LogWriter(pathDaily, new DateTime(2014, 1, 1), false);
             dailyWriter = new LogWriter(pathMonthly, new DateTime(2014, 1, 1), false);
         }
@@ -39,11 +39,11 @@ namespace AldursLab.WurmApi.Tests.Tests
             var dailyContents = File.ReadAllText(pathDaily);
             var monthlyContents = File.ReadAllText(pathMonthly);
 
-            const string ExpectedDailyContents = "Logging started 2014-01-01\r\n[01:01:01] <Source> Contents1\r\n[01:01:02] Contents2\r\n";
-            const string ExpectedMonthlyContents = "Logging started 2014-01-01\r\n[01:01:01] <Source> Contents1\r\n[01:01:02] Contents2\r\n";
+            const string expectedDailyContents = "Logging started 2014-01-01\r\n[01:01:01] <Source> Contents1\r\n[01:01:02] Contents2\r\n";
+            const string expectedMonthlyContents = "Logging started 2014-01-01\r\n[01:01:01] <Source> Contents1\r\n[01:01:02] Contents2\r\n";
 
-            Expect(dailyContents, EqualTo(ExpectedDailyContents));
-            Expect(monthlyContents, EqualTo(ExpectedMonthlyContents));
+            Expect(dailyContents, EqualTo(expectedDailyContents));
+            Expect(monthlyContents, EqualTo(expectedMonthlyContents));
         }
     }
 }

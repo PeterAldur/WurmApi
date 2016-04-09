@@ -11,7 +11,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.ServerHistory
     [TestFixture]
     class WurmServerHistoryTests : WurmTests
     {
-        protected IWurmServerHistory System { get { return Fixture.WurmApiManager.WurmServerHistory; } }
+        protected IWurmServerHistory System => Fixture.WurmApiManager.WurmServerHistory;
         protected StubbableTime.StubScope ClockScope;
 
         private readonly CharacterName characterNameTestguy = new CharacterName("Testguy");

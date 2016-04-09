@@ -143,7 +143,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogFiles
                             DateTime.MinValue,
                             DateTime.MaxValue,
                             new CharacterName("Idonotexist")).ToList();
-                    Expect(logFiles.Count(), EqualTo(0));
+                    Expect(logFiles.Count, EqualTo(0));
                 }
             }
 

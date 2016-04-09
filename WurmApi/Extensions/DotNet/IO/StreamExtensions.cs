@@ -14,7 +14,7 @@ namespace AldursLab.WurmApi.Extensions.DotNet.IO
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             byte[] buffer = new byte[16 * 1024];

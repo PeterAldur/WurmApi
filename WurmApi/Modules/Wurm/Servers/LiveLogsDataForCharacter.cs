@@ -6,21 +6,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class LiveLogsDataForCharacter
     {
-        private readonly CharacterName character;
-
         public LiveLogsDataForCharacter(CharacterName character, [CanBeNull] ServerDateStamped wurmDateTime, 
             [CanBeNull] ServerUptimeStamped uptime)
         {
-            if (character == null) throw new ArgumentNullException("character");
-            this.character = character;
+            if (character == null) throw new ArgumentNullException(nameof(character));
+            Character = character;
             WurmDateTime = wurmDateTime;
             Uptime = uptime;
         }
 
-        public CharacterName Character
-        {
-            get { return character; }
-        }
+        public CharacterName Character { get; }
 
         public ServerDateStamped WurmDateTime { get; private set; }
 

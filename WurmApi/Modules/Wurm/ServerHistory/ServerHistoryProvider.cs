@@ -2,12 +2,10 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
-using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 using AldursLab.WurmApi.PersistentObjects;
 using JetBrains.Annotations;
 
@@ -41,16 +39,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             [NotNull] IWurmCharacterLogFiles wurmCharacterLogFiles, 
             [NotNull] IInternalEventAggregator eventAggregator)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
-            if (persistentData == null) throw new ArgumentNullException("persistentData");
-            if (logsMonitor == null) throw new ArgumentNullException("logsMonitor");
-            if (logsSearcher == null) throw new ArgumentNullException("logsSearcher");
-            if (wurmServerList == null) throw new ArgumentNullException("wurmServerList");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (wurmCharacterLogFiles == null) throw new ArgumentNullException("wurmCharacterLogFiles");
-            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
+            if (persistentData == null) throw new ArgumentNullException(nameof(persistentData));
+            if (logsMonitor == null) throw new ArgumentNullException(nameof(logsMonitor));
+            if (logsSearcher == null) throw new ArgumentNullException(nameof(logsSearcher));
+            if (wurmServerList == null) throw new ArgumentNullException(nameof(wurmServerList));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (wurmCharacterLogFiles == null) throw new ArgumentNullException(nameof(wurmCharacterLogFiles));
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
             this.characterName = characterName;
-            this.sortedServerHistory = new SortedServerHistory(persistentData);
+            sortedServerHistory = new SortedServerHistory(persistentData);
             this.persistentData = persistentData;
             this.logsMonitor = logsMonitor;
             this.logsSearcher = logsSearcher;
@@ -94,7 +92,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             bool foundAny = false;
             foreach (var wurmLogEntry in logEntries)
             {
-                var serverStamp = LogEntryParsingHelper.TryGetServerFromLogEntry(wurmLogEntry, logger, characterName);
+                var serverStamp = wurmLogEntry.TryGetServerFromLogEntry(logger, characterName);
                 if (serverStamp != null)
                 {
                     ServerName previousServerName = null;

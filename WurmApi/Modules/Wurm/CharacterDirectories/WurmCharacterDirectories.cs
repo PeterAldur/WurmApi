@@ -28,8 +28,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
                 ValidateDirectory,
                 wurmPaths)
         {
-            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
-            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
+            if (wurmPaths == null) throw new ArgumentNullException(nameof(wurmPaths));
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
             this.wurmPaths = wurmPaths;
             this.eventAggregator = eventAggregator;
         }
@@ -41,7 +41,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.CharacterDirectories
 
         public string GetFullDirPathForCharacter([NotNull] CharacterName characterName)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
             return GetFullPathForDirName(characterName.Normalized);
         }
 

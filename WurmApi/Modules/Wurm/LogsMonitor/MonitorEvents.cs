@@ -6,7 +6,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
     {
         private readonly List<LogEntry> logEntries = new List<LogEntry>();
         public LogFileInfo LogFileInfo { get; private set; }
-        public IEnumerable<LogEntry> LogEntries { get { return logEntries; } }
+        public IEnumerable<LogEntry> LogEntries => logEntries;
         public string PmRecipientNormalized { get; private set; }
 
         public MonitorEvents(LogFileInfo logFileInfo)
@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 
         public void AddEvents(IEnumerable<LogEntry> entries)
         {
-            this.logEntries.AddRange(entries);
+            logEntries.AddRange(entries);
         }
     }
 }

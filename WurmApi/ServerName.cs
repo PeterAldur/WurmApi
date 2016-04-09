@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using Newtonsoft.Json;
 
@@ -14,17 +13,17 @@ namespace AldursLab.WurmApi
         public ServerName(string name)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             originalName = name;
-            this.normalizedName = name.Trim().ToUpperInvariant();
+            normalizedName = name.Trim().ToUpperInvariant();
         }
 
         /// <summary>
         /// All uppercase server name
         /// </summary>
-        public string Normalized { get { return normalizedName; } }
+        public string Normalized => normalizedName;
 
-        public string Original { get { return originalName; } }
+        public string Original => originalName;
 
         public bool Equals(ServerName other)
         {
@@ -44,7 +43,7 @@ namespace AldursLab.WurmApi
 
         public override int GetHashCode()
         {
-            return (normalizedName != null ? normalizedName.GetHashCode() : 0);
+            return normalizedName?.GetHashCode() ?? 0;
         }
 
         public static bool operator ==(ServerName left, ServerName right)

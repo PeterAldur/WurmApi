@@ -32,7 +32,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules
         [TearDown]
         public void BaseTeardown()
         {
-            if (TimeStub.CurrentScope != null) TimeStub.CurrentScope.Dispose();
+            TimeStub.CurrentScope?.Dispose();
         }
 
         public void DoNothing() { }

@@ -13,7 +13,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         public WurmServerFactory([NotNull] QueuedJobsSyncRunner<Job, JobResult> jobRunner)
         {
-            if (jobRunner == null) throw new ArgumentNullException("jobRunner");
+            if (jobRunner == null) throw new ArgumentNullException(nameof(jobRunner));
             this.jobRunner = jobRunner;
         }
 

@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
 
         public LogFileStreamReaderFactory([NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
             this.wurmApiConfig = wurmApiConfig;
         }
 
@@ -28,14 +28,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             {
                 return new LogFileAnyLineEndingStreamReader(fileFullPath, startPosition, trackFileBytePositions);
             }
-            else
+            if (trackFileBytePositions)
             {
-                if (trackFileBytePositions)
-                {
-                    throw new NotSupportedException("trackFileBytePositions is not supported outside Windows platform");
-                }
-                return new LogFileAnyLineEndingStreamReader(fileFullPath, startPosition, false);
+                throw new NotSupportedException("trackFileBytePositions is not supported outside Windows platform");
             }
+            return new LogFileAnyLineEndingStreamReader(fileFullPath, startPosition, false);
         }
 
         public LogFileStreamReader CreateWithLineCountFastForward(
@@ -51,7 +48,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogReading
             }
             catch (Exception)
             {
-                if (reader != null) reader.Dispose();
+                reader?.Dispose();
                 throw;
             }
         }

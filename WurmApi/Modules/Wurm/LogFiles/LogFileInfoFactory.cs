@@ -11,8 +11,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         public LogFileInfoFactory(IWurmLogDefinitions wurmLogDefinitions, IWurmApiLogger logger)
         {
-            if (wurmLogDefinitions == null) throw new ArgumentNullException("wurmLogDefinitions");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (wurmLogDefinitions == null) throw new ArgumentNullException(nameof(wurmLogDefinitions));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.wurmLogDefinitions = wurmLogDefinitions;
             this.logger = logger;
         }

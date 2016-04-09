@@ -18,7 +18,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
         public SkillEntryParser([NotNull] IWurmApiLogger logger)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logger = logger;
         }
 
@@ -44,8 +44,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
                 var match = Regex.Match(wurmLogEntry.Content,
                     @"^(.+) (?:increased|decreased) (.*) to (\d+(?:\,|\.)\d+|\d+).*$",
                     RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-                string skillName = null;
-                float? parsedLevel = null;
+                string skillName;
+                float? parsedLevel;
                 float? parsedGain = null;
                 if (match.Success)
                 {
@@ -113,7 +113,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         public float? TryParseFloatInvariant(string text)
         {
             float? parsedLevel = null;
-            float level = -1;
+            float level;
             if (float.TryParse(
                 text,
                 System.Globalization.NumberStyles.AllowDecimalPoint,

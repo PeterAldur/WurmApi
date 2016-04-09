@@ -29,9 +29,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
             MonthlyHeuristicsExtractorFactory monthlyHeuristicsExtractorFactory,
             IWurmCharacterLogFiles wurmCharacterLogFiles)
         {
-            if (persistentData == null) throw new ArgumentNullException("persistentData");
-            if (monthlyHeuristicsExtractorFactory == null) throw new ArgumentNullException("monthlyHeuristicsExtractorFactory");
-            if (wurmCharacterLogFiles == null) throw new ArgumentNullException("wurmCharacterLogFiles");
+            if (persistentData == null) throw new ArgumentNullException(nameof(persistentData));
+            if (monthlyHeuristicsExtractorFactory == null) throw new ArgumentNullException(nameof(monthlyHeuristicsExtractorFactory));
+            if (wurmCharacterLogFiles == null) throw new ArgumentNullException(nameof(wurmCharacterLogFiles));
             this.persistentData = persistentData;
             this.monthlyHeuristicsExtractorFactory = monthlyHeuristicsExtractorFactory;
             this.wurmCharacterLogFiles = wurmCharacterLogFiles;
@@ -43,7 +43,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
             return CreateMonthlyFileHeuristics(fileData);
         }
 
-        private MonthlyFileHeuristics CreateMonthlyFileHeuristics(WurmLogMonthlyFile wurmLogMonthlyFile)
+        MonthlyFileHeuristics CreateMonthlyFileHeuristics(WurmLogMonthlyFile wurmLogMonthlyFile)
         {
             var dayMap = new Dictionary<int, DayInfo>();
             var days = wurmLogMonthlyFile.DayToHeuristicsMap.OrderBy(pair => pair.Key).ToArray();
@@ -65,7 +65,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
                 wurmLogMonthlyFile.HasValidBytePositions);
         }
 
-        private WurmLogMonthlyFile GetEntityForFile(LogFileInfo logFileInfo)
+        WurmLogMonthlyFile GetEntityForFile(LogFileInfo logFileInfo)
         {
             WurmLogMonthlyFile fileData;
             bool isNewFile = false;

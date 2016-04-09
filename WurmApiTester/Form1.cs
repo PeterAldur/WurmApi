@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AldursLab.WurmApi;
@@ -21,12 +17,12 @@ namespace WindowsFormsApplication3
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        void Form1_Load(object sender, EventArgs e)
         {
             wurmApi = WurmApiFactory.Create(
                 new WurmApiCreationOptions()
                 {
-                    WurmApiLogger = new WumrApiLogger(this.textBox1),
+                    WurmApiLogger = new WumrApiLogger(textBox1),
                     WurmApiEventMarshaller = new Marshaller(this),     
                     WurmApiConfig = new WurmApiConfig()
                     {
@@ -35,9 +31,9 @@ namespace WindowsFormsApplication3
                 });
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        async void button1_Click(object sender, EventArgs e)
         {
-            SearchTasker tasker = new SearchTasker(this.textBox1, wurmApi);
+            SearchTasker tasker = new SearchTasker(textBox1, wurmApi);
             try
             {
                 List<Task> tasks = new List<Task>();
@@ -49,7 +45,7 @@ namespace WindowsFormsApplication3
             }
             catch (Exception exception)
             {
-                textBox1.Text += "Error: " + exception.ToString();
+                textBox1.Text += "Error: " + exception;
             }
         }
     }
@@ -100,7 +96,7 @@ namespace WindowsFormsApplication3
             textBox.Text += "Skill-Scan complete, skill: " + r3?.NameNormalized + " result: " + r3?.Value + "\r\n";
         }
 
-        string Cnvrt(LogSearchParameters args)
+        string Convert(LogSearchParameters args)
         {
             return $"{args.CharacterName}, {args.LogType}";
         }

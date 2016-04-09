@@ -7,15 +7,15 @@ namespace AldursLab.WurmApi.Tests.Helpers
 {
     class LogWriter
     {
-        private readonly DateTime logDate;
-        private readonly bool isMonthly;
-        private readonly string logFilePath;
+        readonly DateTime logDate;
+        readonly bool isMonthly;
+        readonly string logFilePath;
 
         public LogWriter(string logFilePath, DateTime logDate, bool isMonthly)
         {
             this.logDate = logDate;
             this.isMonthly = isMonthly;
-            if (logFilePath == null) throw new ArgumentNullException("logFilePath");
+            if (logFilePath == null) throw new ArgumentNullException(nameof(logFilePath));
             this.logFilePath = logFilePath;
 
             string directoryPath = Path.GetDirectoryName(logFilePath);
@@ -29,7 +29,7 @@ namespace AldursLab.WurmApi.Tests.Helpers
             ICollection<LogEntry> contents,
             bool addLoggingStarted = false)
         {
-            if (contents == null) throw new ArgumentNullException("contents");
+            if (contents == null) throw new ArgumentNullException(nameof(contents));
             if (!contents.Any()) throw new ArgumentException("contents empty");
 
             if (addLoggingStarted)

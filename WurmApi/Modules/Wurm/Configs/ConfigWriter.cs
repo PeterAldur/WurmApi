@@ -7,30 +7,30 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 {
     class ConfigWriter
     {
-        private readonly WurmConfig config;
+        readonly WurmConfig config;
 
         public ConfigWriter(WurmConfig config)
         {
             if (config == null)
             {
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
             }
             this.config = config;
         }
 
         public void SetEventLoggingMode(LogSaveMode logSaveMode)
         {
-            this.SetLoggingMode(logSaveMode, "event_log_rotation=");
+            SetLoggingMode(logSaveMode, "event_log_rotation=");
         }
 
         public void SetOtherLoggingMode(LogSaveMode logSaveMode)
         {
-            this.SetLoggingMode(logSaveMode, "other_log_rotation=");
+            SetLoggingMode(logSaveMode, "other_log_rotation=");
         }
 
         public void SetIrcLoggingMode(LogSaveMode logSaveMode)
         {
-            this.SetLoggingMode(logSaveMode, "irc_log_rotation=");
+            SetLoggingMode(logSaveMode, "irc_log_rotation=");
         }
 
         void SetLoggingMode(LogSaveMode logSaveMode, string replaceString)
@@ -56,7 +56,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             {
                 replaceValue += "3";
             }
-            this.RewriteFile(replaceString + @"\d", replaceValue);
+            RewriteFile(replaceString + @"\d", replaceValue);
         }
 
         public void SetSkillGainRate(SkillGainRate skillGainRate)
@@ -78,7 +78,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
                 replacement += "4";
             if (skillGainRate == SkillGainRate.Always)
                 replacement += "5";
-            this.RewriteFile(@"skillgain_minimum=\d", replacement);
+            RewriteFile(@"skillgain_minimum=\d", replacement);
         }
 
         public void SetNoSkillMessageOnAlignmentChange(bool? newValue)
@@ -87,7 +87,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             {
                 throw new InvalidOperationException("Null is not valid Wurm config value");
             }
-            this.SetBooleanValue(newValue.Value, "skillgain_no_alignment=");
+            SetBooleanValue(newValue.Value, "skillgain_no_alignment=");
         }
 
         public void SetNoSkillMessageOnFavorChange(bool? newValue)
@@ -96,7 +96,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             {
                 throw new InvalidOperationException("Null is not valid Wurm config value");
             }
-            this.SetBooleanValue(newValue.Value, "skillgain_no_favor=");
+            SetBooleanValue(newValue.Value, "skillgain_no_favor=");
         }
 
         public void SetSaveSkillsOnQuit(bool? newValue)
@@ -105,7 +105,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             {
                 throw new InvalidOperationException("Null is not valid Wurm config value");
             }
-            this.SetBooleanValue(newValue.Value, "save_skills_on_quit=");
+            SetBooleanValue(newValue.Value, "save_skills_on_quit=");
         }
 
         public void SetTimestampMessages(bool? newValue)
@@ -114,19 +114,19 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             {
                 throw new InvalidOperationException("Null is not valid Wurm config value");
             }
-            this.SetBooleanValue(newValue.Value, "setting_timestamps=");
+            SetBooleanValue(newValue.Value, "setting_timestamps=");
         }
 
         void SetBooleanValue(bool newValue, string replacementString)
         {
             string replacement = replacementString;
             replacement += newValue ? "true" : "false";
-            this.RewriteFile(replacementString + @"\w+", replacement);
+            RewriteFile(replacementString + @"\w+", replacement);
         }
 
         void RewriteFile(string currentSettingRegex, string replacementSettingString)
         {
-            string configFilePath = this.config.FullConfigFilePath;
+            string configFilePath = config.FullConfigFilePath;
             string configText;
             Encoding fileEncoding;
             //save encoding to ensure correct output
@@ -162,7 +162,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
                     else
                     {
                         //trim end whitespace
-                        configText = configText.TrimEnd(new char[] { ' ' });
+                        configText = configText.TrimEnd(' ');
 
                         //verify that the file ends with correct newline
                         //add newline if not

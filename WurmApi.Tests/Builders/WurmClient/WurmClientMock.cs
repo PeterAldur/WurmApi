@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AldursLab.WurmApi.Extensions.DotNet.Collections.Generic;
 using AldursLab.WurmApi.Tests.TempDirs;
 using JetBrains.Annotations;
 using Telerik.JustMock;
@@ -26,7 +25,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 
         public  WurmClientMock([NotNull] DirectoryHandle dir, bool createBasicDirs, Platform targetPlatform)
         {
-            if (dir == null) throw new ArgumentNullException("dir");
+            if (dir == null) throw new ArgumentNullException(nameof(dir));
             this.dir = dir;
             this.targetPlatform = targetPlatform;
 
@@ -44,18 +43,9 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 
         public IWurmClientInstallDirectory InstallDirectory { get; private set; }
 
-        public IEnumerable<WurmPlayer> Players
-        {
-            get
-            {
-                return players;
-            }
-        }
+        public IEnumerable<WurmPlayer> Players => players;
 
-        public IEnumerable<WurmConfig> Configs
-        {
-            get { return configs; }
-        }
+        public IEnumerable<WurmConfig> Configs => configs;
 
         public WurmClientMock CreateBasicDirectories()
         {

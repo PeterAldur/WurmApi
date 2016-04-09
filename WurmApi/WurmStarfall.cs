@@ -37,17 +37,11 @@ namespace AldursLab.WurmApi
             SilentNameNormalized
         };
 
-        public static IEnumerable<string> AllNormalizedNames
-        {
-            get { return WurmStarfallNames; }
-        }
+        public static IEnumerable<string> AllNormalizedNames => WurmStarfallNames;
 
         private readonly WurmStarfallId wurmStarfallId;
 
-        public WurmStarfallId Id
-        {
-            get { return wurmStarfallId; }
-        }
+        public WurmStarfallId Id => wurmStarfallId;
 
         public WurmStarfall(int number)
             : this((WurmStarfallId)number)
@@ -61,7 +55,7 @@ namespace AldursLab.WurmApi
 
         public WurmStarfall(string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             name = name.ToUpperInvariant();
 
             switch (name)
@@ -107,18 +101,18 @@ namespace AldursLab.WurmApi
             }
         }
 
-        public static WurmStarfall Diamond { get { return new WurmStarfall(WurmStarfallId.Diamond);} }
-        public static WurmStarfall Saw { get { return new WurmStarfall(WurmStarfallId.Saw); } }
-        public static WurmStarfall Digging { get { return new WurmStarfall(WurmStarfallId.Digging); } }
-        public static WurmStarfall Leaf { get { return new WurmStarfall(WurmStarfallId.Leaf); } }
-        public static WurmStarfall Bear { get { return new WurmStarfall(WurmStarfallId.Bear); } }
-        public static WurmStarfall Snake { get { return new WurmStarfall(WurmStarfallId.Snake); } }
-        public static WurmStarfall WhiteShark { get { return new WurmStarfall(WurmStarfallId.WhiteShark); } }
-        public static WurmStarfall Fire { get { return new WurmStarfall(WurmStarfallId.Fire); } }
-        public static WurmStarfall Raven { get { return new WurmStarfall(WurmStarfallId.Raven); } }
-        public static WurmStarfall Dancer { get { return new WurmStarfall(WurmStarfallId.Dancer); } }
-        public static WurmStarfall Omen { get { return new WurmStarfall(WurmStarfallId.Omen); } }
-        public static WurmStarfall Silent { get { return new WurmStarfall(WurmStarfallId.Silent); } }
+        public static WurmStarfall Diamond => new WurmStarfall(WurmStarfallId.Diamond);
+        public static WurmStarfall Saw => new WurmStarfall(WurmStarfallId.Saw);
+        public static WurmStarfall Digging => new WurmStarfall(WurmStarfallId.Digging);
+        public static WurmStarfall Leaf => new WurmStarfall(WurmStarfallId.Leaf);
+        public static WurmStarfall Bear => new WurmStarfall(WurmStarfallId.Bear);
+        public static WurmStarfall Snake => new WurmStarfall(WurmStarfallId.Snake);
+        public static WurmStarfall WhiteShark => new WurmStarfall(WurmStarfallId.WhiteShark);
+        public static WurmStarfall Fire => new WurmStarfall(WurmStarfallId.Fire);
+        public static WurmStarfall Raven => new WurmStarfall(WurmStarfallId.Raven);
+        public static WurmStarfall Dancer => new WurmStarfall(WurmStarfallId.Dancer);
+        public static WurmStarfall Omen => new WurmStarfall(WurmStarfallId.Omen);
+        public static WurmStarfall Silent => new WurmStarfall(WurmStarfallId.Silent);
 
         public override string ToString()
         {
@@ -172,11 +166,11 @@ namespace AldursLab.WurmApi
         public int CompareTo(object other)
         {
             if (!(other is WurmStarfall)) return int.MinValue;
-            return this.CompareTo((WurmStarfall)other);
+            return CompareTo((WurmStarfall)other);
         }
         public int CompareTo(WurmStarfall other)
         {
-            return this.wurmStarfallId.CompareTo(other.wurmStarfallId);
+            return wurmStarfallId.CompareTo(other.wurmStarfallId);
         }
 
         public static bool operator >(WurmStarfall left, WurmStarfall right)
@@ -209,10 +203,7 @@ namespace AldursLab.WurmApi
             return !left.Equals(right);
         }
 
-        public int Number
-        {
-            get { return (int)wurmStarfallId; }
-        }
+        public int Number => (int)wurmStarfallId;
     }
 
     public enum WurmStarfallId

@@ -10,10 +10,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.ConfigDirectories
         // assumption: normalization convention for WurmApi is ToUpperInvariant
 
         // property-redirect to enable some setup, before wurmapi init 
-        IWurmConfigDirectories System
-        {
-            get { return Fixture.WurmApiManager.WurmConfigDirectories; }
-        }
+        IWurmConfigDirectories System => Fixture.WurmApiManager.WurmConfigDirectories;
 
         [Test]
         public void ReturnsNormalizedNames()

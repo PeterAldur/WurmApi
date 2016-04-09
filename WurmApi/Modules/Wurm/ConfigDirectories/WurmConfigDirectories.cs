@@ -27,7 +27,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
                 ValidateDirectory,
                 wurmPaths)
         {
-            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
             this.eventAggregator = eventAggregator;
         }
 
@@ -36,10 +36,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
             // no validation required here
         }
 
-        public IEnumerable<string> AllConfigNames
-        {
-            get { return AllDirectoryNamesNormalized; }
-        }
+        public IEnumerable<string> AllConfigNames => AllDirectoryNamesNormalized;
 
         public string GetGameSettingsFileFullPathForConfigName(string directoryName)
         {
@@ -52,7 +49,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ConfigDirectories
                     string.Format(
                         "gamesettings.txt full path not found for name: {0} ; Dir monitor for: {1}",
                         directoryName,
-                        this.DirectoryFullPath));
+                        DirectoryFullPath));
             }
             return file.FullName;
         }

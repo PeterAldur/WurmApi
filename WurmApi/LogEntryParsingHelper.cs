@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using AldursLab.WurmApi.Extensions.DotNet;
+﻿using System.Text.RegularExpressions;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 
 namespace AldursLab.WurmApi
@@ -31,17 +29,14 @@ namespace AldursLab.WurmApi
                 }
                 if (result == null)
                 {
-                    if (logger != null)
-                    {
-                        logger.Log(
-                            LogLevel.Warn,
-                            string.Format(
-                                "ServerHistoryProvider found 'other players are online' log line, but could not parse it. Character: {0} Entry: {1}",
-                                sourceCharacterName,
-                                logEntry),
-                            "ServerParsingHelper",
-                            null);
-                    }
+                    logger?.Log(
+                        LogLevel.Warn,
+                        string.Format(
+                            "ServerHistoryProvider found 'other players are online' log line, but could not parse it. Character: {0} Entry: {1}",
+                            sourceCharacterName,
+                            logEntry),
+                        "ServerParsingHelper",
+                        null);
                 }
             }
             return result;

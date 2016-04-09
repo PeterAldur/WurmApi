@@ -13,10 +13,10 @@ namespace AldursLab.WurmApi.PersistentObjects
         public ErrorContext(IEnumerable<DeserializationErrorDetails> deserializationErrorDetails,
             IPersistenceStrategy persistenceStrategy, string collectionId, string objectId)
         {
-            if (deserializationErrorDetails == null) throw new ArgumentNullException("deserializationErrorDetails");
-            if (persistenceStrategy == null) throw new ArgumentNullException("persistenceStrategy");
-            if (collectionId == null) throw new ArgumentNullException("collectionId");
-            if (objectId == null) throw new ArgumentNullException("objectId");
+            if (deserializationErrorDetails == null) throw new ArgumentNullException(nameof(deserializationErrorDetails));
+            if (persistenceStrategy == null) throw new ArgumentNullException(nameof(persistenceStrategy));
+            if (collectionId == null) throw new ArgumentNullException(nameof(collectionId));
+            if (objectId == null) throw new ArgumentNullException(nameof(objectId));
             this.persistenceStrategy = persistenceStrategy;
             this.collectionId = collectionId;
             this.objectId = objectId;
@@ -32,10 +32,7 @@ namespace AldursLab.WurmApi.PersistentObjects
         /// <summary>
         /// Gets the serialized raw data from the backing data store.
         /// </summary>
-        public string RawSerializedData
-        {
-            get { return rawSerializedData ?? (rawSerializedData = persistenceStrategy.TryLoad(objectId, collectionId)); }
-        }
+        public string RawSerializedData => rawSerializedData ?? (rawSerializedData = persistenceStrategy.TryLoad(objectId, collectionId));
 
         /// <summary>
         /// Overwrites serialized data with the new data.

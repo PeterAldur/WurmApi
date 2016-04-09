@@ -20,7 +20,6 @@ using AldursLab.WurmApi.Modules.Wurm.Paths;
 using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
 using AldursLab.WurmApi.Modules.Wurm.Servers;
-using AldursLab.WurmApi.Validation;
 
 namespace AldursLab.WurmApi
 {
@@ -380,11 +379,11 @@ namespace AldursLab.WurmApi
         {
             var config = new WurmApiConfig
             {
-                ClearAllCaches = this.ClearAllCaches,
-                Platform = this.Platform,
-                ServerInfoMap = this.ServerInfoMap,
-                WurmUnlimitedMode = this.WurmUnlimitedMode,
-                PersistenceMethod = this.PersistenceMethod
+                ClearAllCaches = ClearAllCaches,
+                Platform = Platform,
+                ServerInfoMap = ServerInfoMap,
+                WurmUnlimitedMode = WurmUnlimitedMode,
+                PersistenceMethod = PersistenceMethod
             };
             return config;
         }

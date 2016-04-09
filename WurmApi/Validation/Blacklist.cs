@@ -18,8 +18,8 @@ namespace AldursLab.WurmApi.Validation
 
         public Blacklist([NotNull] IWurmApiLogger logger, [NotNull] string description, int issueTreshhold = 10)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (description == null) throw new ArgumentNullException("description");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (description == null) throw new ArgumentNullException(nameof(description));
             this.logger = logger;
             this.description = description;
             this.issueTreshhold = issueTreshhold;

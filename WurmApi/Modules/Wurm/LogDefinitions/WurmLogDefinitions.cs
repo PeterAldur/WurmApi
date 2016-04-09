@@ -83,15 +83,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogDefinitions
             }
         }
 
-        public IEnumerable<LogDefinition> AllDefinitions
-        {
-            get { return Definitions.AsEnumerable(); }
-        }
+        public IEnumerable<LogDefinition> AllDefinitions => Definitions.AsEnumerable();
 
-        public IEnumerable<LogType> AllLogTypes
-        {
-            get { return enumToPrefixMap.Keys.ToArray(); }
-        }
+        public IEnumerable<LogType> AllLogTypes => enumToPrefixMap.Keys.ToArray();
 
         /// <summary>
         /// Returns Unspecified if failed.

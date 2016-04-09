@@ -7,7 +7,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal.Messages
     {
         public CharacterLogFilesAddedOrRemoved([NotNull] CharacterName characterName)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
             CharacterName = characterName;
         }
 

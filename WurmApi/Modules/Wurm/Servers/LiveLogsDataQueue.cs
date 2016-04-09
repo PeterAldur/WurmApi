@@ -16,7 +16,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         public LiveLogsDataQueue(IWurmLogsMonitorInternal wurmLogsMonitor)
         {
-            if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
+            if (wurmLogsMonitor == null) throw new ArgumentNullException(nameof(wurmLogsMonitor));
             this.wurmLogsMonitor = wurmLogsMonitor;
 
             wurmLogsMonitor.SubscribeAllActiveInternal(EventHandler);

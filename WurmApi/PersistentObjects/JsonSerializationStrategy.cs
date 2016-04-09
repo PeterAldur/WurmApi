@@ -105,8 +105,7 @@ namespace AldursLab.WurmApi.PersistentObjects
 
         public override string ToString()
         {
-            return string.Format("Kind: {0}, Path: {1}, Exception: {2}", DeserializationErrorKind, Path,
-                Exception != null ? Exception.Message : String.Empty);
+            return $"Kind: {DeserializationErrorKind}, Path: {Path}, Exception: {Exception?.Message ?? string.Empty}";
         }
     }
 
@@ -141,8 +140,8 @@ namespace AldursLab.WurmApi.PersistentObjects
             IEnumerable<DeserializationErrorDetails> errors)
             : base("At least one deserialization error occurred and was not handled.")
         {
-            if (deserializedFallbackEntity == null) throw new ArgumentNullException("deserializedFallbackEntity");
-            if (errors == null) throw new ArgumentNullException("errors");
+            if (deserializedFallbackEntity == null) throw new ArgumentNullException(nameof(deserializedFallbackEntity));
+            if (errors == null) throw new ArgumentNullException(nameof(errors));
             DeserializedFallbackEntity = deserializedFallbackEntity;
             Errors = errors;
         }

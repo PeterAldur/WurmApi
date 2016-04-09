@@ -23,12 +23,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             LogEntriesParser parser, 
             [NotNull] IWurmApiLogger wurmApiLogger)
         {
-            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
-            if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
-            if (wurmServerHistory == null) throw new ArgumentNullException("wurmServerHistory");
-            if (logHistorySaved == null) throw new ArgumentNullException("logHistorySaved");
-            if (parser == null) throw new ArgumentNullException("parser");
-            if (wurmApiLogger == null) throw new ArgumentNullException("wurmApiLogger");
+            if (wurmLogsHistory == null) throw new ArgumentNullException(nameof(wurmLogsHistory));
+            if (wurmCharacterDirectories == null) throw new ArgumentNullException(nameof(wurmCharacterDirectories));
+            if (wurmServerHistory == null) throw new ArgumentNullException(nameof(wurmServerHistory));
+            if (logHistorySaved == null) throw new ArgumentNullException(nameof(logHistorySaved));
+            if (parser == null) throw new ArgumentNullException(nameof(parser));
+            if (wurmApiLogger == null) throw new ArgumentNullException(nameof(wurmApiLogger));
             this.wurmLogsHistory = wurmLogsHistory;
             this.wurmCharacterDirectories = wurmCharacterDirectories;
             this.wurmServerHistory = wurmServerHistory;

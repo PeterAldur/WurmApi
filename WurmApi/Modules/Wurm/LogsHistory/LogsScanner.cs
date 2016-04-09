@@ -30,14 +30,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             [NotNull] LogFileParserFactory logFileParserFactory, 
             [NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (logSearchParameters == null) throw new ArgumentNullException("logSearchParameters");
-            if (cancellationManager == null) throw new ArgumentNullException("cancellationManager");
-            if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
-            if (monthlyHeuristics == null) throw new ArgumentNullException("monthlyHeuristics");
-            if (streamReaderFactory == null) throw new ArgumentNullException("streamReaderFactory");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (logFileParserFactory == null) throw new ArgumentNullException("logFileParserFactory");
-            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
+            if (logSearchParameters == null) throw new ArgumentNullException(nameof(logSearchParameters));
+            if (cancellationManager == null) throw new ArgumentNullException(nameof(cancellationManager));
+            if (wurmLogFiles == null) throw new ArgumentNullException(nameof(wurmLogFiles));
+            if (monthlyHeuristics == null) throw new ArgumentNullException(nameof(monthlyHeuristics));
+            if (streamReaderFactory == null) throw new ArgumentNullException(nameof(streamReaderFactory));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logFileParserFactory == null) throw new ArgumentNullException(nameof(logFileParserFactory));
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
             this.logSearchParameters = logSearchParameters;
             this.cancellationManager = cancellationManager;
             this.wurmLogFiles = wurmLogFiles;
@@ -57,9 +57,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         public ScanResult Scan()
         {
             logSearchParameters.AssertAreValid();
-            var man = this.wurmLogFiles.GetForCharacter(new CharacterName(logSearchParameters.CharacterName));
+            var filesManager = wurmLogFiles.GetForCharacter(new CharacterName(logSearchParameters.CharacterName));
             LogFileInfo[] logFileInfos =
-                man.GetLogFiles(logSearchParameters.MinDate, logSearchParameters.MaxDate)
+                filesManager.GetLogFiles(logSearchParameters.MinDate, logSearchParameters.MaxDate)
                    .Where(info => info.LogType == logSearchParameters.LogType).ToArray();
 
             cancellationManager.ThrowIfCancelled();
@@ -188,7 +188,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             }
             finally
             {
-                if (reader != null) reader.Dispose();
+                reader?.Dispose();
             }
         }
 

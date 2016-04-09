@@ -8,31 +8,25 @@ namespace AldursLab.WurmApi
     [JsonObject(MemberSerialization.Fields)]
     public sealed class CharacterName : IEquatable<CharacterName>
     {
-        private readonly string normalizedName;
-        static readonly CharacterName EmptyName = new CharacterName("");
+        readonly string normalizedName;
 
-        public static CharacterName Empty
-        {
-            get
-            {
-                return EmptyName;
-            }
-        }
+        public static CharacterName Empty { get; } = new CharacterName("");
 
         public CharacterName(string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            this.normalizedName = name.Trim().ToUpperInvariant();
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            normalizedName = name.Trim().ToUpperInvariant();
         }
 
         /// <summary>
         /// All uppercase character name
         /// </summary>
-        public string Normalized { get { return normalizedName; } }
+        public string Normalized => normalizedName;
+
         /// <summary>
         /// Name with first letter capitalized.
         /// </summary>
-        public string Capitalized { get { return UnnormalizeCharacterName(normalizedName); } }
+        public string Capitalized => UnnormalizeCharacterName(normalizedName);
 
         /// <summary>
         /// Converts a string in such way, that first char is uppercase and remaining chars are lowercase
@@ -70,7 +64,7 @@ namespace AldursLab.WurmApi
 
         public override int GetHashCode()
         {
-            return (normalizedName != null ? normalizedName.GetHashCode() : 0);
+            return normalizedName?.GetHashCode() ?? 0;
         }
 
         public static bool operator ==(CharacterName left, CharacterName right)
@@ -88,6 +82,6 @@ namespace AldursLab.WurmApi
             return Capitalized.ToString(CultureInfo.InvariantCulture);
         }
 
-        public bool IsEmpty { get { return string.IsNullOrWhiteSpace(normalizedName); } }
+        public bool IsEmpty => string.IsNullOrWhiteSpace(normalizedName);
     }
 }

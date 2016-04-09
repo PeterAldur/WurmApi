@@ -20,8 +20,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         public JobExecutor([NotNull] ServerHistoryProviderFactory serverHistoryProviderFactory,
             [NotNull] PersistentCollectionsLibrary persistentLibrary)
         {
-            if (serverHistoryProviderFactory == null) throw new ArgumentNullException("serverHistoryProviderFactory");
-            if (persistentLibrary == null) throw new ArgumentNullException("persistentLibrary");
+            if (serverHistoryProviderFactory == null) throw new ArgumentNullException(nameof(serverHistoryProviderFactory));
+            if (persistentLibrary == null) throw new ArgumentNullException(nameof(persistentLibrary));
             this.serverHistoryProviderFactory = serverHistoryProviderFactory;
             this.persistentLibrary = persistentLibrary;
         }
@@ -29,8 +29,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         public override ServerName Execute([NotNull] object jobContext,
             [NotNull] JobCancellationManager jobCancellationManager)
         {
-            if (jobContext == null) throw new ArgumentNullException("jobContext");
-            if (jobCancellationManager == null) throw new ArgumentNullException("jobCancellationManager");
+            if (jobContext == null) throw new ArgumentNullException(nameof(jobContext));
+            if (jobCancellationManager == null) throw new ArgumentNullException(nameof(jobCancellationManager));
 
             var getServerAtDateJob = jobContext as GetServerAtDateJob;
             if (getServerAtDateJob != null)
@@ -91,7 +91,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             persistentLibrary.SaveChanged();
         }
 
-        public override TimeSpan IdleJobTreshhold { get { return TimeSpan.FromMilliseconds(100); } }
+        public override TimeSpan IdleJobTreshhold => TimeSpan.FromMilliseconds(100);
 
         public void BeginTrackingForCharacter(CharacterName name)
         {

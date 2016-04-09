@@ -7,14 +7,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
     {
         public PmSubscriptionKey([NotNull] EventHandler<LogsMonitorEventArgs> eventHandler, [NotNull] string pmRecipient)
         {
-            if (eventHandler == null) throw new ArgumentNullException("eventHandler");
-            if (pmRecipient == null) throw new ArgumentNullException("pmRecipient");
+            if (eventHandler == null) throw new ArgumentNullException(nameof(eventHandler));
+            if (pmRecipient == null) throw new ArgumentNullException(nameof(pmRecipient));
             EventHandler = eventHandler;
             PmRecipient = pmRecipient;
         }
 
-        public EventHandler<LogsMonitorEventArgs> EventHandler { get; private set; }
-        public string PmRecipient { get; private set; }
+        public EventHandler<LogsMonitorEventArgs> EventHandler { get; }
+        public string PmRecipient { get; }
 
         public bool Equals(PmSubscriptionKey other)
         {

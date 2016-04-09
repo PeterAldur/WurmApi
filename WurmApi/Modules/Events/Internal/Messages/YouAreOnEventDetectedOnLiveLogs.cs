@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Events.Internal.Messages
@@ -12,33 +8,20 @@ namespace AldursLab.WurmApi.Modules.Events.Internal.Messages
     /// </summary>
     class YouAreOnEventDetectedOnLiveLogs : Message
     {
-        readonly ServerName serverName;
-        readonly CharacterName characterName;
-        readonly bool currentServerNameChanged;
-
         public YouAreOnEventDetectedOnLiveLogs([NotNull] ServerName serverName, [NotNull] CharacterName characterName,
             bool currentServerNameChanged)
         {
-            if (serverName == null) throw new ArgumentNullException("serverName");
-            if (characterName == null) throw new ArgumentNullException("characterName");
-            this.serverName = serverName;
-            this.characterName = characterName;
-            this.currentServerNameChanged = currentServerNameChanged;
+            if (serverName == null) throw new ArgumentNullException(nameof(serverName));
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
+            ServerName = serverName;
+            CharacterName = characterName;
+            CurrentServerNameChanged = currentServerNameChanged;
         }
 
-        public ServerName ServerName
-        {
-            get { return serverName; }
-        }
+        public ServerName ServerName { get; }
 
-        public CharacterName CharacterName
-        {
-            get { return characterName; }
-        }
+        public CharacterName CharacterName { get; }
 
-        public bool CurrentServerNameChanged
-        {
-            get { return currentServerNameChanged; }
-        }
+        public bool CurrentServerNameChanged { get; }
     }
 }

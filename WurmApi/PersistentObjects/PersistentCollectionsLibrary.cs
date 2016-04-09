@@ -16,7 +16,7 @@ namespace AldursLab.WurmApi.PersistentObjects
         public PersistentCollectionsLibrary(IPersistenceStrategy persistenceStrategy, 
             IObjectDeserializationErrorHandlingStrategy deserializationErrorHandlingStrategy = null)
         {
-            if (persistenceStrategy == null) throw new ArgumentNullException("persistenceStrategy");
+            if (persistenceStrategy == null) throw new ArgumentNullException(nameof(persistenceStrategy));
             this.persistenceStrategy = persistenceStrategy;
 
             if (deserializationErrorHandlingStrategy == null)
@@ -67,10 +67,7 @@ namespace AldursLab.WurmApi.PersistentObjects
             }
         }
 
-        internal IPersistenceStrategy PersistenceStrategy
-        {
-            get { return persistenceStrategy; }
-        }
+        internal IPersistenceStrategy PersistenceStrategy => persistenceStrategy;
     }
 
     /// <summary>

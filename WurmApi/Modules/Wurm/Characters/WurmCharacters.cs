@@ -48,18 +48,18 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             this.wurmPaths = wurmPaths;
             this.wurmLogsHistory = wurmLogsHistory;
             this.serverGroups = serverGroups;
-            if (characterDirectories == null) throw new ArgumentNullException("characterDirectories");
-            if (wurmConfigs == null) throw new ArgumentNullException("wurmConfigs");
-            if (wurmServers == null) throw new ArgumentNullException("wurmServers");
-            if (wurmServerHistory == null) throw new ArgumentNullException("wurmServerHistory");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
-            if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
-            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
-            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
-            if (serverGroups == null) throw new ArgumentNullException("serverGroups");
+            if (characterDirectories == null) throw new ArgumentNullException(nameof(characterDirectories));
+            if (wurmConfigs == null) throw new ArgumentNullException(nameof(wurmConfigs));
+            if (wurmServers == null) throw new ArgumentNullException(nameof(wurmServers));
+            if (wurmServerHistory == null) throw new ArgumentNullException(nameof(wurmServerHistory));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
+            if (wurmLogsMonitor == null) throw new ArgumentNullException(nameof(wurmLogsMonitor));
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
+            if (wurmPaths == null) throw new ArgumentNullException(nameof(wurmPaths));
+            if (wurmLogsHistory == null) throw new ArgumentNullException(nameof(wurmLogsHistory));
+            if (serverGroups == null) throw new ArgumentNullException(nameof(serverGroups));
 
             var allChars = characterDirectories.GetAllCharacters();
             foreach (var characterName in allChars)
@@ -91,7 +91,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public IWurmCharacter Get([NotNull] CharacterName name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
             lock (locker)
             {
@@ -106,7 +106,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public IWurmCharacter Get([NotNull] string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             return Get(new CharacterName(name));
         }
 
@@ -134,7 +134,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             }
             else
             {
-                throw new DataNotFoundException(string.Format("Directory for character {0} does not exist.", name));
+                throw new DataNotFoundException($"Directory for character {name} does not exist.");
             }
         }
 

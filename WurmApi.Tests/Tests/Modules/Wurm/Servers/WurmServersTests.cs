@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.Modules.Networking;
-using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Tests.Helpers;
 using AldursLab.WurmApi.Tests.TempDirs;
 using NUnit.Framework;
@@ -17,7 +16,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Servers
     [TestFixture]
     class WurmServersTests : WurmTests
     {
-        protected IWurmServers System { get { return Fixture.WurmApiManager.Servers; } }
+        protected IWurmServers System => Fixture.WurmApiManager.Servers;
         public StubbableTime.StubScope Timescope;
         protected readonly CharacterName TestGuyCharacterName = new CharacterName("Testguy");
         protected DateTime MockedNow = new DateTime(2014, 12, 15, 0, 0, 0, DateTimeKind.Local);

@@ -8,7 +8,7 @@ namespace AldursLab.WurmApi.Extensions.DotNet.IO
     {
         public static string CodeBaseLocalPath(this Assembly assembly)
         {
-            return (Path.GetDirectoryName(new Uri(assembly.CodeBase).LocalPath));
+            return Path.GetDirectoryName(new Uri(assembly.CodeBase).LocalPath);
         }
     }
 }

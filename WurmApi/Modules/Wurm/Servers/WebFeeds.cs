@@ -8,7 +8,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class WebFeeds
     {
-        private readonly IHttpWebRequests httpWebRequests;
         private readonly IWurmServerList wurmServerList;
         private readonly IWurmApiLogger logger;
 
@@ -20,10 +19,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         public WebFeeds(IHttpWebRequests httpWebRequests, IWurmServerList wurmServerList, IWurmApiLogger logger)
         {
-            if (httpWebRequests == null) throw new ArgumentNullException("httpWebRequests");
-            if (wurmServerList == null) throw new ArgumentNullException("wurmServerList");
-            if (logger == null) throw new ArgumentNullException("logger");
-            this.httpWebRequests = httpWebRequests;
+            if (httpWebRequests == null) throw new ArgumentNullException(nameof(httpWebRequests));
+            if (wurmServerList == null) throw new ArgumentNullException(nameof(wurmServerList));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.wurmServerList = wurmServerList;
             this.logger = logger;
 

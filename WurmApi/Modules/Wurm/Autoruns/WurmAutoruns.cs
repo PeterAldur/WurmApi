@@ -11,7 +11,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
     {
         readonly IWurmConfigs wurmConfigs;
         readonly IWurmCharacterDirectories wurmCharacterDirectories;
-        readonly IWurmApiLogger logger;
         readonly object locker = new object();
 
         public WurmAutoruns(
@@ -19,12 +18,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Autoruns
             [NotNull] IWurmCharacterDirectories wurmCharacterDirectories, 
             [NotNull] IWurmApiLogger logger)
         {
-            if (wurmConfigs == null) throw new ArgumentNullException("wurmConfigs");
-            if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (wurmConfigs == null) throw new ArgumentNullException(nameof(wurmConfigs));
+            if (wurmCharacterDirectories == null) throw new ArgumentNullException(nameof(wurmCharacterDirectories));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.wurmConfigs = wurmConfigs;
             this.wurmCharacterDirectories = wurmCharacterDirectories;
-            this.logger = logger;
         }
 
         public void MergeCommandToAllAutoruns(string command)

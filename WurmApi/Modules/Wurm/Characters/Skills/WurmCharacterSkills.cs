@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.Extensions.DotNet;
@@ -45,12 +43,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             [NotNull] IWurmApiLogger logger, IWurmPaths wurmPaths,
             [NotNull] IInternalEventAggregator internalEventAggregator)
         {
-            if (character == null) throw new ArgumentNullException("character");
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
-            if (logsMonitor == null) throw new ArgumentNullException("logsMonitor");
-            if (logsHistory == null) throw new ArgumentNullException("logsHistory");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
+            if (character == null) throw new ArgumentNullException(nameof(character));
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
+            if (logsMonitor == null) throw new ArgumentNullException(nameof(logsMonitor));
+            if (logsHistory == null) throw new ArgumentNullException(nameof(logsHistory));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
             this.character = character;
             this.publicEventInvoker = publicEventInvoker;
             this.logsMonitor = logsMonitor;
@@ -166,8 +164,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             if (skillinfo != null)
             {
 
-                skill = new SkillInfo(skillName, skillinfo.Value, dump.Stamp, null);
-                skill.Server = await character.TryGetHistoricServerAtLogStampAsync(dump.Stamp);
+                skill = new SkillInfo(skillName, skillinfo.Value, dump.Stamp, null)
+                {
+                    Server = await character.TryGetHistoricServerAtLogStampAsync(dump.Stamp)
+                };
             }
             return skill;
         }
@@ -178,9 +178,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
                 return mapSkill.Stamp > dumpSkill.Stamp ? mapSkill : dumpSkill;
             }
-            if (mapSkill != null) return mapSkill;
-            if (dumpSkill != null) return dumpSkill;
-            return null;
+            return mapSkill ?? dumpSkill;
         }
 
         public SkillInfo TryGetCurrentSkillLevel(string skillName, ServerGroup serverGroup, TimeSpan maxTimeToLookBackInLogs)

@@ -1,7 +1,6 @@
 ﻿using System;
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuilders;
-using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
@@ -41,10 +40,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
             LogFileStreamReaderFactory logFileStreamReaderFactory,
             IWurmApiLogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (logFileInfo == null) throw new ArgumentNullException("logFileInfo");
-            if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
+            if (logFileInfo == null) throw new ArgumentNullException(nameof(logFileInfo));
+            if (logFileStreamReaderFactory == null) throw new ArgumentNullException(nameof(logFileStreamReaderFactory));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
             this.logFileInfo = logFileInfo;
             this.logFileStreamReaderFactory = logFileStreamReaderFactory;
             this.logger = logger;

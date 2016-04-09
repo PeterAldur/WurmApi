@@ -17,8 +17,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             [NotNull] IWurmApiLogger logger)
             : base(serverGroup)
         {
-            if (dumpInfo == null) throw new ArgumentNullException("dumpInfo");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (dumpInfo == null) throw new ArgumentNullException(nameof(dumpInfo));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.dumpInfo = dumpInfo;
             this.logger = logger;
             skillLevels = ParseDump();
@@ -79,19 +79,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             }
         }
 
-        public override DateTime Stamp
-        {
-            get { return dumpInfo.Stamp; }
-        }
+        public override DateTime Stamp => dumpInfo.Stamp;
 
         public override IEnumerable<SkillInfo> All
         {
             get { return skillLevels.Select(pair => new SkillInfo(pair.Key, pair.Value, Stamp, null)); }
         }
 
-        public override bool IsNull
-        {
-            get { return false; }
-        }
+        public override bool IsNull => false;
     }
 }

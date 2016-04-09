@@ -27,17 +27,11 @@ namespace AldursLab.WurmApi
             AwakeningNameNormalized
         };
 
-        public static IEnumerable<string> AllNormalizedNames
-        {
-            get { return WurmStarfallNames; }
-        }
+        public static IEnumerable<string> AllNormalizedNames => WurmStarfallNames;
 
         private readonly WurmDayId wurmDayId;
 
-        public WurmDayId Id
-        {
-            get { return wurmDayId; }
-        }
+        public WurmDayId Id => wurmDayId;
 
         public WurmDay(int number)
             : this((WurmDayId)number)
@@ -51,7 +45,7 @@ namespace AldursLab.WurmApi
 
         public WurmDay(string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             name = name.ToUpperInvariant();
 
             switch (name)
@@ -82,13 +76,13 @@ namespace AldursLab.WurmApi
             }
         }
 
-        public static WurmDay Ant { get { return new WurmDay(WurmDayId.Ant); } }
-        public static WurmDay Luck { get { return new WurmDay(WurmDayId.Luck); } }
-        public static WurmDay Wurm { get { return new WurmDay(WurmDayId.Wurm); } }
-        public static WurmDay Wrath { get { return new WurmDay(WurmDayId.Wrath); } }
-        public static WurmDay Tears { get { return new WurmDay(WurmDayId.Tears); } }
-        public static WurmDay Sleep { get { return new WurmDay(WurmDayId.Sleep); } }
-        public static WurmDay Awakening { get { return new WurmDay(WurmDayId.Awakening); } }
+        public static WurmDay Ant => new WurmDay(WurmDayId.Ant);
+        public static WurmDay Luck => new WurmDay(WurmDayId.Luck);
+        public static WurmDay Wurm => new WurmDay(WurmDayId.Wurm);
+        public static WurmDay Wrath => new WurmDay(WurmDayId.Wrath);
+        public static WurmDay Tears => new WurmDay(WurmDayId.Tears);
+        public static WurmDay Sleep => new WurmDay(WurmDayId.Sleep);
+        public static WurmDay Awakening => new WurmDay(WurmDayId.Awakening);
 
         public override string ToString()
         {
@@ -134,11 +128,11 @@ namespace AldursLab.WurmApi
         {
             if (!(other is WurmDayId))
                 return int.MinValue;
-            return this.CompareTo((WurmDayId)other);
+            return CompareTo((WurmDayId)other);
         }
         public int CompareTo(WurmDay other)
         {
-            return this.wurmDayId.CompareTo(other.wurmDayId);
+            return wurmDayId.CompareTo(other.wurmDayId);
         }
 
         public static bool operator >(WurmDay left, WurmDay right)
@@ -171,10 +165,7 @@ namespace AldursLab.WurmApi
             return !left.Equals(right);
         }
 
-        public int Number
-        {
-            get { return (int)wurmDayId; }
-        }
+        public int Number => (int)wurmDayId;
     }
 
     public enum WurmDayId

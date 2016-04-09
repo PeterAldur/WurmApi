@@ -8,28 +8,18 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel
     [JsonObject(MemberSerialization.Fields)]
     class ServersData : Entity
     {
-        private readonly Dictionary<string, ServerData> serverDatas;
-        private DateTimeOffset lastScanDate;
-
         /// <summary>
         /// Server Name Normalized to Server Data
         /// </summary>
-        public Dictionary<string, ServerData> ServerDatas
-        {
-            get { return serverDatas; }
-        }
+        public Dictionary<string, ServerData> ServerDatas { get; }
 
         public ServersData()
         {
-            serverDatas = new Dictionary<string, ServerData>();
-            lastScanDate = new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero); //something that wont on break on +/- adjustments
+            ServerDatas = new Dictionary<string, ServerData>();
+            LastScanDate = new DateTimeOffset(1900, 1, 1, 0, 0, 0, TimeSpan.Zero); //something that wont on break on +/- adjustments
         }
 
-        public DateTimeOffset LastScanDate
-        {
-            get { return lastScanDate; }
-            set { lastScanDate = value; }
-        }
+        public DateTimeOffset LastScanDate { get; set; }
     }
 
     public class ServerData

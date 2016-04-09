@@ -13,8 +13,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             LogFileStreamReaderFactory streamReaderFactory,
             LogFileParser logFileParser)
         {
-            if (streamReaderFactory == null) throw new ArgumentNullException("streamReaderFactory");
-            if (logFileParser == null) throw new ArgumentNullException("logFileParser");
+            if (streamReaderFactory == null) throw new ArgumentNullException(nameof(streamReaderFactory));
+            if (logFileParser == null) throw new ArgumentNullException(nameof(logFileParser));
             this.streamReaderFactory = streamReaderFactory;
             this.logFileParser = logFileParser;
         }

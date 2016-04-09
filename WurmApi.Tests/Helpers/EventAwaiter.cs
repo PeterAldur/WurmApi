@@ -43,7 +43,7 @@ namespace AldursLab.WurmApi.Tests.Helpers
 
         public void WaitUntilMatch([NotNull] Func<List<TEventArgs>, bool> isEventArgsMatch, int timeoutMillis = 5000)
         {
-            if (isEventArgsMatch == null) throw new ArgumentNullException("isEventArgsMatch");
+            if (isEventArgsMatch == null) throw new ArgumentNullException(nameof(isEventArgsMatch));
 
             int currentWait = 0;
             while (true)
@@ -76,7 +76,7 @@ namespace AldursLab.WurmApi.Tests.Helpers
                 currentWait += loopMillis;
                 lock (locker)
                 {
-                    if (invocations.Count() >= messageCount)
+                    if (invocations.Count >= messageCount)
                     {
                         //Trace.WriteLine("WaitInvocations:" + DateTime.Now.ToString("O"));
                         return;

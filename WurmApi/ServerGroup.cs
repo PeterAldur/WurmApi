@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -23,7 +22,7 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         public static ServerGroup CreateServerScoped([NotNull] ServerName serverName)
         {
-            if (serverName == null) throw new ArgumentNullException("serverName");
+            if (serverName == null) throw new ArgumentNullException(nameof(serverName));
             return new ServerGroup(ServerScoped + serverName.Normalized);
         }
 
@@ -34,22 +33,19 @@ namespace AldursLab.WurmApi
         /// <param name="serverGroupId">Case insensitive</param>
         public ServerGroup([NotNull] string serverGroupId)
         {
-            if (serverGroupId == null) throw new ArgumentNullException("serverGroupId");
+            if (serverGroupId == null) throw new ArgumentNullException(nameof(serverGroupId));
             this.serverGroupId = serverGroupId.ToUpperInvariant();
         }
 
         /// <summary>
         /// Returns normalized server group id.
         /// </summary>
-        public string ServerGroupId { get { return serverGroupId; } }
+        public string ServerGroupId => serverGroupId;
 
         /// <summary>
         /// Determines if this server group is scoped to a particular server name.
         /// </summary>
-        public bool IsServerScoped
-        {
-            get { return serverGroupId.StartsWith(ServerScoped); }
-        }
+        public bool IsServerScoped => serverGroupId.StartsWith(ServerScoped);
 
         public bool Equals(ServerGroup other)
         {
@@ -62,7 +58,7 @@ namespace AldursLab.WurmApi
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((ServerGroup) obj);
         }
 

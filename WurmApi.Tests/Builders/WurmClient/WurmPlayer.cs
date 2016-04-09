@@ -9,8 +9,6 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 {
     class WurmPlayer
     {
-        readonly DirectoryInfo playerDir;
-
         DirectoryInfo DumpsDir { get; set; }
         DirectoryInfo LogsDir { get; set; }
         DirectoryInfo ScreenshotsDir { get; set; }
@@ -19,7 +17,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
         public WurmPlayer(DirectoryInfo playerDir, string name, Platform targetPlatform)
         {
             Name = name;
-            this.playerDir = playerDir;
+            PlayerDir = playerDir;
             DumpsDir = playerDir.CreateSubdirectory("dumps");
             LogsDir = playerDir.CreateSubdirectory("logs");
             ScreenshotsDir = playerDir.CreateSubdirectory("screenshots");
@@ -32,10 +30,7 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
 
         public WurmLogs Logs { get; private set; }
 
-        public DirectoryInfo PlayerDir
-        {
-            get { return playerDir; }
-        }
+        public DirectoryInfo PlayerDir { get; }
 
         public WurmPlayer SetConfigName(string name)
         {

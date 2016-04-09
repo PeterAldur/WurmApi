@@ -13,7 +13,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters
     [TestFixture]
     class WurmCharactersTests : WurmTests
     {
-        protected IWurmCharacters System { get { return Fixture.WurmApiManager.Characters; } }
+        protected IWurmCharacters System => Fixture.WurmApiManager.Characters;
 
         [SetUp]
         public virtual void Setup()

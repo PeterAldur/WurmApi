@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.Modules.Events.Public
 
         public PublicEventImpl([NotNull] PublicEventInvoker publicEventInvoker)
         {
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
             this.publicEventInvoker = publicEventInvoker;
         }
 

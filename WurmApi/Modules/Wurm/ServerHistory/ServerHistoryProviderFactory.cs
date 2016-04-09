@@ -24,13 +24,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
             IWurmLogsMonitorInternal wurmLogsMonitor,
             IWurmLogFiles wurmLogFiles, [NotNull] IInternalEventAggregator internalEventAggregator)
         {
-            if (persistentCollection == null) throw new ArgumentNullException("persistentCollection");
-            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
-            if (wurmServerList == null) throw new ArgumentNullException("wurmServerList");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
-            if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
+            if (persistentCollection == null) throw new ArgumentNullException(nameof(persistentCollection));
+            if (wurmLogsHistory == null) throw new ArgumentNullException(nameof(wurmLogsHistory));
+            if (wurmServerList == null) throw new ArgumentNullException(nameof(wurmServerList));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (wurmLogsMonitor == null) throw new ArgumentNullException(nameof(wurmLogsMonitor));
+            if (wurmLogFiles == null) throw new ArgumentNullException(nameof(wurmLogFiles));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
             this.persistentCollection = persistentCollection;
             this.wurmLogsHistory = wurmLogsHistory;
             this.wurmServerList = wurmServerList;
@@ -42,7 +42,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
 
         public ServerHistoryProvider Create(CharacterName characterName)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
             var persistent = persistentCollection.GetObject<PersistentModel.ServerHistory>(characterName.Normalized);
             var wurmCharacterLogFiles = wurmLogFiles.GetForCharacter(characterName);
             return new ServerHistoryProvider(

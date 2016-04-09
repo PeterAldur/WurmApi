@@ -35,7 +35,7 @@ namespace AldursLab.WurmApi.Utility
         protected virtual void OnDirectoriesChanged()
         {
             EventHandler handler = DirectoriesChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         public void Refresh()

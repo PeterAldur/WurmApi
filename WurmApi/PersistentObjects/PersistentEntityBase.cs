@@ -6,13 +6,13 @@ namespace AldursLab.WurmApi.PersistentObjects
     {
         readonly IPersistent<TEntity> persistent;
 
-        public PersistentEntityBase(IPersistent<TEntity> persistent) 
+        protected PersistentEntityBase(IPersistent<TEntity> persistent) 
         {
-            if (persistent == null) throw new ArgumentNullException("persistent");
+            if (persistent == null) throw new ArgumentNullException(nameof(persistent));
             this.persistent = persistent;
         }
 
-        protected TEntity Entity { get { return persistent.Entity; } }
+        protected TEntity Entity => persistent.Entity;
 
         protected void FlagAsChanged()
         {
@@ -22,7 +22,7 @@ namespace AldursLab.WurmApi.PersistentObjects
         protected void RunMigration(int sourceVersion, int targetVersion, Action<TEntity> migrationAction, Func<TEntity, bool> entityFilteringPredicate = null)
         {
             if (migrationAction == null)
-                throw new ArgumentNullException("migrationAction");
+                throw new ArgumentNullException(nameof(migrationAction));
             if (entityFilteringPredicate != null)
             {
                 if (!entityFilteringPredicate(persistent.Entity))

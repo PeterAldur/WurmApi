@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 
         public LogHistorySaved(IPersistent<ServersData> persistenceManager)
         {
-            if (persistenceManager == null) throw new ArgumentNullException("persistenceManager");
+            if (persistenceManager == null) throw new ArgumentNullException(nameof(persistenceManager));
             this.persistenceManager = persistenceManager;
         }
 

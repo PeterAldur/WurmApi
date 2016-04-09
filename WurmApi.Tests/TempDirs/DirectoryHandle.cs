@@ -8,34 +8,24 @@ namespace AldursLab.WurmApi.Tests.TempDirs
     public sealed class DirectoryHandle : IDisposable
     {
         readonly TempDirectoriesManager manager;
-        readonly DirectoryInfo dir;
 
         public bool IsDisposed { get; private set; }
 
         internal DirectoryHandle(TempDirectoriesManager manager, DirectoryInfo dir)
         {
-            if (manager == null) throw new ArgumentNullException("manager");
-            if (dir == null) throw new ArgumentNullException("dir");
+            if (manager == null) throw new ArgumentNullException(nameof(manager));
+            if (dir == null) throw new ArgumentNullException(nameof(dir));
             this.manager = manager;
-            this.dir = dir;
+            Dir = dir;
 
             manager.RegisterHandle(this);
         }
 
-        internal DirectoryInfo Dir
-        {
-            get { return dir; }
-        }
+        internal DirectoryInfo Dir { get; }
 
-        public string AbsolutePath
-        {
-            get { return Dir.FullName; }
-        }
+        public string AbsolutePath => Dir.FullName;
 
-        public bool Exists
-        {
-            get { return Dir.Exists; }
-        }
+        public bool Exists => Dir.Exists;
 
         public IEnumerable<FileInfo> GetFiles()
         {
@@ -50,7 +40,7 @@ namespace AldursLab.WurmApi.Tests.TempDirs
         public DirectoryHandle AmmendFromSourceDirectory(string sourceDirFullPath, string targetRelativePath = null)
         {
             DirectoryOps.CopyRecursively(sourceDirFullPath,
-                targetRelativePath != null ? Path.Combine(dir.FullName, targetRelativePath) : dir.FullName,
+                targetRelativePath != null ? Path.Combine(Dir.FullName, targetRelativePath) : Dir.FullName,
                 true);
             return this;
         }

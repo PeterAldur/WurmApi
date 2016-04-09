@@ -21,11 +21,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             [NotNull] string heuristicsDataDirectory, [NotNull] LogFileStreamReaderFactory logFileStreamReaderFactory,
             [NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (heuristicsDataDirectory == null) throw new ArgumentNullException("heuristicsDataDirectory");
-            if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
-            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
+            if (wurmLogFiles == null) throw new ArgumentNullException(nameof(wurmLogFiles));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (heuristicsDataDirectory == null) throw new ArgumentNullException(nameof(heuristicsDataDirectory));
+            if (logFileStreamReaderFactory == null) throw new ArgumentNullException(nameof(logFileStreamReaderFactory));
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
 
             IPersistenceStrategy persistenceStrategy;
             if (wurmApiConfig.PersistenceMethod == WurmApiPersistenceMethod.FlatFiles)

@@ -8,7 +8,7 @@ namespace AldursLab.WurmApi
     {
         protected SkillDump(ServerGroup serverGroup)
         {
-            this.ServerGroupId = serverGroup;
+            ServerGroupId = serverGroup;
         }
 
         public ServerGroup ServerGroupId { get; private set; }

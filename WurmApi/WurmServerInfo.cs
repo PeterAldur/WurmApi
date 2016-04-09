@@ -6,20 +6,20 @@ namespace AldursLab.WurmApi
     {
         public WurmServerInfo(string name, string webStatsUrl, ServerGroup serverGroup)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (webStatsUrl == null) throw new ArgumentNullException("webStatsUrl");
-            this.ServerName = new ServerName(name);
-            this.WebStatsUrl = webStatsUrl;
-            this.ServerGroup = serverGroup;
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (webStatsUrl == null) throw new ArgumentNullException(nameof(webStatsUrl));
+            ServerName = new ServerName(name);
+            WebStatsUrl = webStatsUrl;
+            ServerGroup = serverGroup;
         }
 
-        public ServerName ServerName { get; private set; }
-        public string WebStatsUrl { get; private set; }
-        public ServerGroup ServerGroup { get; private set; }
+        public ServerName ServerName { get; }
+        public string WebStatsUrl { get; }
+        public ServerGroup ServerGroup { get; }
 
         public override string ToString()
         {
-            return string.Format("Name: {0}, WebStatsUrl: {1}, ServerGroup: {2}", ServerName, WebStatsUrl, ServerGroup);
+            return $"Name: {ServerName}, WebStatsUrl: {WebStatsUrl}, ServerGroup: {ServerGroup}";
         }
     }
 }

@@ -9,18 +9,18 @@ namespace AldursLab.WurmApi
         {
             if (characterName == null)
             {
-                throw new ArgumentNullException("characterName");
+                throw new ArgumentNullException(nameof(characterName));
             }
             if (wurmLogEntries == null)
             {
-                throw new ArgumentNullException("wurmLogEntries");
+                throw new ArgumentNullException(nameof(wurmLogEntries));
             }
             if (pmRecipientNormalized == null) pmRecipientNormalized = string.Empty;
 
-            this.CharacterName = characterName;
-            this.LogType = logType;
-            this.WurmLogEntries = wurmLogEntries;
-            this.PmRecipientNormalized = pmRecipientNormalized;
+            CharacterName = characterName;
+            LogType = logType;
+            WurmLogEntries = wurmLogEntries;
+            PmRecipientNormalized = pmRecipientNormalized;
         }
 
         public CharacterName CharacterName { get; private set; }
@@ -38,12 +38,6 @@ namespace AldursLab.WurmApi
         /// <summary>
         /// Converts PmRecipientNormalized to a representation, as it appears in the game.
         /// </summary>
-        public string PmRecipientCapitalized
-        {
-            get
-            {
-                return CharacterName.UnnormalizeCharacterName(PmRecipientNormalized);
-            }
-        }
+        public string PmRecipientCapitalized => CharacterName.UnnormalizeCharacterName(PmRecipientNormalized);
     }
 }

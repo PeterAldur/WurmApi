@@ -19,10 +19,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
         public JobRunner([NotNull] LiveLogs liveLogs, [NotNull] LogHistory logHistory, [NotNull] WebFeeds webFeeds,
             [NotNull] PersistentCollectionsLibrary persistentCollectionsLibrary)
         {
-            if (liveLogs == null) throw new ArgumentNullException("liveLogs");
-            if (logHistory == null) throw new ArgumentNullException("logHistory");
-            if (webFeeds == null) throw new ArgumentNullException("webFeeds");
-            if (persistentCollectionsLibrary == null) throw new ArgumentNullException("persistentCollectionsLibrary");
+            if (liveLogs == null) throw new ArgumentNullException(nameof(liveLogs));
+            if (logHistory == null) throw new ArgumentNullException(nameof(logHistory));
+            if (webFeeds == null) throw new ArgumentNullException(nameof(webFeeds));
+            if (persistentCollectionsLibrary == null) throw new ArgumentNullException(nameof(persistentCollectionsLibrary));
             this.liveLogs = liveLogs;
             this.logHistory = logHistory;
             this.webFeeds = webFeeds;
@@ -55,7 +55,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             persistentCollectionsLibrary.SaveChanged();
         }
 
-        public override TimeSpan IdleJobTreshhold { get { return TimeSpan.FromMinutes(5); }}
+        public override TimeSpan IdleJobTreshhold => TimeSpan.FromMinutes(5);
 
         WurmDateTime? TryGetCurrentTime(ServerName serverName)
         {

@@ -17,10 +17,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             IWurmCharacterLogFiles wurmCharacterLogFiles, 
             [NotNull] IInternalEventAggregator internalEventAggregator)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (singleFileMonitorFactory == null) throw new ArgumentNullException("singleFileMonitorFactory");
-            if (wurmCharacterLogFiles == null) throw new ArgumentNullException("wurmCharacterLogFiles");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (singleFileMonitorFactory == null) throw new ArgumentNullException(nameof(singleFileMonitorFactory));
+            if (wurmCharacterLogFiles == null) throw new ArgumentNullException(nameof(wurmCharacterLogFiles));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
             this.logger = logger;
             this.singleFileMonitorFactory = singleFileMonitorFactory;
             this.wurmCharacterLogFiles = wurmCharacterLogFiles;

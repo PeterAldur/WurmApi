@@ -27,17 +27,17 @@ namespace AldursLab.WurmApi.Utility
 
         readonly Blacklist<string> directoryBlacklist;
 
-        public WurmSubdirsMonitor([NotNull] string directoryFullPath, [NotNull] TaskManager taskManager,
+        protected WurmSubdirsMonitor([NotNull] string directoryFullPath, [NotNull] TaskManager taskManager,
             [NotNull] Action onChanged, [NotNull] IWurmApiLogger logger,
             [NotNull] Action<string, IWurmPaths> validateDirectory, [NotNull] IWurmPaths wurmPaths)
         {
-            if (directoryFullPath == null) throw new ArgumentNullException("directoryFullPath");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
-            if (onChanged == null) throw new ArgumentNullException("onChanged");
-            if (validateDirectory == null) throw new ArgumentNullException("validateDirectory");
-            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
-            if (logger == null) throw new ArgumentNullException("logger");
-            this.DirectoryFullPath = directoryFullPath;
+            if (directoryFullPath == null) throw new ArgumentNullException(nameof(directoryFullPath));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
+            if (onChanged == null) throw new ArgumentNullException(nameof(onChanged));
+            if (validateDirectory == null) throw new ArgumentNullException(nameof(validateDirectory));
+            if (wurmPaths == null) throw new ArgumentNullException(nameof(wurmPaths));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            DirectoryFullPath = directoryFullPath;
             this.taskManager = taskManager;
             this.onChanged = onChanged;
             this.validateDirectory = validateDirectory;
@@ -55,7 +55,7 @@ namespace AldursLab.WurmApi.Utility
             }
             catch (Exception exception)
             {
-                logger.Log(LogLevel.Error, "Error at initial Refresh of " + this.GetType().Name, this, exception);
+                logger.Log(LogLevel.Error, "Error at initial Refresh of " + GetType().Name, this, exception);
             }
 
             fileSystemWatcher = new FileSystemWatcher(directoryFullPath) {NotifyFilter = NotifyFilters.DirectoryName};
@@ -68,12 +68,12 @@ namespace AldursLab.WurmApi.Utility
             task.Trigger();
         }
 
-        private void DirectoryMonitorOnDirectoriesChanged(object sender, EventArgs eventArgs)
+        void DirectoryMonitorOnDirectoriesChanged(object sender, EventArgs eventArgs)
         {
             task.Trigger();
         }
 
-        private void Refresh()
+        void Refresh()
         {
             var di = new DirectoryInfo(DirectoryFullPath);
             var allDirs = di.GetDirectories();
@@ -117,21 +117,9 @@ namespace AldursLab.WurmApi.Utility
             onChanged();
         }
 
-        public IEnumerable<string> AllDirectoryNamesNormalized
-        {
-            get
-            {
-                return dirNameToFullPathMap.Keys;
-            }
-        }
+        public IEnumerable<string> AllDirectoryNamesNormalized => dirNameToFullPathMap.Keys;
 
-        public IEnumerable<string> AllDirectoriesFullPaths
-        {
-            get
-            {
-                return this.dirNameToFullPathMap.Values;
-            }
-        }
+        public IEnumerable<string> AllDirectoriesFullPaths => dirNameToFullPathMap.Values;
 
         public void Dispose()
         {
@@ -142,7 +130,7 @@ namespace AldursLab.WurmApi.Utility
 
         protected string GetFullPathForDirName([NotNull] string dirName)
         {
-            if (dirName == null) throw new ArgumentNullException("dirName");
+            if (dirName == null) throw new ArgumentNullException(nameof(dirName));
 
             string directoryFullPath;
             if (!dirNameToFullPathMap.TryGetValue(dirName.ToUpperInvariant(), out directoryFullPath))

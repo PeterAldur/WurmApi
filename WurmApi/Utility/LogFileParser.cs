@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Utility
 
         public LogFileParser(IWurmApiLogger logger)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logger = logger;
         }
 
@@ -121,18 +121,10 @@ namespace AldursLab.WurmApi.Utility
             }
         }
 
-        private void LogTimestampDiscrepancy(LogFileInfo logFileInfo, List<LogEntry> result, string line)
+        void LogTimestampDiscrepancy(LogFileInfo logFileInfo, List<LogEntry> result, string line)
         {
-            string lastLineContents;
-            LogEntry lastEntry = result.LastOrDefault();
-            if (lastEntry != null)
-            {
-                lastLineContents = lastEntry.ToString();
-            }
-            else
-            {
-                lastLineContents = "No entries parsed yet";
-            }
+            var lastEntry = result.LastOrDefault();
+            var lastLineContents = lastEntry?.ToString() ?? "No entries parsed yet";
 
             Log(
                 string.Format(
@@ -143,16 +135,16 @@ namespace AldursLab.WurmApi.Utility
                 LogLevel.Info);
         }
 
-        private static void AssertOriginDate(DateTime originDate)
+        static void AssertOriginDate(DateTime originDate)
         {
-            DateTime validationDate = new DateTime(originDate.Year, originDate.Month, originDate.Day);
+            var validationDate = new DateTime(originDate.Year, originDate.Month, originDate.Day);
             if (validationDate != originDate)
             {
                 throw new InvalidOperationException(string.Format("originDate must start at midnight, actual: {0}", originDate));
             }
         }
 
-        private void Log(string message, LogFileInfo logFileInfo, LogLevel level = LogLevel.Warn)
+        void Log(string message, LogFileInfo logFileInfo, LogLevel level = LogLevel.Warn)
         {
             logger.Log(level, string.Format("{0}, Log file: [{1}]", message, logFileInfo.FullPath), this, null);
         }
@@ -160,11 +152,11 @@ namespace AldursLab.WurmApi.Utility
 
     class LogFileParserFactory
     {
-        private readonly IWurmApiLogger logger;
+        readonly IWurmApiLogger logger;
 
         public LogFileParserFactory(IWurmApiLogger logger)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logger = logger;
         }
 

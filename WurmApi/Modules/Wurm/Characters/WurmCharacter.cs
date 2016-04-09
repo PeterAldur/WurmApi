@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.JobRunning;
@@ -33,7 +32,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
         readonly string configDefiningFileFullPath;
         string currentConfigName = string.Empty;
 
-        private const string ConfigDefinerFileName = "config.txt";
+        const string ConfigDefinerFileName = "config.txt";
 
         readonly TaskHandle configUpdateTask;
 
@@ -46,19 +45,19 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
             [NotNull] IWurmLogsHistory logsHistory, [NotNull] IWurmPaths wurmPaths,
             [NotNull] IWurmServerGroups wurmServerGroups)
         {
-            if (name == null) throw new ArgumentNullException("name");
-            if (playerDirectoryFullPath == null) throw new ArgumentNullException("playerDirectoryFullPath");
-            if (wurmConfigs == null) throw new ArgumentNullException("wurmConfigs");
-            if (wurmServers == null) throw new ArgumentNullException("wurmServers");
-            if (wurmServerHistory == null) throw new ArgumentNullException("wurmServerHistory");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
-            if (logsMonitor == null) throw new ArgumentNullException("logsMonitor");
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
-            if (logsHistory == null) throw new ArgumentNullException("logsHistory");
-            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
-            if (wurmServerGroups == null) throw new ArgumentNullException("wurmServerGroups");
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (playerDirectoryFullPath == null) throw new ArgumentNullException(nameof(playerDirectoryFullPath));
+            if (wurmConfigs == null) throw new ArgumentNullException(nameof(wurmConfigs));
+            if (wurmServers == null) throw new ArgumentNullException(nameof(wurmServers));
+            if (wurmServerHistory == null) throw new ArgumentNullException(nameof(wurmServerHistory));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
+            if (logsMonitor == null) throw new ArgumentNullException(nameof(logsMonitor));
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
+            if (logsHistory == null) throw new ArgumentNullException(nameof(logsHistory));
+            if (wurmPaths == null) throw new ArgumentNullException(nameof(wurmPaths));
+            if (wurmServerGroups == null) throw new ArgumentNullException(nameof(wurmServerGroups));
 
             this.wurmConfigs = wurmConfigs;
             this.wurmServers = wurmServers;
@@ -95,7 +94,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
             try
             {
-                wurmServerHistory.BeginTracking(this.Name);
+                wurmServerHistory.BeginTracking(Name);
             }
             catch (Exception exception)
             {
@@ -175,7 +174,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public async Task<IWurmServer> TryGetHistoricServerAtLogStampAsync(DateTime stamp, CancellationToken cancellationToken)
         {
-            var serverName = await wurmServerHistory.TryGetServerAsync(this.Name, stamp, cancellationToken).ConfigureAwait(false);
+            var serverName = await wurmServerHistory.TryGetServerAsync(Name, stamp, cancellationToken).ConfigureAwait(false);
             if (serverName == null) return null;
             var server = wurmServers.GetByName(serverName);
             return server;
@@ -202,7 +201,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public async Task<IWurmServer> TryGetCurrentServerAsync(CancellationToken cancellationToken)
         {
-            var serverName = await wurmServerHistory.TryGetCurrentServerAsync(this.Name, cancellationToken).ConfigureAwait(false);
+            var serverName = await wurmServerHistory.TryGetCurrentServerAsync(Name, cancellationToken).ConfigureAwait(false);
             if (serverName == null) return null;
             var server = wurmServers.GetByName(serverName);
             return server;
@@ -236,7 +235,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters
 
         public override string ToString()
         {
-            return this.Name.ToString();
+            return Name.ToString();
         }
     }
 

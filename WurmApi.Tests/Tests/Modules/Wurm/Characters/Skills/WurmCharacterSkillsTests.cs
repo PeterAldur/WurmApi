@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.Tests.Builders.WurmClient;
 using AldursLab.WurmApi.Tests.Helpers;
@@ -15,15 +12,9 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Skills
     {
         StubbableTime.StubScope timeScope;
 
-        public IWurmCharacterSkills TestguySkills
-        {
-            get { return Fixture.WurmApiManager.Characters.Get("Testguy").Skills; }
-        }
+        public IWurmCharacterSkills TestguySkills => Fixture.WurmApiManager.Characters.Get("Testguy").Skills;
 
-        public IWurmCharacterSkills TestguytwoSkills
-        {
-            get { return Fixture.WurmApiManager.Characters.Get("Testguytwo").Skills; }
-        }
+        public IWurmCharacterSkills TestguytwoSkills => Fixture.WurmApiManager.Characters.Get("Testguytwo").Skills;
 
         [SetUp]
         public void Setup()

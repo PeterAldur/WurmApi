@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Modules.Events
 
         public ThreadPoolMarshaller([NotNull] IWurmApiLogger logger)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logger = logger;
         }
 

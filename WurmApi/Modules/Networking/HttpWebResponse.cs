@@ -3,6 +3,7 @@ using System.IO;
 
 namespace AldursLab.WurmApi.Modules.Networking
 {
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     class HttpWebResponse
     {
         private readonly System.Net.HttpWebResponse webResponse;
@@ -11,19 +12,16 @@ namespace AldursLab.WurmApi.Modules.Networking
         {
             if (webResponse == null)
             {
-                throw new ArgumentNullException("webResponse");
+                throw new ArgumentNullException(nameof(webResponse));
             }
             this.webResponse = webResponse;
         }
 
         public virtual Stream GetResponseStream()
         {
-            return this.webResponse.GetResponseStream();
+            return webResponse.GetResponseStream();
         }
 
-        public virtual DateTime LastModified
-        {
-            get { return this.webResponse.LastModified; }
-        }
+        public virtual DateTime LastModified => webResponse.LastModified;
     }
 }

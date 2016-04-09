@@ -88,8 +88,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Events
         public virtual void OnFoovent()
         {
             var handler = Foovent;
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            handler?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -22,9 +22,9 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         public InternalEventInvoker([NotNull] IInternalEventAggregator eventAggregator, [NotNull] IWurmApiLogger logger,
             [NotNull] IWurmApiEventMarshaller eventMarshaller)
         {
-            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (eventMarshaller == null) throw new ArgumentNullException("eventMarshaller");
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (eventMarshaller == null) throw new ArgumentNullException(nameof(eventMarshaller));
             this.eventAggregator = eventAggregator;
             this.logger = logger;
             this.eventMarshaller = eventMarshaller;
@@ -45,7 +45,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         public InternalEvent Create([NotNull] Func<Message> messageFactory, TimeSpan invocationMinDelay)
         {
             if (messageFactory == null)
-                throw new ArgumentNullException("messageFactory");
+                throw new ArgumentNullException(nameof(messageFactory));
             var e = new InternalEventImpl(this);
             events.TryAdd(e, new EventManager(e, invocationMinDelay, messageFactory));
             return e;
@@ -57,8 +57,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
             {
                 try
                 {
-                    if (handler != null)
-                        handler(source, args);
+                    handler?.Invoke(source, args);
                 }
                 catch (Exception exception)
                 {
@@ -135,9 +134,9 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
             public EventManager([NotNull] InternalEvent internalEvent, TimeSpan betweenDelay, [NotNull] Func<Message> messageFactory)
             {
                 if (internalEvent == null)
-                    throw new ArgumentNullException("internalEvent");
+                    throw new ArgumentNullException(nameof(internalEvent));
                 if (messageFactory == null)
-                    throw new ArgumentNullException("action");
+                    throw new ArgumentNullException(nameof(messageFactory));
                 InternalEvent = internalEvent;
                 BetweenDelay = betweenDelay;
                 MessageFactory = messageFactory;
@@ -170,14 +169,8 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
                 }
             }
 
-            public bool ShouldInvoke
-            {
-                get
-                {
-                    return Pending == 1
-                           && lastInvoke < DateTime.Now - BetweenDelay;
-                }
-            }
+            public bool ShouldInvoke => Pending == 1
+                                        && lastInvoke < DateTime.Now - BetweenDelay;
         }
     }
 }

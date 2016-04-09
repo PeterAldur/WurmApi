@@ -8,8 +8,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
     {
         sealed class CompositeSkillKey : IEquatable<CompositeSkillKey>
         {
-            public string SkillNameNormalized { get; private set; }
-            public ServerGroup ServerGroupId { get; private set; }
+            public string SkillNameNormalized { get; }
+            public ServerGroup ServerGroupId { get; }
 
             public CompositeSkillKey(string skillNameNormalized, ServerGroup serverGroupId)
             {
@@ -35,7 +35,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             {
                 unchecked
                 {
-                    return ((SkillNameNormalized != null ? SkillNameNormalized.GetHashCode() : 0)*397) ^ (ServerGroupId != null ? ServerGroupId.GetHashCode() : 0);
+                    return ((SkillNameNormalized?.GetHashCode() ?? 0)*397) ^ (ServerGroupId?.GetHashCode() ?? 0);
                 }
             }
 
@@ -56,9 +56,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         public bool UpdateSkill([NotNull] SkillInfo newSkillInfo, [NotNull] IWurmServer server)
         {
             if (newSkillInfo == null)
-                throw new ArgumentNullException("newSkillInfo");
+                throw new ArgumentNullException(nameof(newSkillInfo));
             if (server == null)
-                throw new ArgumentNullException("server");
+                throw new ArgumentNullException(nameof(server));
 
             var key = new CompositeSkillKey(newSkillInfo.NameNormalized, server.ServerGroup);
             bool skillUpdated = false;
@@ -85,7 +85,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
         public SkillInfo TryGetSkill([NotNull] string skillName, ServerGroup serverGroup)
         {
             if (skillName == null)
-                throw new ArgumentNullException("skillName");
+                throw new ArgumentNullException(nameof(skillName));
             skillName = WurmSkills.NormalizeSkillName(skillName);
 
             var key = new CompositeSkillKey(skillName, serverGroup);

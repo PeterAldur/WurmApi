@@ -53,7 +53,7 @@ namespace AldursLab.WurmApi.Tests.Tests.PersistentCollectionsLibraryTests.Tests
 
             BreakPersistedData();
 
-            string rawData = null;
+            string rawData;
             IEnumerable<DeserializationErrorDetails> details = null;
             var lib = CreateLibrary(new CustomDeserializationErrorHandler(context =>
             {

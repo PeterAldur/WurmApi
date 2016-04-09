@@ -20,9 +20,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
             MonthlyHeuristicsExtractorFactory monthlyHeuristicsExtractorFactory)
         {
             if (heuristicsPersistentCollection == null)
-                throw new ArgumentNullException("heuristicsPersistentCollection");
-            if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
-            if (monthlyHeuristicsExtractorFactory == null) throw new ArgumentNullException("monthlyHeuristicsExtractorFactory");
+                throw new ArgumentNullException(nameof(heuristicsPersistentCollection));
+            if (wurmLogFiles == null) throw new ArgumentNullException(nameof(wurmLogFiles));
+            if (monthlyHeuristicsExtractorFactory == null) throw new ArgumentNullException(nameof(monthlyHeuristicsExtractorFactory));
 
             this.heuristicsPersistentCollection = heuristicsPersistentCollection;
             this.wurmLogFiles = wurmLogFiles;
@@ -31,7 +31,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics
 
         public virtual CharacterMonthlyLogHeuristics GetForCharacter(CharacterName characterName)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
 
             CharacterMonthlyLogHeuristics heuristics;
             if (!cache.TryGetValue(characterName, out heuristics))

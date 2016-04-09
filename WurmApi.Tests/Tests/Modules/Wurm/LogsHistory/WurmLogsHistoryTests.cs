@@ -14,7 +14,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogsHistory
         public WurmLogsHistoryTests(Platform targetPlatform) : base(targetPlatform)
         {}
 
-        public IWurmLogsHistory System { get { return Fixture.WurmApiManager.LogsHistory; } }
+        public IWurmLogsHistory System => Fixture.WurmApiManager.LogsHistory;
 
         [SetUp]
         public void Setup()

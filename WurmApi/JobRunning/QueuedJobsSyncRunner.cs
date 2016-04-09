@@ -19,7 +19,7 @@ namespace AldursLab.WurmApi.JobRunning
 
         public QueuedJobsSyncRunner([NotNull] JobExecutor<TJobContext, TResult> jobExecutor, IWurmApiLogger logger)
         {
-            if (jobExecutor == null) throw new ArgumentNullException("jobExecutor");
+            if (jobExecutor == null) throw new ArgumentNullException(nameof(jobExecutor));
             this.jobExecutor = jobExecutor;
 
             searchJobTask = new Task((token) =>
@@ -164,8 +164,6 @@ namespace AldursLab.WurmApi.JobRunning
     /// <typeparam name="TResult">Result of the job</typeparam>
     abstract class JobExecutor<TJobContext, TResult>
     {
-        readonly TimeSpan defaultIdleJobTreshhold = TimeSpan.FromMilliseconds(-1);
-
         /// <summary>
         /// Executes single job synchronously with other jobs and returns it's result.
         /// </summary>
@@ -184,9 +182,6 @@ namespace AldursLab.WurmApi.JobRunning
         /// Time to wait, before IdleJob is triggered due to queue inactivity.
         /// Defaults to never.
         /// </summary>
-        public virtual TimeSpan IdleJobTreshhold
-        {
-            get { return defaultIdleJobTreshhold; }
-        }
+        public virtual TimeSpan IdleJobTreshhold { get; } = TimeSpan.FromMilliseconds(-1);
     }
 }

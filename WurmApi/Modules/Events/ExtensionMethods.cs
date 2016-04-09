@@ -59,8 +59,9 @@ namespace AldursLab.WurmApi.Modules.Events
             var lambda = (LambdaExpression)expression;
 
             MemberExpression memberExpression;
-            if (lambda.Body is UnaryExpression) {
-                var unaryExpression = (UnaryExpression)lambda.Body;
+            var body = lambda.Body as UnaryExpression;
+            if (body != null) {
+                var unaryExpression = body;
                 memberExpression = (MemberExpression)unaryExpression.Operand;
             }
             else {

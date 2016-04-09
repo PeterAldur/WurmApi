@@ -10,12 +10,12 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm
         readonly Platform targetPlatform;
 
         internal WurmApiIntegrationFixtureV2 Fixture { get; private set; }
-        internal WurmClientMock ClientMock { get { return Fixture.WurmClientMock; } }
+        internal WurmClientMock ClientMock => Fixture.WurmClientMock;
 
-        public WurmTests() : this(Platform.Windows) 
+        protected WurmTests() : this(Platform.Windows) 
         {}
 
-        public WurmTests(Platform targetPlatform)
+        protected WurmTests(Platform targetPlatform)
         {
             this.targetPlatform = targetPlatform;
         }

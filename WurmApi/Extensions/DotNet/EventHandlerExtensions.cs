@@ -23,10 +23,7 @@ namespace AldursLab.WurmApi.Extensions.DotNet
         public static void SafeInvoke<TEventArgs>(this EventHandler<TEventArgs> handler, object source,
             TEventArgs eventArgs) where TEventArgs : EventArgs
         {
-            if (handler != null)
-            {
-                handler(source, eventArgs);
-            }
+            handler?.Invoke(source, eventArgs);
         }
     }
 }

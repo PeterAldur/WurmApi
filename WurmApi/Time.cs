@@ -45,11 +45,11 @@ namespace AldursLab.WurmApi
             {
                 throw new InvalidOperationException("time provider already set");
             }
-            Time.Get = timeProvider;
+            Get = timeProvider;
         }
 
-        public virtual DateTime LocalNow { get { return DateTime.Now; } }
-        public virtual DateTimeOffset LocalNowOffset { get { return DateTimeOffset.Now; } }
+        public virtual DateTime LocalNow => DateTime.Now;
+        public virtual DateTimeOffset LocalNowOffset => DateTimeOffset.Now;
     }
 
     class StubbableTime : Time

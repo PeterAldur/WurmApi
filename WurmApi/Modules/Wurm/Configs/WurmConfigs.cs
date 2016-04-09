@@ -36,11 +36,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             [NotNull] IWurmApiLogger logger, [NotNull] IPublicEventInvoker publicEventInvoker,
             [NotNull] IInternalEventAggregator eventAggregator, [NotNull] TaskManager taskManager)
         {
-            if (wurmConfigDirectories == null) throw new ArgumentNullException("wurmConfigDirectories");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
-            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
+            if (wurmConfigDirectories == null) throw new ArgumentNullException(nameof(wurmConfigDirectories));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
             this.wurmConfigDirectories = wurmConfigDirectories;
             this.logger = logger;
             this.publicEventInvoker = publicEventInvoker;
@@ -131,20 +131,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             taskHandle.Trigger();
         }
 
-        public IEnumerable<IWurmConfig> All
-        {
-            get
-            {
-                return this.nameToConfigMap.Values.ToArray();
-            }
-        }
+        public IEnumerable<IWurmConfig> All => nameToConfigMap.Values.ToArray();
 
         public IWurmConfig GetConfig([NotNull] string name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
             name = name.Trim().ToUpperInvariant();
             WurmConfig config;
-            if (!this.nameToConfigMap.TryGetValue(name, out config))
+            if (!nameToConfigMap.TryGetValue(name, out config))
             {
                 throw new DataNotFoundException("Config not found for name: " + name);
             }
@@ -165,7 +159,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
                 eventAggregator.Unsubscribe(this);
                 onAnyConfigChanged.Detach();
                 onAvailableConfigsChanged.Detach();
-                foreach (var wurmConfig in this.nameToConfigMap)
+                foreach (var wurmConfig in nameToConfigMap)
                 {
                     wurmConfig.Value.ConfigChanged -= ConfigOnConfigChanged;
                     wurmConfig.Value.Dispose();

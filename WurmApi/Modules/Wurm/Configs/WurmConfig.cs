@@ -30,9 +30,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
         internal WurmConfig(string gameSettingsFullPath, [NotNull] IPublicEventInvoker publicEventMarshaller,
             [NotNull] TaskManager taskManager, IWurmApiLogger logger)
         {
-            if (gameSettingsFullPath == null) throw new ArgumentNullException("gameSettingsFullPath");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
-            this.gameSettingsFileInfo = new FileInfo(gameSettingsFullPath);
+            if (gameSettingsFullPath == null) throw new ArgumentNullException(nameof(gameSettingsFullPath));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
+            gameSettingsFileInfo = new FileInfo(gameSettingsFullPath);
             if (gameSettingsFileInfo.Directory == null)
             {
                 throw new WurmApiException("gameSettingsFileInfo.Directory is null, provided file raw path: "
@@ -45,7 +45,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             onConfigChanged = publicEventMarshaller.Create(() => ConfigChanged.SafeInvoke(this, EventArgs.Empty),
                 WurmApiTuningParams.PublicEventMarshallerDelay);
 
-            this.configReader = new ConfigReader(this);
+            configReader = new ConfigReader(this);
 
             try
             {
@@ -79,18 +79,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             taskHandle.Trigger();
         }
 
-        public string FullConfigFilePath
-        {
-            get { return this.gameSettingsFileInfo.FullName; }
-        }
+        public string FullConfigFilePath => gameSettingsFileInfo.FullName;
 
-        public string ConfigDirectoryFullPath
-        {
-            get
-            {
-                return this.gameSettingsFileInfo.DirectoryName;
-            }
-        }
+        public string ConfigDirectoryFullPath => gameSettingsFileInfo.DirectoryName;
 
         public void Dispose()
         {
@@ -102,139 +93,67 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 
         #region IWurmConfig
 
-        private LogsLocation customTimerSource;
-        private LogsLocation execSource;
-        private LogsLocation keyBindSource;
-        private LogsLocation autoRunSource;
-        private LogSaveMode ircLoggingType;
-        private LogSaveMode otherLoggingType;
-        private LogSaveMode eventLoggingType;
-        private SkillGainRate skillGainRate;
-        private bool? noSkillMessageOnAlignmentChange;
-        private bool? noSkillMessageOnFavorChange;
-        private bool? saveSkillsOnQuit;
-        private bool? timestampMessages;
-        private bool? saveSkillDumpsOnQuit;
+        LogsLocation customTimerSource;
+        LogsLocation execSource;
+        LogsLocation keyBindSource;
+        LogsLocation autoRunSource;
+        LogSaveMode ircLoggingType;
+        LogSaveMode otherLoggingType;
+        LogSaveMode eventLoggingType;
+        SkillGainRate skillGainRate;
+        bool? noSkillMessageOnAlignmentChange;
+        bool? noSkillMessageOnFavorChange;
+        bool? saveSkillsOnQuit;
+        bool? timestampMessages;
+        bool? saveSkillDumpsOnQuit;
 
         public event EventHandler<EventArgs> ConfigChanged;
 
         public string Name { get; private set; }
 
-        public LogsLocation CustomTimerSource
-        {
-            get
-            {
-                return customTimerSource;
-            }
-        }
+        public LogsLocation CustomTimerSource => customTimerSource;
 
-        public LogsLocation ExecSource
-        {
-            get
-            {
-                return execSource;
-            }
-        }
+        public LogsLocation ExecSource => execSource;
 
-        public LogsLocation KeyBindSource
-        {
-            get
-            {
-                return keyBindSource;
-            }
-        }
+        public LogsLocation KeyBindSource => keyBindSource;
 
-        public LogsLocation AutoRunSource
-        {
-            get
-            {
-                return autoRunSource;
-            }
-        }
+        public LogsLocation AutoRunSource => autoRunSource;
 
-        public LogSaveMode IrcLoggingType
-        {
-            get
-            {
-                return ircLoggingType;
-            }
-        }
+        public LogSaveMode IrcLoggingType => ircLoggingType;
 
-        public LogSaveMode OtherLoggingType
-        {
-            get
-            {
-                return otherLoggingType;
-            }
-        }
+        public LogSaveMode OtherLoggingType => otherLoggingType;
 
-        public LogSaveMode EventLoggingType
-        {
-            get
-            {
-                return eventLoggingType;
-            }
-        }
+        public LogSaveMode EventLoggingType => eventLoggingType;
 
-        public SkillGainRate SkillGainRate
-        {
-            get
-            {
-                return skillGainRate;
-            }
-        }
+        public SkillGainRate SkillGainRate => skillGainRate;
 
-        public bool? NoSkillMessageOnAlignmentChange
-        {
-            get
-            {
-                return noSkillMessageOnAlignmentChange;
-            }
-        }
+        public bool? NoSkillMessageOnAlignmentChange => noSkillMessageOnAlignmentChange;
 
-        public bool? NoSkillMessageOnFavorChange
-        {
-            get
-            {
-                return noSkillMessageOnFavorChange;
-            }
-        }
+        public bool? NoSkillMessageOnFavorChange => noSkillMessageOnFavorChange;
 
-        public bool? SaveSkillsOnQuit
-        {
-            get
-            {
-                return saveSkillsOnQuit;
-            }
-        }
+        public bool? SaveSkillsOnQuit => saveSkillsOnQuit;
 
-        public bool? TimestampMessages
-        {
-            get
-            {
-                return timestampMessages;
-            }
-        }
+        public bool? TimestampMessages => timestampMessages;
 
         void Refresh()
         {
             lock (locker)
             {
-                var result = this.configReader.ReadValues();
-                this.customTimerSource = result.CustomTimerSource;
-                this.execSource = result.ExecSource;
-                this.keyBindSource = result.KeyBindSource;
-                this.autoRunSource = result.AutoRunSource;
-                this.ircLoggingType = result.IrcLoggingType;
-                this.otherLoggingType = result.OtherLoggingType;
-                this.eventLoggingType = result.EventLoggingType;
-                this.skillGainRate = result.SkillGainRate;
-                this.noSkillMessageOnAlignmentChange = result.NoSkillMessageOnAlignmentChange;
-                this.noSkillMessageOnFavorChange = result.NoSkillMessageOnFavorChange;
-                this.saveSkillsOnQuit = result.SaveSkillsOnQuit;
-                this.timestampMessages = result.TimestampMessages;
+                var result = configReader.ReadValues();
+                customTimerSource = result.CustomTimerSource;
+                execSource = result.ExecSource;
+                keyBindSource = result.KeyBindSource;
+                autoRunSource = result.AutoRunSource;
+                ircLoggingType = result.IrcLoggingType;
+                otherLoggingType = result.OtherLoggingType;
+                eventLoggingType = result.EventLoggingType;
+                skillGainRate = result.SkillGainRate;
+                noSkillMessageOnAlignmentChange = result.NoSkillMessageOnAlignmentChange;
+                noSkillMessageOnFavorChange = result.NoSkillMessageOnFavorChange;
+                saveSkillsOnQuit = result.SaveSkillsOnQuit;
+                timestampMessages = result.TimestampMessages;
 
-                this.HasBeenRead = true;
+                HasBeenRead = true;
             }
             onConfigChanged.Trigger();
         }

@@ -23,9 +23,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
         public DataBuilderV2(string logFileName, DateTime today, IWurmApiLogger logger)
         {
             if (logFileName == null)
-                throw new ArgumentNullException("logFileName");
+                throw new ArgumentNullException(nameof(logFileName));
             if (logger == null)
-                throw new ArgumentNullException("logger");
+                throw new ArgumentNullException(nameof(logger));
 
             this.logFileName = logFileName;
             this.today = today;
@@ -146,7 +146,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
         {
             if (!records.Any() || records.All(record => record.Day == 0))
             {
-                throw new WurmApiException("Empty results, may indicate malformed file data. File name: " + this.logFileName);
+                throw new WurmApiException("Empty results, may indicate malformed file data. File name: " + logFileName);
             }
 
             var dayToHeuristicsMap = new Dictionary<int, WurmLogMonthlyFileHeuristics>();

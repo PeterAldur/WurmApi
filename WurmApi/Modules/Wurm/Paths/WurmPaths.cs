@@ -8,31 +8,21 @@ namespace AldursLab.WurmApi.Modules.Wurm.Paths
     {
         readonly IWurmApiConfig wurmApiConfig;
 
-        private readonly string configsDirPath;
         private readonly string playersDirPath;
 
         public WurmPaths(IWurmClientInstallDirectory wurmInstallDirectory, [NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
             this.wurmApiConfig = wurmApiConfig;
-            configsDirPath = Path.Combine(wurmInstallDirectory.FullPath, "configs");
+            ConfigsDirFullPath = Path.Combine(wurmInstallDirectory.FullPath, "configs");
             playersDirPath = Path.Combine(wurmInstallDirectory.FullPath, "players");
         }
 
-        public string LogsDirName
-        {
-            get { return wurmApiConfig.WurmUnlimitedMode ? "test_logs" : "logs"; }
-        }
+        public string LogsDirName => wurmApiConfig.WurmUnlimitedMode ? "test_logs" : "logs";
 
-        public string ConfigsDirFullPath
-        {
-            get { return configsDirPath; }
-        }
+        public string ConfigsDirFullPath { get; }
 
-        public string CharactersDirFullPath
-        {
-            get { return playersDirPath; }
-        }
+        public string CharactersDirFullPath => playersDirPath;
 
         public string GetSkillDumpsFullPathForCharacter(CharacterName characterName)
         {

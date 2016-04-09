@@ -63,7 +63,7 @@ namespace AldursLab.WurmApi.PersistentObjects
             }
 
             Persistent<TEntity> obj = null;
-            bool retry = false;
+            bool retry;
             int currentRetry = 0;
             int retryMax = 100;
             do
@@ -102,12 +102,12 @@ namespace AldursLab.WurmApi.PersistentObjects
                 ISerializationStrategy serializationStrategy,
                 IObjectDeserializationErrorHandlingStrategy objectDeserializationErrorHandlingStrategy)
             {
-                if (objectId == null) throw new ArgumentNullException("objectId");
-                if (collectionId == null) throw new ArgumentNullException("collectionId");
-                if (persistenceStrategy == null) throw new ArgumentNullException("persistenceStrategy");
-                if (serializationStrategy == null) throw new ArgumentNullException("serializationStrategy");
+                if (objectId == null) throw new ArgumentNullException(nameof(objectId));
+                if (collectionId == null) throw new ArgumentNullException(nameof(collectionId));
+                if (persistenceStrategy == null) throw new ArgumentNullException(nameof(persistenceStrategy));
+                if (serializationStrategy == null) throw new ArgumentNullException(nameof(serializationStrategy));
                 if (objectDeserializationErrorHandlingStrategy == null)
-                    throw new ArgumentNullException("objectDeserializationErrorHandlingStrategy");
+                    throw new ArgumentNullException(nameof(objectDeserializationErrorHandlingStrategy));
                 this.objectId = objectId;
                 this.collectionId = collectionId;
                 this.persistenceStrategy = persistenceStrategy;

@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AldursLab.WurmApi.Extensions;
 using AldursLab.WurmApi.Extensions.DotNet;
 using JetBrains.Annotations;
 
@@ -14,14 +13,14 @@ namespace AldursLab.WurmApi.Modules.Events.Public
         readonly IWurmApiEventMarshaller eventMarshaller;
         readonly IWurmApiLogger logger;
         readonly Task schedulingTask;
-        volatile bool stop = false;
+        volatile bool stop;
 
         readonly ConcurrentDictionary<PublicEvent, EventManager> events = new ConcurrentDictionary<PublicEvent, EventManager>(); 
 
         public PublicEventInvoker([NotNull] IWurmApiEventMarshaller eventMarshaller, [NotNull] IWurmApiLogger logger)
         {
-            if (eventMarshaller == null) throw new ArgumentNullException("eventMarshaller");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (eventMarshaller == null) throw new ArgumentNullException(nameof(eventMarshaller));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.eventMarshaller = eventMarshaller;
             this.logger = logger;
 
@@ -35,7 +34,7 @@ namespace AldursLab.WurmApi.Modules.Events.Public
 
         public PublicEvent Create([NotNull] Action action, TimeSpan invocationMinDelay)
         {
-            if (action == null) throw new ArgumentNullException("action");
+            if (action == null) throw new ArgumentNullException(nameof(action));
             var e = new PublicEventImpl(this);
             events.TryAdd(e, new EventManager(e, invocationMinDelay, action));
             return e;
@@ -62,8 +61,7 @@ namespace AldursLab.WurmApi.Modules.Events.Public
             {
                 try
                 {
-                    if (handler != null)
-                        handler(source, args);
+                    handler?.Invoke(source, args);
                 }
                 catch (Exception exception)
                 {
@@ -128,19 +126,19 @@ namespace AldursLab.WurmApi.Modules.Events.Public
         {
             public EventManager([NotNull] PublicEvent publicEvent, TimeSpan betweenDelay, [NotNull] Action action)
             {
-                if (publicEvent == null) throw new ArgumentNullException("publicEvent");
-                if (action == null) throw new ArgumentNullException("action");
+                if (publicEvent == null) throw new ArgumentNullException(nameof(publicEvent));
+                if (action == null) throw new ArgumentNullException(nameof(action));
                 PublicEvent = publicEvent;
                 BetweenDelay = betweenDelay;
                 Action = action;
             }
 
             public PublicEvent PublicEvent { get; private set; }
-            public TimeSpan BetweenDelay { get; private set; }
-            public Action Action { get; private set; }
+            public TimeSpan BetweenDelay { get; }
+            public Action Action { get; }
 
-            public volatile int Pending = 0;
-            private DateTime lastInvoke;
+            public volatile int Pending;
+            DateTime lastInvoke;
 
             public DateTime LastInvoke
             {
@@ -162,14 +160,8 @@ namespace AldursLab.WurmApi.Modules.Events.Public
                 }
             }
 
-            public bool ShouldInvoke
-            {
-                get
-                {
-                    return Pending == 1
-                           && lastInvoke < DateTime.Now - BetweenDelay;
-                }
-            }
+            public bool ShouldInvoke => Pending == 1
+                                        && lastInvoke < DateTime.Now - BetweenDelay;
         }
 
         public string GetEventInfoString(PublicEventImpl publicEventImpl)

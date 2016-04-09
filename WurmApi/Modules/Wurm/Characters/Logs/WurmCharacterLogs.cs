@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Logs
@@ -10,9 +8,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Logs
     class WurmCharacterLogs : IWurmCharacterLogs
     {
         readonly IWurmCharacter character;
-        readonly IWurmServerGroups serverGroups;
         readonly IWurmLogsHistory logsHistory;
-        readonly IWurmServers wurmServers;
         readonly IWurmApiLogger logger;
 
         public WurmCharacterLogs(
@@ -22,15 +18,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Logs
             [NotNull] IWurmServers wurmServers, 
             [NotNull] IWurmApiLogger logger)
         {
-            if (character == null) throw new ArgumentNullException("character");
-            if (serverGroups == null) throw new ArgumentNullException("serverGroups");
-            if (logsHistory == null) throw new ArgumentNullException("logsHistory");
-            if (wurmServers == null) throw new ArgumentNullException("wurmServers");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (character == null) throw new ArgumentNullException(nameof(character));
+            if (serverGroups == null) throw new ArgumentNullException(nameof(serverGroups));
+            if (logsHistory == null) throw new ArgumentNullException(nameof(logsHistory));
+            if (wurmServers == null) throw new ArgumentNullException(nameof(wurmServers));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.character = character;
-            this.serverGroups = serverGroups;
             this.logsHistory = logsHistory;
-            this.wurmServers = wurmServers;
             this.logger = logger;
         }
 

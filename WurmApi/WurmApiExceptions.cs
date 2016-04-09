@@ -123,7 +123,7 @@ namespace AldursLab.WurmApi
         public HttpWebRequestFailedException(string message, Exception inner, IEnumerable<Exception> previousExceptions)
             : base(message, inner)
         {
-            PreviousErrors = previousExceptions != null ? previousExceptions.ToArray() : new Exception[0];
+            PreviousErrors = previousExceptions?.ToArray() ?? new Exception[0];
         }
 
         protected HttpWebRequestFailedException(

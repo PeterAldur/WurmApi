@@ -123,10 +123,7 @@ namespace AldursLab.WurmApi.Utility
         /// <summary>
         /// Something happened since last reset.
         /// </summary>
-        public bool AnyChange
-        {
-            get { return Changed || Created || Deleted || Renamed; }
-        }
+        public bool AnyChange => Changed || Created || Deleted || Renamed;
 
         /// <summary>
         /// Attempt to reset the counters. If false is returned, 
@@ -148,13 +145,7 @@ namespace AldursLab.WurmApi.Utility
         /// Obtain current ChangeToken, that can be used to prevent "lost" changes.
         /// Should be obtained before any reads are done.
         /// </summary>
-        public int ChangeToken
-        {
-            get
-            {
-                return _changeToken;
-            }
-        }
+        public int ChangeToken => _changeToken;
 
         public void Dispose()
         {

@@ -20,9 +20,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             LogFileStreamReaderFactory streamReaderFactory,
             LogFileParser logFileParser)
         {
-            if (logFileInfo == null) throw new ArgumentNullException("logFileInfo");
-            if (streamReaderFactory == null) throw new ArgumentNullException("streamReaderFactory");
-            if (logFileParser == null) throw new ArgumentNullException("logFileParser");
+            if (logFileInfo == null) throw new ArgumentNullException(nameof(logFileInfo));
+            if (streamReaderFactory == null) throw new ArgumentNullException(nameof(streamReaderFactory));
+            if (logFileParser == null) throw new ArgumentNullException(nameof(logFileParser));
             this.logFileInfo = logFileInfo;
             this.streamReaderFactory = streamReaderFactory;
             this.logFileParser = logFileParser;
@@ -31,7 +31,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             lastFileSize = fileInfo.Length;
         }
 
-        public LogFileInfo LogFileInfo { get { return logFileInfo; }}
+        public LogFileInfo LogFileInfo => logFileInfo;
 
         public ICollection<LogEntry> GetNewEvents()
         {
@@ -50,7 +50,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
                 using (var reader = streamReaderFactory.Create(logFileInfo.FullPath))
                 {
                     reader.Seek(lastFileSize);
-                    string line = null;
+                    string line;
                     while ((line = reader.TryReadNextLine()) != null)
                     {
                         rawLogLines.Add(line);

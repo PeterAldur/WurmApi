@@ -33,12 +33,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
         internal WurmCharacterLogFiles([NotNull] CharacterName characterName, [NotNull] string fullDirPathToCharacterLogsDir, [NotNull] IWurmApiLogger logger, [NotNull] LogFileInfoFactory logFileInfoFactory, [NotNull] IInternalEventInvoker internalEventInvoker,
             [NotNull] TaskManager taskManager)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
-            if (fullDirPathToCharacterLogsDir == null) throw new ArgumentNullException("fullDirPathToCharacterLogsDir");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (logFileInfoFactory == null) throw new ArgumentNullException("logFileInfoFactory");
-            if (internalEventInvoker == null) throw new ArgumentNullException("internalEventInvoker");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
+            if (fullDirPathToCharacterLogsDir == null) throw new ArgumentNullException(nameof(fullDirPathToCharacterLogsDir));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (logFileInfoFactory == null) throw new ArgumentNullException(nameof(logFileInfoFactory));
+            if (internalEventInvoker == null) throw new ArgumentNullException(nameof(internalEventInvoker));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
             this.logger = logger;
             this.logFileInfoFactory = logFileInfoFactory;
             this.taskManager = taskManager;
@@ -76,7 +76,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         public CharacterName CharacterName { get; private set; }
         public string FullDirPathToCharacterLogsDir { get; private set; }
-        public DateTime OldestLogFileDate { get { return oldestLogFileDate.Value; }}
+        public DateTime OldestLogFileDate => oldestLogFileDate.Value;
 
         public bool HasBeenInitiallyRefreshed { get; private set; }
 

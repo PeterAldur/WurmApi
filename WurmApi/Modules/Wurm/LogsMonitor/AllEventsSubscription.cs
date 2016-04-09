@@ -5,12 +5,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
 {
     sealed class AllEventsSubscription : IEquatable<AllEventsSubscription>
     {
-        public EventHandler<LogsMonitorEventArgs> EventHandler { get; private set; }
-        public bool InternalSubscription { get; private set; }
+        public EventHandler<LogsMonitorEventArgs> EventHandler { get; }
+        public bool InternalSubscription { get; }
 
         public AllEventsSubscription([NotNull] EventHandler<LogsMonitorEventArgs> eventHandler, bool internalSubscription)
         {
-            if (eventHandler == null) throw new ArgumentNullException("eventHandler");
+            if (eventHandler == null) throw new ArgumentNullException(nameof(eventHandler));
             EventHandler = eventHandler;
             InternalSubscription = internalSubscription;
         }
@@ -26,7 +26,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((AllEventsSubscription) obj);
         }
 

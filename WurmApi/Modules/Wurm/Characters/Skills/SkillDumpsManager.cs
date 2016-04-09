@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
@@ -27,8 +26,8 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
 
         public SkillDumpsManager([NotNull] IWurmCharacter character, [NotNull] IWurmPaths wurmPaths, IWurmApiLogger logger)
         {
-            if (character == null) throw new ArgumentNullException("character");
-            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
+            if (character == null) throw new ArgumentNullException(nameof(character));
+            if (wurmPaths == null) throw new ArgumentNullException(nameof(wurmPaths));
             this.character = character;
             this.logger = logger;
 

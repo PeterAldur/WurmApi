@@ -66,10 +66,8 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
             {
                 CreateCustomLogFile(file.Name, "Logging started " + now.ToString("yyyy-MM-dd") + "\r\n");
             }
-            string line = string.Format("[{0}] {1}{2}",
-                now.ToString("HH:mm:ss"),
-                source != null ? ("<" + source + "> ") : string.Empty,
-                content);
+            string line =
+                $"[{now.ToString("HH:mm:ss")}] {(source != null ? "<" + source + "> " : string.Empty)}{content}";
             File.AppendAllLines(file.FullName, new[]{ line });
         }
 
@@ -82,14 +80,14 @@ namespace AldursLab.WurmApi.Tests.Builders.WurmClient
         {
             var now = Time.Get.LocalNow;
             var datePart = LogSaveMode == LogSaveMode.Daily ? now.ToString("yyyy-MM-dd") : now.ToString("yyyy-mm");
-            return string.Format("_Event.{0}.txt", datePart);
+            return $"_Event.{datePart}.txt";
         }
 
         string CreateCurrentSkillsLogFileName()
         {
             var now = Time.Get.LocalNow;
             var datePart = LogSaveMode == LogSaveMode.Daily ? now.ToString("yyyy-MM-dd") : now.ToString("yyyy-mm");
-            return string.Format("_Skills.{0}.txt", datePart);
+            return $"_Skills.{datePart}.txt";
         }
     }
 }

@@ -35,7 +35,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         volatile bool stop = false;
         readonly object locker = new object();
 
-        TaskHandle taskHandle;
+        readonly TaskHandle taskHandle;
 
         public WurmLogsMonitor([NotNull] IWurmLogFiles wurmLogFiles, [NotNull] IWurmApiLogger logger,
             [NotNull] IPublicEventInvoker publicEventInvoker, [NotNull] IInternalEventAggregator internalEventAggregator,
@@ -43,14 +43,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             [NotNull] InternalEventInvoker internalEventInvoker, [NotNull] TaskManager taskManager,
             [NotNull] LogFileStreamReaderFactory logFileStreamReaderFactory)
         {
-            if (wurmLogFiles == null) throw new ArgumentNullException("wurmLogFiles");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
-            if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
-            if (internalEventInvoker == null) throw new ArgumentNullException("internalEventInvoker");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
-            if (logFileStreamReaderFactory == null) throw new ArgumentNullException("logFileStreamReaderFactory");
+            if (wurmLogFiles == null) throw new ArgumentNullException(nameof(wurmLogFiles));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
+            if (wurmCharacterDirectories == null) throw new ArgumentNullException(nameof(wurmCharacterDirectories));
+            if (internalEventInvoker == null) throw new ArgumentNullException(nameof(internalEventInvoker));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
+            if (logFileStreamReaderFactory == null) throw new ArgumentNullException(nameof(logFileStreamReaderFactory));
             this.wurmLogFiles = wurmLogFiles;
             this.logger = logger;
             this.publicEventInvoker = publicEventInvoker;

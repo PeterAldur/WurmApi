@@ -112,11 +112,11 @@ namespace AldursLab.WurmApi.Tests.Tests
             var dateLowerClone = new WurmDateTime(1000, WurmStarfall.Diamond, 3, WurmDay.Ant, 12, 0, 0);
             Assert.True(dateLower.Equals(dateLowerClone));
             Assert.True(dateLower.Equals((object)dateLowerClone));
-            Assert.True(((object)dateLower).Equals((object)dateLowerClone));
-            Assert.False(((object)dateLower).Equals(null));
+            Assert.True(((object)dateLower).Equals(dateLowerClone));
+            Assert.False(dateLower.Equals(null));
             // ReSharper disable once SuspiciousTypeConversion.Global
-            Assert.False(((object)dateLower).Equals(new DateTime()));
-            Assert.False((dateLower).Equals(null));
+            Assert.False(dateLower.Equals(new DateTime()));
+            Assert.False(dateLower.Equals(null));
 #pragma warning restore 1718
         }
 

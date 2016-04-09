@@ -9,7 +9,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
 
         public InternalEventImpl([NotNull] InternalEventInvoker invoker)
         {
-            if (invoker == null) throw new ArgumentNullException("invoker");
+            if (invoker == null) throw new ArgumentNullException(nameof(invoker));
             this.invoker = invoker;
         }
 

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AldursLab.WurmApi.PersistentObjects.SqLite.Model;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi.PersistentObjects.SqLite.Migrations

@@ -14,9 +14,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         public ScanJobExecutor([NotNull] LogsScannerFactory logsScannerFactory,
             [NotNull] PersistentCollectionsLibrary persistentLibrary, [NotNull] IWurmApiLogger logger)
         {
-            if (logsScannerFactory == null) throw new ArgumentNullException("logsScannerFactory");
-            if (persistentLibrary == null) throw new ArgumentNullException("persistentLibrary");
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logsScannerFactory == null) throw new ArgumentNullException(nameof(logsScannerFactory));
+            if (persistentLibrary == null) throw new ArgumentNullException(nameof(persistentLibrary));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logsScannerFactory = logsScannerFactory;
             this.persistentLibrary = persistentLibrary;
             this.logger = logger;
@@ -26,7 +26,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
         {
             try
             {
-                var scanner = this.logsScannerFactory.Create(logSearchParameters, jobCancellationManager);
+                var scanner = logsScannerFactory.Create(logSearchParameters, jobCancellationManager);
                 var results = scanner.Scan();
 
                 try

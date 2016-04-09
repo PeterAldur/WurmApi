@@ -57,7 +57,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         public virtual void Subscribe(object subscriber) 
         {
             if (subscriber == null) {
-                throw new ArgumentNullException("subscriber");
+                throw new ArgumentNullException(nameof(subscriber));
             }
             lock(handlers) {
                 if (handlers.Any(x => x.Matches(subscriber))) {
@@ -75,7 +75,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         public virtual void Unsubscribe(object subscriber) 
         {
             if (subscriber == null) {
-                throw new ArgumentNullException("subscriber");
+                throw new ArgumentNullException(nameof(subscriber));
             }
             lock(handlers) {
                 var found = handlers.FirstOrDefault(x => x.Matches(subscriber));
@@ -96,7 +96,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         public virtual void Send(Message message) 
         {
             if (message == null) {
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
             }
             Send(message, PublicationThreadMarshaller);
         }
@@ -109,10 +109,10 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
         public virtual void Send(Message message, Action<System.Action> marshal)
         {
             if (message == null){
-                throw new ArgumentNullException("message");
+                throw new ArgumentNullException(nameof(message));
             }
             if (marshal == null) {
-                throw new ArgumentNullException("marshal");
+                throw new ArgumentNullException(nameof(marshal));
             }
 
             Handler[] toNotify;
@@ -139,9 +139,7 @@ namespace AldursLab.WurmApi.Modules.Events.Internal
             readonly WeakReference reference;
             readonly Dictionary<Type, MethodInfo> supportedHandlers = new Dictionary<Type, MethodInfo>();
 
-            public bool IsDead {
-                get { return reference.Target == null; }
-            }
+            public bool IsDead => reference.Target == null;
 
             public Handler(object handler) {
                 reference = new WeakReference(handler);

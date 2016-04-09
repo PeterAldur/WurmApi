@@ -2,7 +2,7 @@
 {
     public static class TempDirectoriesFactory
     {
-        readonly static TempDirectoriesManager Manager = new TempDirectoriesManager();
+        static readonly TempDirectoriesManager Manager = new TempDirectoriesManager();
 
         public static DirectoryHandle CreateEmpty()
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AldursLab.WurmApi.PersistentObjects.SqLite.Model
+﻿namespace AldursLab.WurmApi.PersistentObjects.SqLite.Model
 {
     public class PersistentData
     {

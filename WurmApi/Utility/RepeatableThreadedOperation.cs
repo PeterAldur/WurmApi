@@ -28,7 +28,7 @@ namespace AldursLab.WurmApi.Utility
         {
             this.eventMarshaller = eventMarshaller;
 
-            if (job == null) throw new ArgumentNullException("job");
+            if (job == null) throw new ArgumentNullException(nameof(job));
             task = new Task(() =>
             {
                 while (true)
@@ -72,21 +72,12 @@ namespace AldursLab.WurmApi.Utility
         /// <summary>
         /// Indicates, if operation had been successfully executed at least once.
         /// </summary>
-        public bool OperationCompletedAtLeastOnce
-        {
-            get { return operationCompletedAtLeastOnceAwaiter.Task.IsCompleted; }
-        }
+        public bool OperationCompletedAtLeastOnce => operationCompletedAtLeastOnceAwaiter.Task.IsCompleted;
 
         /// <summary>
         /// Task, that transitions to completion, when operation has been successfully executed for the first time.
         /// </summary>
-        public Task OperationCompletedAtLeastOnceAwaiter
-        {
-            get
-            {
-                return operationCompletedAtLeastOnceAwaiter.Task;
-            }
-        }
+        public Task OperationCompletedAtLeastOnceAwaiter => operationCompletedAtLeastOnceAwaiter.Task;
 
         /// <summary>
         /// Synchronously waits for when operation is successfully executed for the first time

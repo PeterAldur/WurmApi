@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -12,10 +10,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.Characters.Logs
     {
         StubbableTime.StubScope timeScope;
 
-        public IWurmCharacterLogs TestguyLogs
-        {
-            get { return Fixture.WurmApiManager.Characters.Get("Testguy").Logs; }
-        }
+        public IWurmCharacterLogs TestguyLogs => Fixture.WurmApiManager.Characters.Get("Testguy").Logs;
 
         [SetUp]
         public void Setup()

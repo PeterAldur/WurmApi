@@ -7,7 +7,6 @@ using AldursLab.WurmApi.Modules.Wurm.LogFiles;
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.Tests.TempDirs;
-using AldursLab.WurmApi.Utility;
 using NUnit.Framework;
 using Telerik.JustMock;
 

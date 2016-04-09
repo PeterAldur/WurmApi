@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using JetBrains.Annotations;
 
 namespace AldursLab.WurmApi
@@ -12,8 +11,8 @@ namespace AldursLab.WurmApi
         public LogEntry(DateTime timestamp, [NotNull] string source, [NotNull] string content,
             [CanBeNull] string pmConversationRecipient = null)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (content == null) throw new ArgumentNullException("content");
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (content == null) throw new ArgumentNullException(nameof(content));
             Timestamp = timestamp;
             Source = source;
             Content = content;

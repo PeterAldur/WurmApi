@@ -14,15 +14,9 @@ namespace AldursLab.WurmApi
             this.logSavingType = logSavingType;
         }
 
-        public DateTime DateTime
-        {
-            get { return dateTime; }
-        }
+        public DateTime DateTime => dateTime;
 
-        public LogSavingType LogSavingType
-        {
-            get { return logSavingType; }
-        }
+        public LogSavingType LogSavingType => logSavingType;
 
         public bool Equals(LogFileDate other)
         {

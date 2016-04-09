@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using AldursLab.WurmApi.Extensions.DotNet.Collections.Generic;
 using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Events.Internal.Messages;
@@ -34,13 +33,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
             [NotNull] IInternalEventAggregator eventAggregator, [NotNull] IInternalEventInvoker internalEventInvoker,
             [NotNull] TaskManager taskManager, [NotNull] IWurmPaths wurmPaths)
         {
-            if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (wurmLogDefinitions == null) throw new ArgumentNullException("wurmLogDefinitions");
-            if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
-            if (internalEventInvoker == null) throw new ArgumentNullException("internalEventInvoker");
-            if (taskManager == null) throw new ArgumentNullException("taskManager");
-            if (wurmPaths == null) throw new ArgumentNullException("wurmPaths");
+            if (wurmCharacterDirectories == null) throw new ArgumentNullException(nameof(wurmCharacterDirectories));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (wurmLogDefinitions == null) throw new ArgumentNullException(nameof(wurmLogDefinitions));
+            if (eventAggregator == null) throw new ArgumentNullException(nameof(eventAggregator));
+            if (internalEventInvoker == null) throw new ArgumentNullException(nameof(internalEventInvoker));
+            if (taskManager == null) throw new ArgumentNullException(nameof(taskManager));
+            if (wurmPaths == null) throw new ArgumentNullException(nameof(wurmPaths));
             this.wurmCharacterDirectories = wurmCharacterDirectories;
             this.logger = logger;
             this.wurmLogDefinitions = wurmLogDefinitions;
@@ -73,7 +72,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         public IWurmCharacterLogFiles GetForCharacter([NotNull] CharacterName characterName)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
 
             WurmCharacterLogFiles manager;
             characterNormalizedNameToWatcherMap.TryGetValue(characterName, out manager);
@@ -87,7 +86,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogFiles
 
         void Refresh()
         {
-            List<Exception> errors = null;
+            List<Exception> errors;
             lock (locker)
             {
                 var allDirNames = wurmCharacterDirectories.AllDirectoryNamesNormalized.ToArray();

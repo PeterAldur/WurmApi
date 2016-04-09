@@ -29,11 +29,11 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             [NotNull] IWurmCharacterLogFiles wurmCharacterLogFiles, 
             [NotNull] IInternalEventAggregator internalEventAggregator)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (singleFileMonitorFactory == null) throw new ArgumentNullException("singleFileMonitorFactory");
-            if (wurmCharacterLogFiles == null) throw new ArgumentNullException("wurmCharacterLogFiles");
-            if (internalEventAggregator == null) throw new ArgumentNullException("internalEventAggregator");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (singleFileMonitorFactory == null) throw new ArgumentNullException(nameof(singleFileMonitorFactory));
+            if (wurmCharacterLogFiles == null) throw new ArgumentNullException(nameof(wurmCharacterLogFiles));
+            if (internalEventAggregator == null) throw new ArgumentNullException(nameof(internalEventAggregator));
             this.characterName = characterName;
             this.logger = logger;
             this.singleFileMonitorFactory = singleFileMonitorFactory;
@@ -131,14 +131,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
         {
             if (file.LogFileDate.LogSavingType == LogSavingType.Daily)
             {
-                return (file.LogFileDate.DateTime.Year == localNow.Year
-                        && file.LogFileDate.DateTime.Month == localNow.Month
-                        && file.LogFileDate.DateTime.Day == localNow.Day);
+                return file.LogFileDate.DateTime.Year == localNow.Year
+                       && file.LogFileDate.DateTime.Month == localNow.Month
+                       && file.LogFileDate.DateTime.Day == localNow.Day;
             }
             else if (file.LogFileDate.LogSavingType == LogSavingType.Monthly)
             {
-                return (file.LogFileDate.DateTime.Year == localNow.Year
-                        && file.LogFileDate.DateTime.Month == localNow.Month);
+                return file.LogFileDate.DateTime.Year == localNow.Year
+                       && file.LogFileDate.DateTime.Month == localNow.Month;
             }
             else
             {

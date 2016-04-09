@@ -11,14 +11,14 @@ namespace AldursLab.WurmApi.JobRunning
     {
         readonly IWurmApiLogger logger;
 
-        Task runner;
+        readonly Task runner;
         volatile bool stop = false;
         readonly HashSet<TaskHandle> tasks = new HashSet<TaskHandle>();
         readonly object locker = new object();
 
         public TaskManager([NotNull] IWurmApiLogger logger)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logger = logger;
             CycleDelayMillis = 100;
             runner = new Task(JobRunner, TaskCreationOptions.LongRunning);
@@ -83,60 +83,6 @@ namespace AldursLab.WurmApi.JobRunning
         ~TaskManager()
         {
             stop = true;
-        }
-    }
-
-    class TaskHandle
-    {
-        readonly Action action;
-        DateTimeOffset lastInvoke = DateTimeOffset.MinValue;
-        int triggered;
-        DateTimeOffset lastError = DateTimeOffset.MinValue;
-
-        static readonly TimeSpan ErrorMinimumRetryDelay = TimeSpan.FromMilliseconds(500);
-
-        public TaskHandle([NotNull] Action action, [NotNull] string description, TimeSpan? minimumDelay = null)
-        {
-            if (action == null) throw new ArgumentNullException("action");
-            if (description == null) throw new ArgumentNullException("description");
-            this.action = action;
-            MinimumDelay = minimumDelay.HasValue ? MinimumDelay : TimeSpan.Zero;
-            Description = description;
-        }
-
-        internal void TryExecute()
-        {
-            var now = Time.Get.LocalNowOffset;
-            if (triggered == 1 && lastInvoke <= now - MinimumDelay && lastError <= now - ErrorMinimumRetryDelay)
-            {
-                Interlocked.Exchange(ref triggered, 0);
-                try
-                {
-                    action();
-                    lastInvoke = now;
-                }
-                catch (Exception)
-                {
-                    // if action failed, retry on next run
-                    Interlocked.Exchange(ref triggered, 1);
-                    lastError = Time.Get.LocalNowOffset;
-                    throw;
-                }
-            }
-        }
-
-        public TimeSpan MinimumDelay { get; private set; }
-        public string Description { get; private set; }
-
-        public void Trigger()
-        {
-            Interlocked.Exchange(ref triggered, 1);
-        }
-
-        public void SetErrorAndRetrigger()
-        {
-            lastError = Time.Get.LocalNowOffset;
-            Trigger();
         }
     }
 }

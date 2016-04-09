@@ -12,7 +12,6 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
     class LogsMonitorEngineManager : IDisposable
     {
         readonly CharacterName characterName;
-        readonly CharacterLogsMonitorEngineFactory characterLogsMonitorEngineFactory;
         readonly IPublicEventInvoker publicEventInvoker;
         readonly IWurmApiLogger logger;
         readonly IInternalEventInvoker internalEventInvoker;
@@ -32,13 +31,12 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             [NotNull] IWurmApiLogger logger,
             [NotNull] IInternalEventInvoker internalEventInvoker)
         {
-            if (characterName == null) throw new ArgumentNullException("characterName");
-            if (characterLogsMonitorEngineFactory == null) throw new ArgumentNullException("characterLogsMonitorEngineFactory");
-            if (publicEventInvoker == null) throw new ArgumentNullException("publicEventInvoker");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (internalEventInvoker == null) throw new ArgumentNullException("internalEventInvoker");
+            if (characterName == null) throw new ArgumentNullException(nameof(characterName));
+            if (characterLogsMonitorEngineFactory == null) throw new ArgumentNullException(nameof(characterLogsMonitorEngineFactory));
+            if (publicEventInvoker == null) throw new ArgumentNullException(nameof(publicEventInvoker));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (internalEventInvoker == null) throw new ArgumentNullException(nameof(internalEventInvoker));
             this.characterName = characterName;
-            this.characterLogsMonitorEngineFactory = characterLogsMonitorEngineFactory;
             this.publicEventInvoker = publicEventInvoker;
             this.logger = logger;
             this.internalEventInvoker = internalEventInvoker;
@@ -46,7 +44,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             engine = characterLogsMonitorEngineFactory.Create(characterName);
         }
 
-        public CharacterName CharacterName { get { return characterName; } }
+        public CharacterName CharacterName => characterName;
 
         public void AddSubscription(LogType logType, EventHandler<LogsMonitorEventArgs> eventHandler)
         {
@@ -256,10 +254,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsMonitor
             }
         }
 
-        bool AnyLocalSubscriptions
-        {
-            get { return subscriptions.Count + pmSubscriptions.Count > 0; }
-        }
+        bool AnyLocalSubscriptions => subscriptions.Count + pmSubscriptions.Count > 0;
 
         public void Dispose()
         {

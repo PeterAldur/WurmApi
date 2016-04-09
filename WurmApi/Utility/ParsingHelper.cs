@@ -162,9 +162,7 @@ namespace AldursLab.WurmApi.Utility
         /// <returns></returns>
         public static string TryParseContentFromLogLine(string line)
         {
-            Match match;
-
-            match = Regex.Match(line, @"^\[\d\d\:\d\d\:\d\d\] <.+> (.+)", RegexOptions.Compiled | RegexOptions.Singleline);
+            var match = Regex.Match(line, @"^\[\d\d\:\d\d\:\d\d\] <.+> (.+)", RegexOptions.Compiled | RegexOptions.Singleline);
             if (match.Success)
             {
                 return match.Groups[1].Value;

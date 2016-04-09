@@ -4,7 +4,7 @@ namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogDefinitions
 {
     class WurmLogDefinitionsTests : WurmTests
     {
-        IWurmLogDefinitions System { get { return Fixture.WurmApiManager.LogDefinitions; } }
+        IWurmLogDefinitions System => Fixture.WurmApiManager.LogDefinitions;
 
         [Test]
         public void RecognizesTypes()

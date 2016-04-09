@@ -8,15 +8,15 @@ namespace AldursLab.WurmApi
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException("prefix");
+                throw new ArgumentNullException(nameof(prefix));
             }
             if (friendlyName == null)
             {
-                throw new ArgumentNullException("friendlyName");
+                throw new ArgumentNullException(nameof(friendlyName));
             }
-            this.LogType = logType;
-            this.LogPrefix = prefix;
-            this.FriendlyName = friendlyName;
+            LogType = logType;
+            LogPrefix = prefix;
+            FriendlyName = friendlyName;
         }
         public LogType LogType { get; private set; }
         public string LogPrefix { get; private set; }

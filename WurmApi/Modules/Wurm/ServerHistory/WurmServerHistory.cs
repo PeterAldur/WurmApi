@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AldursLab.WurmApi.JobRunning;
@@ -21,7 +19,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         readonly IWurmServerGroups wurmServerGroups;
         readonly IWurmApiConfig wurmApiConfig;
         readonly QueuedJobsSyncRunner<object, ServerName> runner;
-        JobExecutor jobExecutor;
+        readonly JobExecutor jobExecutor;
 
         public WurmServerHistory(
             [NotNull] string dataDirectoryFullPath, 

@@ -23,16 +23,16 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory
             IWurmApiLogger logger, [NotNull] IWurmApiConfig wurmApiConfig)
         {
             if (logFileParserFactory == null)
-                throw new ArgumentNullException("logFileParserFactory");
+                throw new ArgumentNullException(nameof(logFileParserFactory));
             if (streamReaderFactory == null)
-                throw new ArgumentNullException("streamReaderFactory");
+                throw new ArgumentNullException(nameof(streamReaderFactory));
             if (heuristics == null)
-                throw new ArgumentNullException("heuristics");
+                throw new ArgumentNullException(nameof(heuristics));
             if (wurmLogFiles == null)
-                throw new ArgumentNullException("wurmLogFiles");
+                throw new ArgumentNullException(nameof(wurmLogFiles));
             if (logger == null)
-                throw new ArgumentNullException("logger");
-            if (wurmApiConfig == null) throw new ArgumentNullException("wurmApiConfig");
+                throw new ArgumentNullException(nameof(logger));
+            if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
             this.logFileParserFactory = logFileParserFactory;
             this.streamReaderFactory = streamReaderFactory;
             this.heuristics = heuristics;

@@ -14,19 +14,10 @@ namespace AldursLab.WurmApi.Modules.Wurm.Characters.Skills
             return null;
         }
 
-        public override DateTime Stamp
-        {
-            get { return DateTime.MinValue; }
-        }
+        public override DateTime Stamp => DateTime.MinValue;
 
-        public override IEnumerable<SkillInfo> All
-        {
-            get { return new SkillInfo[0]; }
-        }
+        public override IEnumerable<SkillInfo> All => new SkillInfo[0];
 
-        public override bool IsNull
-        {
-            get { return true; }
-        }
+        public override bool IsNull => true;
     }
 }

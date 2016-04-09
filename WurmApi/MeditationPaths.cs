@@ -1,33 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace AldursLab.WurmApi
 {
     public static class MeditationPaths
     {
         // knowledge, insanity, power, love, hate
-        static string[] Level0 = { "Uninitiated" };
-        static string[] Level1 = { "Initiate" };
-        static string[] Level2 = { "Eager", "Disturbed", "Gatherer", "Nice", "Ridiculous" };
-        static string[] Level3 = { "Explorer", "Crazed", "Greedy", "Gentle", "Envious" };
-        static string[] Level4 = { "Sheetfolder", "Deranged", "Strong", "Warm", "Hateful" };
-        static string[] Level5 = { "Desertmind", "Sicko", "Released", "Goodhearted", "Finger" };
-        static string[] Level6 = { "Observer", "Mental", "Unafraid", "Giving", "Sheep" };
-        static string[] Level7 = { "Bookkeeper", "Psycho", "Brave", "Rock", "Snake" };
-        static string[] Level8 = { "Mud-dweller", "Beast", "Performer", "Splendid", "Shark" };
-        static string[] Level9 = { "Thought Eater", "Maniac", "Liberator", "Protector", "Infection" };
-        static string[] Level10 = { "Crooked", "Drooling", "Force", "Respectful", "Swarm" };
-        static string[] Level11 = { "Enlightened", "Gone", "Vibrant Light", "Saint", "Free" };
-        static string[] Level12 = { "12th Hierophant", "12th Eidolon", "12th Sovereign", "12th Deva", "12th Harbinger" };
-        static string[] Level13 = { "13th Hierophant", "13th Eidolon", "13th Sovereign", "13th Deva", "13th Harbinger" };
-        static string[] Level14 = { "14th Hierophant", "14th Eidolon", "14th Sovereign", "14th Deva", "14th Harbinger" };
-        static string[] Level15 = { "15th Hierophant", "15th Eidolon", "15th Sovereign", "15th Deva", "15th Harbinger" };
-        static string[] Level16 = { "16th Hierophant", "16th Eidolon", "16th Sovereign", "16th Deva", "16th Harbinger" };
+        static readonly string[] Level0 = { "Uninitiated" };
+        static readonly string[] Level1 = { "Initiate" };
+        static readonly string[] Level2 = { "Eager", "Disturbed", "Gatherer", "Nice", "Ridiculous" };
+        static readonly string[] Level3 = { "Explorer", "Crazed", "Greedy", "Gentle", "Envious" };
+        static readonly string[] Level4 = { "Sheetfolder", "Deranged", "Strong", "Warm", "Hateful" };
+        static readonly string[] Level5 = { "Desertmind", "Sicko", "Released", "Goodhearted", "Finger" };
+        static readonly string[] Level6 = { "Observer", "Mental", "Unafraid", "Giving", "Sheep" };
+        static readonly string[] Level7 = { "Bookkeeper", "Psycho", "Brave", "Rock", "Snake" };
+        static readonly string[] Level8 = { "Mud-dweller", "Beast", "Performer", "Splendid", "Shark" };
+        static readonly string[] Level9 = { "Thought Eater", "Maniac", "Liberator", "Protector", "Infection" };
+        static readonly string[] Level10 = { "Crooked", "Drooling", "Force", "Respectful", "Swarm" };
+        static readonly string[] Level11 = { "Enlightened", "Gone", "Vibrant Light", "Saint", "Free" };
+        static readonly string[] Level12 = { "12th Hierophant", "12th Eidolon", "12th Sovereign", "12th Deva", "12th Harbinger" };
+        static readonly string[] Level13 = { "13th Hierophant", "13th Eidolon", "13th Sovereign", "13th Deva", "13th Harbinger" };
+        static readonly string[] Level14 = { "14th Hierophant", "14th Eidolon", "14th Sovereign", "14th Deva", "14th Harbinger" };
+        static readonly string[] Level15 = { "15th Hierophant", "15th Eidolon", "15th Sovereign", "15th Deva", "15th Harbinger" };
+        static readonly string[] Level16 = { "16th Hierophant", "16th Eidolon", "16th Sovereign", "16th Deva", "16th Harbinger" };
 
         static readonly Dictionary<int, string[]> LevelToTitlesMap = new Dictionary<int, string[]>();
         static readonly Dictionary<int, int> LevelToCooldownInHoursMap = new Dictionary<int, int>();

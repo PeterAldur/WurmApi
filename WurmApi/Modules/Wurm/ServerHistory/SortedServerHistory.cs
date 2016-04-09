@@ -17,7 +17,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.ServerHistory
         public SortedServerHistory(IPersistent<PersistentModel.ServerHistory> persistentData)
         {
             if (persistentData == null)
-                throw new ArgumentNullException("persistentData");
+                throw new ArgumentNullException(nameof(persistentData));
             this.persistentData = persistentData;
 
             Rebuild(persistentData.Entity.ServerStamps);

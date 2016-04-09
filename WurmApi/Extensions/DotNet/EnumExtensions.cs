@@ -12,7 +12,7 @@ namespace AldursLab.WurmApi.Extensions.DotNet
         public static void ValidateIsDefined<TEnum>(TEnum enumValue)
         {
             if (!IsDefined<TEnum>(enumValue))
-                throw new ArgumentOutOfRangeException("enumValue", "Enumeration value " + enumValue + " is not defined.");
+                throw new ArgumentOutOfRangeException(nameof(enumValue), "Enumeration value " + enumValue + " is not defined.");
         }
     }
 }

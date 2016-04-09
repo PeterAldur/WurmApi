@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
-using AldursLab.WurmApi.Modules.Wurm.ServerGroups;
 using AldursLab.WurmApi.Modules.Wurm.Servers.Jobs;
 using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 using AldursLab.WurmApi.PersistentObjects;
@@ -41,15 +40,15 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             [NotNull] IWurmServerGroups wurmServerGroups, 
             [NotNull] IWurmApiConfig wurmApiConfig)
         {
-            if (wurmLogsHistory == null) throw new ArgumentNullException("wurmLogsHistory");
-            if (wurmLogsMonitor == null) throw new ArgumentNullException("wurmLogsMonitor");
-            if (wurmServerList == null) throw new ArgumentNullException("wurmServerList");
-            if (httpWebRequests == null) throw new ArgumentNullException("httpWebRequests");
-            if (dataDirectory == null) throw new ArgumentNullException("dataDirectory");
-            if (wurmCharacterDirectories == null) throw new ArgumentNullException("wurmCharacterDirectories");
-            if (wurmServerHistory == null) throw new ArgumentNullException("wurmServerHistory");
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (wurmServerGroups == null) throw new ArgumentNullException("wurmServerGroups");
+            if (wurmLogsHistory == null) throw new ArgumentNullException(nameof(wurmLogsHistory));
+            if (wurmLogsMonitor == null) throw new ArgumentNullException(nameof(wurmLogsMonitor));
+            if (wurmServerList == null) throw new ArgumentNullException(nameof(wurmServerList));
+            if (httpWebRequests == null) throw new ArgumentNullException(nameof(httpWebRequests));
+            if (dataDirectory == null) throw new ArgumentNullException(nameof(dataDirectory));
+            if (wurmCharacterDirectories == null) throw new ArgumentNullException(nameof(wurmCharacterDirectories));
+            if (wurmServerHistory == null) throw new ArgumentNullException(nameof(wurmServerHistory));
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
+            if (wurmServerGroups == null) throw new ArgumentNullException(nameof(wurmServerGroups));
             if (wurmApiConfig == null) throw new ArgumentNullException(nameof(wurmApiConfig));
 
             this.wurmServerGroups = wurmServerGroups;
@@ -100,32 +99,26 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
         private WurmServer RegisterServer(WurmServerInfo wurmServerInfo)
         {
             var normalizedName = wurmServerInfo.ServerName;
-            if (this.nameToServerMap.ContainsKey(normalizedName))
+            if (nameToServerMap.ContainsKey(normalizedName))
             {
                 throw new WurmApiException("Server already registered: " + wurmServerInfo);
             }
 
             var server = wurmServerFactory.Create(wurmServerInfo);
 
-            this.nameToServerMap.Add(normalizedName, server);
+            nameToServerMap.Add(normalizedName, server);
 
             return server;
         }
 
-        public IEnumerable<IWurmServer> All
-        {
-            get
-            {
-                return this.nameToServerMap.Values;
-            }
-        }
+        public IEnumerable<IWurmServer> All => nameToServerMap.Values;
 
         public IWurmServer GetByName(ServerName name)
         {
-            if (name == null) throw new ArgumentNullException("name");
+            if (name == null) throw new ArgumentNullException(nameof(name));
 
             WurmServer server;
-            if (!this.nameToServerMap.TryGetValue(name, out server))
+            if (!nameToServerMap.TryGetValue(name, out server))
             {
                 // registering unknown server
                 return RegisterServer(new WurmServerInfo(name.Original, String.Empty, wurmServerGroups.GetForServer(name)));

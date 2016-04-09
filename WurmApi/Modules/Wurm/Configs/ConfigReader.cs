@@ -6,13 +6,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 {
     class ConfigReader
     {
-        private readonly WurmConfig config;
+        readonly WurmConfig config;
 
         public ConfigReader(WurmConfig config)
         {
             if (config == null)
             {
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
             }
             this.config = config;
         }
@@ -20,14 +20,14 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
         public ReadResult ReadValues()
         {
             var readResult = new ReadResult();
-            using (var fs = new FileStream(this.config.FullConfigFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var fs = new FileStream(config.FullConfigFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (var sr = new StreamReader(fs))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        this.ProcessLine(line, readResult);
+                        ProcessLine(line, readResult);
                     }
                 }
             }
@@ -39,7 +39,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             // no, this is not my typo. :)
             if (line.Contains("custim_timer_source"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.CustomTimerSource = LogsLocation.ProfileFolder;
                 else if (val == 1)
@@ -47,7 +47,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("exec_source"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.ExecSource = LogsLocation.ProfileFolder;
                 else if (val == 1)
@@ -55,7 +55,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("key_bindings_source"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.KeyBindSource = LogsLocation.ProfileFolder;
                 else if (val == 1)
@@ -63,7 +63,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("auto_run_source"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.AutoRunSource = LogsLocation.ProfileFolder;
                 else if (val == 1)
@@ -72,7 +72,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 
             else if (line.Contains("irc_log_rotation"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.IrcLoggingType = LogSaveMode.Never;
                 else if (val == 1)
@@ -84,7 +84,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("other_log_rotation"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.OtherLoggingType = LogSaveMode.Never;
                 else if (val == 1)
@@ -96,7 +96,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("event_log_rotation"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.EventLoggingType = LogSaveMode.Never;
                 else if (val == 1)
@@ -108,7 +108,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("skillgain_minimum"))
             {
-                int? val = this.ExtractSettingNumericValue(line);
+                int? val = ExtractSettingNumericValue(line);
                 if (val == 0)
                     readResult.SkillGainRate = SkillGainRate.Never;
                 else if (val == 1)
@@ -125,7 +125,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
 
             else if (line.Contains("skillgain_no_alignment"))
             {
-                bool? val = this.ExtractBoolValue(line);
+                bool? val = ExtractBoolValue(line);
                 if (val == true)
                     readResult.NoSkillMessageOnAlignmentChange = true;
                 else if (val == false)
@@ -133,7 +133,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("skillgain_no_favor"))
             {
-                bool? val = this.ExtractBoolValue(line);
+                bool? val = ExtractBoolValue(line);
                 if (val == true)
                     readResult.NoSkillMessageOnFavorChange = true;
                 else if (val == false)
@@ -141,7 +141,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("save_skills_on_quit"))
             {
-                bool? val = this.ExtractBoolValue(line);
+                bool? val = ExtractBoolValue(line);
                 if (val == true)
                     readResult.SaveSkillsOnQuit = true;
                 else if (val == false)
@@ -149,7 +149,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Configs
             }
             else if (line.Contains("setting_timestamps"))
             {
-                bool? val = this.ExtractBoolValue(line);
+                bool? val = ExtractBoolValue(line);
                 if (val == true)
                     readResult.TimestampMessages = true;
                 else if (val == false)

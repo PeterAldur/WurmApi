@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Tests.TempDirs;
 using NUnit.Framework;
-using Telerik.JustMock;
 
 namespace AldursLab.WurmApi.Tests.Tests.Modules.Wurm.LogReading
 {

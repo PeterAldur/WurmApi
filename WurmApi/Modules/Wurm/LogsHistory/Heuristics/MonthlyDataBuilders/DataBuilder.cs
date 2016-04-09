@@ -59,9 +59,9 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
         public DataBuilder(string logFileName, DateTime today, IWurmApiLogger logger)
         {
             if (logFileName == null)
-                throw new ArgumentNullException("logFileName");
+                throw new ArgumentNullException(nameof(logFileName));
             if (logger == null)
-                throw new ArgumentNullException("logger");
+                throw new ArgumentNullException(nameof(logger));
 
             this.logFileName = logFileName;
             this.today = today;
@@ -221,7 +221,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics.MonthlyDataBuild
             {
                 if (NoDataGathered)
                 {
-                    throw new WurmApiException("Empty results, may indicate malformed file data. File name: " + this.logFileName);
+                    throw new WurmApiException("Empty results, may indicate malformed file data. File name: " + logFileName);
                 }
                 resultTaken = true;
             }

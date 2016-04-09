@@ -8,13 +8,13 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
 {
     class WebFeedExtractor
     {
-        private readonly IHttpWebRequests httpWebRequests;
+        readonly IHttpWebRequests httpWebRequests;
 
         public WebFeedExtractor(IHttpWebRequests httpWebRequests)
         {
             if (httpWebRequests == null)
             {
-                throw new ArgumentNullException("httpWebRequests");
+                throw new ArgumentNullException(nameof(httpWebRequests));
             }
             this.httpWebRequests = httpWebRequests;
         }
@@ -23,7 +23,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
         {
             WebDataExtractionResult result = new WebDataExtractionResult(serverInfo.ServerName);
 
-            var res = await this.httpWebRequests.GetResponseAsync(serverInfo.WebStatsUrl).ConfigureAwait(false);
+            var res = await httpWebRequests.GetResponseAsync(serverInfo.WebStatsUrl).ConfigureAwait(false);
             DateTime headerLastUpdated = res.LastModified;
 
             using (Stream stream = res.GetResponseStream())

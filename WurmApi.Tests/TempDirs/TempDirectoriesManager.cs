@@ -107,7 +107,7 @@ namespace AldursLab.WurmApi.Tests.TempDirs
                 }
                 catch (Exception exception)
                 {
-                    Trace.WriteLine("Error during disposal of DirectoryHandle: " + exception.ToString());
+                    Trace.WriteLine("Error during disposal of DirectoryHandle: " + exception);
                 }
             }
         }

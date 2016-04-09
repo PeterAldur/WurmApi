@@ -13,38 +13,22 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
     {
         private readonly WurmServerInfo wurmServerInfo;
         readonly QueuedJobsSyncRunner<Job, JobResult> jobRunner;
-        readonly ServerGroup serverScopedServerGroup;
 
         internal WurmServer(WurmServerInfo wurmServerInfo, [NotNull] QueuedJobsSyncRunner<Job, JobResult> jobRunner)
         {
-            if (wurmServerInfo == null) throw new ArgumentNullException("wurmServerInfo");
-            if (jobRunner == null) throw new ArgumentNullException("jobRunner");
+            if (wurmServerInfo == null) throw new ArgumentNullException(nameof(wurmServerInfo));
+            if (jobRunner == null) throw new ArgumentNullException(nameof(jobRunner));
             this.wurmServerInfo = wurmServerInfo;
             this.jobRunner = jobRunner;
-            serverScopedServerGroup = ServerGroup.CreateServerScoped(wurmServerInfo.ServerName);
+            ServerScopedServerGroup = ServerGroup.CreateServerScoped(wurmServerInfo.ServerName);
         }
 
-        public ServerName ServerName
-        {
-            get
-            {
-                return wurmServerInfo.ServerName;
-            }
-        }
+        public ServerName ServerName => wurmServerInfo.ServerName;
 
-        public ServerGroup ServerGroup
-        {
-            get
-            {
-                return wurmServerInfo.ServerGroup;
-            }
-        }
+        public ServerGroup ServerGroup => wurmServerInfo.ServerGroup;
 
         [Obsolete]
-        public ServerGroup ServerScopedServerGroup
-        {
-            get { return serverScopedServerGroup; }
-        }
+        public ServerGroup ServerScopedServerGroup { get; }
 
         #region TryGetCurrentTime
 

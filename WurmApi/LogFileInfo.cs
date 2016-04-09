@@ -4,8 +4,6 @@ namespace AldursLab.WurmApi
 {
     public class LogFileInfo : IComparable<LogFileInfo>, IComparable
     {
-        private readonly LogType logType;
-        private readonly string pmRecipientNormalized;
         /// <summary>
         /// Full path to the file with extension.
         /// </summary>
@@ -24,15 +22,12 @@ namespace AldursLab.WurmApi
 
         public LogFileInfo(string fullPath, string fileName, LogFileDate logFileDate, LogType logType, bool parsingError, string pmRecipient)
         {
-            this.logType = logType;
-            if (pmRecipient != null) // can be null
-            {
-                // normalize name
-                pmRecipient = pmRecipient.ToUpperInvariant();
-            }
-            this.pmRecipientNormalized = pmRecipient; 
-            if (fullPath == null) throw new ArgumentNullException("fullPath");
-            if (fileName == null) throw new ArgumentNullException("fileName");
+            LogType = logType;
+            // normalize name
+            pmRecipient = pmRecipient?.ToUpperInvariant();
+            PmRecipientNormalized = pmRecipient; 
+            if (fullPath == null) throw new ArgumentNullException(nameof(fullPath));
+            if (fileName == null) throw new ArgumentNullException(nameof(fileName));
             LogFileDate = logFileDate;
             ParsingError = parsingError;
             FullPath = fullPath;
@@ -40,16 +35,13 @@ namespace AldursLab.WurmApi
             FileNameNormalized = FileName.ToUpperInvariant();
         }
 
-        public LogType LogType
-        {
-            get { return logType; }
-        }
+        public LogType LogType { get; }
 
-        public string PmRecipientNormalized { get { return pmRecipientNormalized; } }
+        public string PmRecipientNormalized { get; }
 
         public int CompareTo(LogFileInfo other)
         {
-            return this.LogFileDate.DateTime.CompareTo(other.LogFileDate.DateTime);
+            return LogFileDate.DateTime.CompareTo(other.LogFileDate.DateTime);
         }
 
         public int CompareTo(object obj)

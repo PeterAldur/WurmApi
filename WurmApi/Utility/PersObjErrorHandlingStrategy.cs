@@ -10,7 +10,7 @@ namespace AldursLab.WurmApi.Utility
 
         public PersObjErrorHandlingStrategy([NotNull] IWurmApiLogger logger)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
             this.logger = logger;
         }
 

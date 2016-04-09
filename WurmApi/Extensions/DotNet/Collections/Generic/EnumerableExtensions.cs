@@ -14,7 +14,7 @@ namespace AldursLab.WurmApi.Extensions.DotNet.Collections.Generic
         public static TSource FirstOrValue<TSource>(this IEnumerable<TSource> source, Func<TSource> valueFactory)
         {
             if (source == null)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
             IList<TSource> list = source as IList<TSource>;
             if (list != null)
             {

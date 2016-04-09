@@ -29,83 +29,35 @@ namespace AldursLab.WurmApi
 
         private readonly long totalseconds;
 
-        public long TotalSeconds
-        {
-            get
-            {
-                return this.totalseconds;
-            }
-        }
+        public long TotalSeconds => totalseconds;
 
         private readonly int second;
 
-        public int Second
-        {
-            get
-            {
-                return this.second;
-            }
-        }
+        public int Second => second;
 
         private readonly int minute;
 
-        public int Minute
-        {
-            get
-            {
-                return this.minute;
-            }
-        }
+        public int Minute => minute;
 
         private readonly int hour;
 
-        public int Hour
-        {
-            get
-            {
-                return this.hour;
-            }
-        }
+        public int Hour => hour;
 
         private readonly WurmDay day;
 
-        public WurmDay Day
-        {
-            get
-            {
-                return this.day;
-            }
-        }
+        public WurmDay Day => day;
 
         private readonly int week;
 
-        public int Week
-        {
-            get
-            {
-                return this.week;
-            }
-        }
+        public int Week => week;
 
         private readonly WurmStarfall starfall;
 
-        public WurmStarfall Starfall
-        {
-            get
-            {
-                return this.starfall;
-            }
-        }
+        public WurmStarfall Starfall => starfall;
 
         private readonly int year;
 
-        public int Year
-        {
-            get
-            {
-                return this.year;
-            }
-        }
+        public int Year => year;
 
         private const int MinuteSecs = 60,
                           HourSecs = 60 * 60,
@@ -114,37 +66,13 @@ namespace AldursLab.WurmApi
                           StarfallSecs = 4 * 7 * 24 * 60 * 60,
                           YearSecs = 12 * 4 * 7 * 24 * 60 * 60;
 
-        public static WurmDateTime MinValue
-        {
-            get
-            {
-                return new WurmDateTime(0);
-            }
-        }
+        public static WurmDateTime MinValue => new WurmDateTime(0);
 
-        public static WurmDateTime MaxValue
-        {
-            get
-            {
-                return new WurmDateTime(99999, 12, 4, 7, 23, 59, 59);
-            }
-        }
+        public static WurmDateTime MaxValue => new WurmDateTime(99999, 12, 4, 7, 23, 59, 59);
 
-        public int DayInYear
-        {
-            get
-            {
-                return this.day.Number + (this.week - 1) * 7 + (this.starfall.Number - 1) * 28;
-            }
-        }
+        public int DayInYear => day.Number + (week - 1) * 7 + (starfall.Number - 1) * 28;
 
-        public TimeSpan DayAndTimeOfYear
-        {
-            get
-            {
-                return new TimeSpan(this.DayInYear, this.hour, this.minute, this.second);
-            }
-        }
+        public TimeSpan DayAndTimeOfYear => new TimeSpan(DayInYear, hour, minute, second);
 
         /// <summary>
         /// Creates a new Wurm date/time object
@@ -188,16 +116,16 @@ namespace AldursLab.WurmApi
             this.starfall = starfall;
             this.year = year;
 
-            this.totalseconds = second;
-            this.totalseconds += minute * MinuteSecs;
-            this.totalseconds += hour * HourSecs;
-            this.totalseconds += (day.Number - 1) * DaySecs;
-            this.totalseconds += (week - 1) * WeekSecs;
-            this.totalseconds += (starfall.Number - 1) * StarfallSecs;
-            this.totalseconds += (long)year * (long)YearSecs;
+            totalseconds = second;
+            totalseconds += minute * MinuteSecs;
+            totalseconds += hour * HourSecs;
+            totalseconds += (day.Number - 1) * DaySecs;
+            totalseconds += (week - 1) * WeekSecs;
+            totalseconds += (starfall.Number - 1) * StarfallSecs;
+            totalseconds += year * (long)YearSecs;
         }
 
-        private static void ValidateParameter(int minInclusive, int maxInclusive, int value, string sourceName)
+        static void ValidateParameter(int minInclusive, int maxInclusive, int value, string sourceName)
         {
             if (value < minInclusive)
             {
@@ -227,8 +155,8 @@ namespace AldursLab.WurmApi
         {
             this.totalseconds = totalseconds;
 
-            int yearNum = (int)(totalseconds / (long)YearSecs);
-            totalseconds -= (long)yearNum * (long)YearSecs;
+            int yearNum = (int)(totalseconds / YearSecs);
+            totalseconds -= (long)yearNum * YearSecs;
 
             int starfallNum = (int)(totalseconds / StarfallSecs);
             totalseconds -= starfallNum * StarfallSecs;
@@ -245,15 +173,15 @@ namespace AldursLab.WurmApi
             int minuteNum = (int)(totalseconds / MinuteSecs);
             totalseconds -= minuteNum * MinuteSecs;
 
-            int secondNum = (int)(totalseconds);
+            int secondNum = (int)totalseconds;
 
-            this.second = secondNum;
-            this.minute = minuteNum;
-            this.hour = hourNum;
-            this.day = new WurmDay(dayNum + 1);
-            this.week = weekNum + 1;
-            this.starfall = new WurmStarfall(starfallNum + 1);
-            this.year = yearNum;
+            second = secondNum;
+            minute = minuteNum;
+            hour = hourNum;
+            day = new WurmDay(dayNum + 1);
+            week = weekNum + 1;
+            starfall = new WurmStarfall(starfallNum + 1);
+            year = yearNum;
         }
 
         /// <summary>
@@ -278,7 +206,7 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         public TimeSpan TimeTo(WurmDateTime otherDate)
         {
-            return TimeSpan.FromSeconds(otherDate.TotalSeconds - this.TotalSeconds);
+            return TimeSpan.FromSeconds(otherDate.TotalSeconds - TotalSeconds);
         }
 
         /// <summary>
@@ -287,20 +215,13 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format(
-                "{0:00}:{1:00}:{2:00} on day of {3} in week {4} of the {5} starfall in the year of {6}",
-                this.hour,
-                this.minute,
-                this.second,
-                this.day,
-                this.week,
-                this.starfall,
-                this.year);
+            return
+                $"{hour:00}:{minute:00}:{second:00} on day of {day} in week {week} of the {starfall} starfall in the year of {year}";
         }
 
         public int CompareTo(WurmDateTime other)
         {
-            return this.TotalSeconds.CompareTo(other.TotalSeconds);
+            return TotalSeconds.CompareTo(other.TotalSeconds);
         }
 
         public static WurmDateTime operator +(WurmDateTime wdt, TimeSpan ts)
@@ -356,13 +277,9 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-            if (obj is WurmDateTime)
-            {
-                WurmDateTime wdt = (WurmDateTime)obj;
-                return this.totalseconds == wdt.totalseconds;
-            }
-            else return false;
+            if (!(obj is WurmDateTime)) return false;
+            var wdt = (WurmDateTime)obj;
+            return totalseconds == wdt.totalseconds;
         }
 
         /// <summary>
@@ -372,12 +289,12 @@ namespace AldursLab.WurmApi
         /// <returns></returns>
         public bool Equals(WurmDateTime wdt)
         {
-            return this.totalseconds == wdt.totalseconds;
+            return totalseconds == wdt.totalseconds;
         }
 
         public override int GetHashCode()
         {
-            return this.totalseconds.GetHashCode();
+            return totalseconds.GetHashCode();
         }
     }
 }
