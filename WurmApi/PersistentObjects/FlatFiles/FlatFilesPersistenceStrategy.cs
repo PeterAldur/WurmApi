@@ -2,7 +2,7 @@
 using System.IO;
 using AldursLab.WurmApi.FileSystem;
 
-namespace AldursLab.WurmApi.PersistentObjects
+namespace AldursLab.WurmApi.PersistentObjects.FlatFiles
 {
     class FlatFilesPersistenceStrategy : IPersistenceStrategy
     {

@@ -2,6 +2,7 @@
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.PersistentModel;
 using AldursLab.WurmApi.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects.FlatFiles;
 using AldursLab.WurmApi.Tests.TempDirs;
 using NUnit.Framework;
 

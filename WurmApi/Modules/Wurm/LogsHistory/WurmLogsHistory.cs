@@ -6,6 +6,7 @@ using AldursLab.WurmApi.JobRunning;
 using AldursLab.WurmApi.Modules.Wurm.LogReading;
 using AldursLab.WurmApi.Modules.Wurm.LogsHistory.Heuristics;
 using AldursLab.WurmApi.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects.FlatFiles;
 using AldursLab.WurmApi.PersistentObjects.SqLite;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;

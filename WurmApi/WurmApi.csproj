@@ -189,7 +189,7 @@
     <Compile Include="PersistentObjects\Entity.cs" />
     <Compile Include="PersistentObjects\ErrorContext.cs" />
     <Compile Include="PersistentObjects\Exceptions.cs" />
-    <Compile Include="PersistentObjects\FlatFilesPersistenceStrategy.cs" />
+    <Compile Include="PersistentObjects\FlatFiles\FlatFilesPersistenceStrategy.cs" />
     <Compile Include="PersistentObjects\IPersistenceStrategy.cs" />
     <Compile Include="PersistentObjects\IPersistent.cs" />
     <Compile Include="PersistentObjects\IPersistentCollection.cs" />

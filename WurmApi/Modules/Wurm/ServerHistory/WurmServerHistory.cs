@@ -8,6 +8,7 @@ using AldursLab.WurmApi.Modules.Events.Internal;
 using AldursLab.WurmApi.Modules.Wurm.LogsMonitor;
 using AldursLab.WurmApi.Modules.Wurm.ServerHistory.Jobs;
 using AldursLab.WurmApi.PersistentObjects;
+using AldursLab.WurmApi.PersistentObjects.FlatFiles;
 using AldursLab.WurmApi.PersistentObjects.SqLite;
 using AldursLab.WurmApi.Utility;
 using JetBrains.Annotations;
