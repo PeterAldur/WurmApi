@@ -1,4 +1,5 @@
 using System;
+using AldursLab.WurmApi.Extensions.DotNet;
 using AldursLab.WurmApi.Modules.Wurm.Servers.WurmServersModel;
 using JetBrains.Annotations;
 
@@ -51,7 +52,7 @@ namespace AldursLab.WurmApi.Modules.Wurm.Servers
             if (scanned) return;
 
             var maxScanSince = Time.Get.LocalNowOffset.AddDays(-30);
-            var lastScanSince = logHistorySaved.LastScanDate.AddDays(-1);
+            var lastScanSince = logHistorySaved.LastScanDate.AddDaysSnapToMinMax(-1);
             var scanSince = lastScanSince < maxScanSince ? maxScanSince : lastScanSince;
 
             var allChars = wurmCharacterDirectories.GetAllCharacters();

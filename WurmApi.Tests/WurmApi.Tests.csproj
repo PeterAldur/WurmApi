@@ -108,6 +108,7 @@
     <Compile Include="Builders\WurmClient\WurmConfig.cs" />
     <Compile Include="Builders\WurmClient\WurmLogs.cs" />
     <Compile Include="Builders\WurmClient\WurmPlayer.cs" />
+    <Compile Include="Extensions\DateTimeExtTests.cs" />
     <Compile Include="TempDirs\DirectoryHandle.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\DummyException.cs" />

@@ -38,5 +38,34 @@ namespace AldursLab.WurmApi.Extensions.DotNet
         {
             return AddConstrain(dateTime, -timeSpan);
         }
+
+        public static DateTimeOffset AddDaysSnapToMinMax(this DateTimeOffset dateTimeOffset, double days)
+        {
+            if (Math.Sign(days) >= 0)
+            {
+                double maxDaysToAdd = (DateTimeOffset.MaxValue - dateTimeOffset).TotalDays;
+                if (maxDaysToAdd >= days)
+                {
+                    return dateTimeOffset.AddDays(days);
+                }
+                else
+                {
+                    return DateTimeOffset.MaxValue;
+                }
+
+            }
+            else
+            {
+                double minDaysToAdd = (DateTimeOffset.MinValue - dateTimeOffset).TotalDays;
+                if (minDaysToAdd <= days)
+                {
+                    return dateTimeOffset.AddDays(days);
+                }
+                else
+                {
+                    return DateTimeOffset.MinValue;
+                }
+            }
+        }
     }
 }
