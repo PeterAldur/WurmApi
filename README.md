@@ -1,9 +1,21 @@
+#**This repository is no longer being supported. WurmApi has been merged into [WurmAssistant3](https://github.com/mdsolver/WurmAssistant3).**
+
+WurmApi can still be used without dependency on WurmAssistant3 by cloning WurmAssistant3 repository and referencing WurmApi.* projects.
+
+The new WurmApi does not guarantee immutable contracts nor non-windows compatibility, depends on more 3rd party packages and is tailored for WurmAssistant only.
+
+This project has been abandoned due to:
+
+* Lack of proper interfaces into game client and servers. Lack of development progress in this area.
+* Majority of Wurm dev community is Java, not .NET. Rewriting library into java and creating .NET bindings is too much work.
+
+---
+---
+
 # WurmApi #
 ----------------
 
 WurmApi is a .NET library, realizing mission to enable other programmers, to easily write their own tools for Wurm Online game client and for the game in general.
-
-**This api is in preview! Contracts may change between commits. Usage examples may be out of date.**
 
 Note: Requires Visual Studio 2015
 
